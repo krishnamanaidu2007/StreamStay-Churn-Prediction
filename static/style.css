@@ -1,0 +1,786 @@
+/* =========================================================
+   STREAMSTAY - GLOBAL STYLES
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    background: #07101f;
+    color: #e8f0fb;
+
+    font-family:
+        "Segoe UI",
+        Inter,
+        Arial,
+        sans-serif;
+
+    font-size: 15px;
+    line-height: 1.6;
+
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   TOP HEADER
+   ========================================================= */
+
+.topbar {
+    height: 74px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #07101f,
+            #091525
+        );
+
+    border-bottom: 1px solid #1b2d46;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+
+    box-shadow:
+        0 5px 25px rgba(0, 0, 0, 0.18);
+}
+
+.topbar h1 {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+
+    color: #f3f7fc;
+}
+
+
+/* BLUE CHURN PREDICTION TEXT */
+
+.topbar h1::after {
+    content: " - Churn Prediction";
+
+    color: #28c7ff;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+.layout {
+    display: flex;
+
+    min-height: calc(100vh - 74px);
+
+    background:
+        radial-gradient(
+            circle at 85% 10%,
+            rgba(22, 126, 170, 0.07),
+            transparent 35%
+        ),
+        #07101f;
+}
+
+
+/* =========================================================
+   LEFT SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    width: 242px;
+
+    flex-shrink: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0a1425,
+            #08111f
+        );
+
+    border-right: 1px solid #1b2d46;
+
+    padding: 28px 14px;
+
+    position: sticky;
+    top: 74px;
+
+    height: calc(100vh - 74px);
+
+    overflow-y: auto;
+}
+
+.sidebar ul {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 8px;
+}
+
+
+/* =========================================================
+   SIDEBAR MENU
+   ========================================================= */
+
+.menu-item {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    padding: 14px 16px;
+
+    color: #9eb0c7;
+
+    text-decoration: none;
+
+    border-radius: 9px;
+
+    border: 1px solid transparent;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.menu-item:hover {
+    color: #eaf7ff;
+
+    background: #10243c;
+
+    border-color: #1b4262;
+
+    transform: translateX(2px);
+}
+
+
+/* =========================================================
+   ACTIVE MENU
+   ========================================================= */
+
+.menu-item.active {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            90deg,
+            #12365a,
+            #102943
+        );
+
+    border-color: #245b87;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.18);
+}
+
+.menu-item.active::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 20%;
+
+    width: 4px;
+    height: 60%;
+
+    border-radius: 0 4px 4px 0;
+
+    background: #27c7ff;
+
+    box-shadow:
+        0 0 10px rgba(39, 199, 255, 0.45);
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.content {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 34px 40px 60px;
+
+    overflow-x: hidden;
+
+    animation:
+        contentAppear 0.35s ease both;
+}
+
+@keyframes contentAppear {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
+   HEADINGS
+   ========================================================= */
+
+.content h2 {
+    margin: 0 0 28px;
+
+    color: #f2f6fc;
+
+    font-size: 30px;
+
+    font-weight: 650;
+
+    letter-spacing: -0.4px;
+}
+
+.content h3 {
+    margin: 32px 0 14px;
+
+    color: #edf4fb;
+
+    font-size: 19px;
+
+    font-weight: 600;
+
+    letter-spacing: -0.1px;
+}
+
+.content p {
+    color: #9eafc4;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   ERROR BOX
+   ========================================================= */
+
+.error {
+    padding: 14px 17px;
+
+    margin-bottom: 22px;
+
+    color: #ffd7d7;
+
+    background: #32151b;
+
+    border: 1px solid #74313a;
+
+    border-left: 4px solid #ef626c;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   SUMMARY TABLE
+   ========================================================= */
+
+.summary-table {
+    width: 100%;
+
+    max-width: 520px;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    margin-bottom: 30px;
+
+    background: #0a1729;
+
+    border: 1px solid #1c324c;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.summary-table tr {
+    transition:
+        background 0.2s ease;
+}
+
+.summary-table tr:hover {
+    background: #0e2036;
+}
+
+.summary-table td {
+    padding: 13px 16px;
+
+    border-bottom: 1px solid #182b43;
+
+    color: #aebed1;
+}
+
+.summary-table tr:last-child td {
+    border-bottom: none;
+}
+
+.summary-table td:first-child {
+    width: 55%;
+
+    color: #9eb1c8;
+
+    font-weight: 500;
+}
+
+.summary-table td:last-child {
+    color: #f1f6fc;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    max-height: 420px;
+
+    overflow: auto;
+
+    border: 1px solid #1b324c;
+
+    border-radius: 10px;
+
+    background: #091525;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.12);
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================================================
+   DATA TABLE
+   ========================================================= */
+
+.data-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 650px;
+}
+
+.data-table thead {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 5;
+
+    background:
+        linear-gradient(
+            90deg,
+            #102849,
+            #132e51
+        );
+}
+
+.data-table th {
+    padding: 13px 14px;
+
+    text-align: left;
+
+    color: #dcecff;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.3px;
+
+    border-bottom: 1px solid #254364;
+}
+
+.data-table td {
+    padding: 12px 14px;
+
+    color: #aebed0;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #172b42;
+
+    white-space: nowrap;
+}
+
+.data-table tbody tr {
+    background: #091525;
+
+    transition:
+        background 0.18s ease;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background: #0b192b;
+}
+
+.data-table tbody tr:hover {
+    background: #10253d;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.table-wrapper::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+
+    height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track,
+.sidebar::-webkit-scrollbar-track {
+    background: #07101f;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb {
+    background: #27435f;
+
+    border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover,
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #35617f;
+}
+
+
+/* =========================================================
+   LARGE EDA CHART GRID
+   ========================================================= */
+
+.chart-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 28px;
+
+    width: 100%;
+
+    margin-top: 22px;
+}
+
+
+/* =========================================================
+   LARGE CHART CARD
+   ========================================================= */
+
+.chart-card {
+    width: 100%;
+
+    min-width: 0;
+
+    padding: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b1728,
+            #091321
+        );
+
+    border: 1px solid #203650;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.18);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+
+    animation:
+        chartAppear 0.5s ease both;
+}
+
+
+/* =========================================================
+   BIGGER GRAPH
+   ========================================================= */
+
+.chart-card img {
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    min-height: 430px;
+
+    object-fit: contain;
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+/* =========================================================
+   CHART HOVER
+   ========================================================= */
+
+.chart-card:hover {
+    transform: translateY(-4px);
+
+    border-color: #2b5b7c;
+
+    box-shadow:
+        0 14px 35px rgba(0, 0, 0, 0.28),
+        0 0 18px rgba(32, 199, 255, 0.06);
+}
+
+.chart-card:hover img {
+    transform: scale(1.005);
+}
+
+
+/* =========================================================
+   CHART ANIMATION
+   ========================================================= */
+
+@keyframes chartAppear {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
+   CHART STAGGER ANIMATION
+   ========================================================= */
+
+.chart-card:nth-child(2) {
+    animation-delay: 0.04s;
+}
+
+.chart-card:nth-child(3) {
+    animation-delay: 0.08s;
+}
+
+.chart-card:nth-child(4) {
+    animation-delay: 0.12s;
+}
+
+.chart-card:nth-child(5) {
+    animation-delay: 0.16s;
+}
+
+.chart-card:nth-child(6) {
+    animation-delay: 0.20s;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .sidebar {
+        width: 210px;
+    }
+
+    .content {
+        padding: 30px 28px 50px;
+    }
+
+    .chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-card img {
+        min-height: 380px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .topbar {
+        height: 64px;
+
+        padding: 0 18px;
+    }
+
+    .topbar h1 {
+        font-size: 18px;
+    }
+
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: relative;
+
+        top: 0;
+
+        width: 100%;
+
+        height: auto;
+
+        padding: 10px;
+
+        border-right: none;
+
+        border-bottom: 1px solid #1b2d46;
+    }
+
+    .sidebar ul {
+        display: flex;
+
+        gap: 8px;
+    }
+
+    .sidebar li {
+        flex: 1;
+
+        margin-bottom: 0;
+    }
+
+    .menu-item {
+        justify-content: center;
+
+        padding: 11px 8px;
+
+        font-size: 13px;
+    }
+
+    .menu-item.active::before {
+        display: none;
+    }
+
+    .content {
+        padding: 25px 16px 40px;
+    }
+
+    .content h2 {
+        font-size: 25px;
+
+        margin-bottom: 22px;
+    }
+
+    .content h3 {
+        font-size: 18px;
+    }
+
+    .summary-table {
+        max-width: 100%;
+    }
+
+    .chart-grid {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .chart-card {
+        padding: 10px;
+    }
+
+    .chart-card img {
+        min-height: 300px;
+    }
+}
+
+
+/* =========================================================
+   REDUCE MOTION FOR ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+}

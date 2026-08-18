@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>StreamStay</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="topbar">
+    <h1>StreamStay</h1>
+</header>
+
+<div class="layout">
+
+    <!-- LEFT SIDEBAR -->
+    <nav class="sidebar">
+
+        <ul>
+
+            <li>
+                <a href="{{ url_for('data_loading') }}"
+                   class="menu-item {% if active == 'data-loading' %}active{% endif %}">
+                    Data Loading
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('eda') }}"
+                   class="menu-item {% if active == 'eda' %}active{% endif %}">
+                    EDA
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+
+        <!-- HOME -->
+        {% if active == 'none' %}
+
+            <h2>StreamStay - Churn Prediction</h2>
+
+            <p>
+                Select an option from the left panel to get started.
+            </p>
+
+        {% endif %}
+
+
+        <!-- DATA LOADING -->
+        {% if active == 'data-loading' %}
+
+            <h2>Data Loading</h2>
+
+            {% if error %}
+
+                <div class="error">
+                    {{ error }}
+                </div>
+
+            {% endif %}
+
+
+            {% if summary %}
+
+                <!-- Dataset Summary -->
+
+                <table class="summary-table">
+
+                    <tr>
+                        <td>Rows</td>
+                        <td>{{ summary.n_rows }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Columns</td>
+                        <td>{{ summary.n_cols }}</td>
+                    </tr>
+
+                </table>
+
+
+                <!-- Column Information -->
+
+                <h3>Column Information</h3>
+
+                <div class="table-wrapper">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Column</th>
+                                <th>Dtype</th>
+                                <th>Missing Values</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {% for col in summary.columns %}
+
+                            <tr>
+
+                                <td>{{ col }}</td>
+
+                                <td>{{ summary.dtypes[col] }}</td>
+
+                                <td>{{ summary.missing_counts[col] }}</td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- First 10 Rows -->
+
+                <h3>Preview (First 10 Rows)</h3>
+
+                <div class="table-wrapper">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                            <tr>
+
+                            {% for col in summary.columns %}
+
+                                <th>{{ col }}</th>
+
+                            {% endfor %}
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {% for row in summary.preview %}
+
+                            <tr>
+
+                            {% for col in summary.columns %}
+
+                                <td>{{ row[col] }}</td>
+
+                            {% endfor %}
+
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% endif %}
+
+        {% endif %}
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>StreamStay - EDA</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="topbar">
+    <h1>StreamStay</h1>
+</header>
+
+<div class="layout">
+
+    <!-- LEFT SIDEBAR -->
+
+    <nav class="sidebar">
+
+        <ul>
+
+            <li>
+                <a href="{{ url_for('data_loading') }}"
+                   class="menu-item">
+                    Data Loading
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('eda') }}"
+                   class="menu-item active">
+                    EDA
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="content">
+
+        <h2>Exploratory Data Analysis</h2>
+
+        {% if error %}
+
+            <div class="error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        {% if results %}
+
+            <!-- Dataset Summary -->
+
+            <table class="summary-table">
+
+                <tr>
+                    <td>Rows</td>
+                    <td>{{ results.n_rows }}</td>
+                </tr>
+
+                <tr>
+                    <td>Columns</td>
+                    <td>{{ results.n_cols }}</td>
+                </tr>
+
+                <tr>
+                    <td>Duplicate Rows</td>
+                    <td>{{ results.duplicate_count }}</td>
+                </tr>
+
+            </table>
+
+
+            <!-- Missing Values -->
+
+            {% if results.missing %}
+
+                <h3>Missing Values</h3>
+
+                <div class="table-wrapper">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Column</th>
+                                <th>Missing Count</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {% for col, count in results.missing.items() %}
+
+                            <tr>
+
+                                <td>{{ col }}</td>
+
+                                <td>{{ count }}</td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- Churn Status -->
+
+            <h3>Churn Status Counts</h3>
+
+            <table class="summary-table">
+
+                {% for status, count in results.target_counts.items() %}
+
+                    <tr>
+
+                        <td>
+
+                            {% if status|string == '0' %}
+
+                                No Churn
+
+                            {% elif status|string == '1' %}
+
+                                Churn
+
+                            {% else %}
+
+                                {{ status }}
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ count }}
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </table>
+
+
+            <!-- Charts -->
+
+            <h3>Charts</h3>
+
+            <div class="chart-grid">
+
+                {% for fname in results.charts %}
+
+                    <div class="chart-card">
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='charts/' + fname
+                            ) }}"
+                            alt="{{ fname }}"
+                        >
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </main>
+
+</div>
+
+</body>
+
+</html>
