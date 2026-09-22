@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamStay - Logistic Regression</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="application-shell logistic-regression-body">
+<div class="topbar"><h1>StreamStay</h1><p>Churn Prediction</p></div>
+<div class="layout">
+    <aside class="sidebar"><ul>
+        <li><a href="{{ url_for('index') }}" class="menu-item">🏠&nbsp; Home</a></li>
+        <li><a href="{{ url_for('data_loading') }}" class="menu-item">📁&nbsp; Data Loading</a></li>
+        <li><a href="{{ url_for('eda') }}" class="menu-item">📊&nbsp; EDA</a></li>
+        <li><a href="{{ url_for('preprocessing') }}" class="menu-item">⚙️&nbsp; Preprocessing</a></li>
+        <li><a href="{{ url_for('linear_regression') }}" class="menu-item">📈&nbsp; Linear Regression</a></li>
+        <li><a href="{{ url_for('logistic_regression') }}" class="menu-item active">🔢&nbsp; Logistic Regression</a></li>
+        <li><a href="{{ url_for('tree_based') }}" class="menu-item">🌳&nbsp; Tree Based Models</a></li>
+    </ul></aside>
+
+    <main class="content logistic-page">
+        <h1>Logistic Regression</h1>
+        <p>Evaluate Logistic, Ridge Logistic, and Lasso logistic classification models for StreamStay churn prediction.</p>
+
+        {% if error %}<div class="error">{{ error }}</div>{% endif %}
+        {% if results is not none %}
+            <div class="logistic-summary">
+                <div class="card"><h3>Training Records</h3><p>{{ results.training_shape[0] }}</p></div>
+                <div class="card"><h3>Testing Records</h3><p>{{ results.testing_shape[0] }}</p></div>
+                <div class="card"><h3>Transformed Features</h3><p>{{ results.feature_count }}</p></div>
+                <div class="card"><h3>Models Compared</h3><p>{{ results.models|length }}</p></div>
+            </div>
+
+            <div class="section-card logistic-context">
+                <h2>1. Classification Overview</h2>
+                <p>The target is <strong>is_churn</strong>: 0 means No Churn and 1 means Churn. Logistic Regression is suitable for this binary classification task because it estimates a customer’s churn probability. A probability of {{ results.threshold }} or above is interpreted as Churn.</p>
+            </div>
+            <div class="section-card logistic-context">
+                <h2>2. Dataset &amp; Class Distribution</h2>
+                <p>Churn is the minority class, so accuracy alone can be misleading. Precision, recall, F1 Score, and ROC-AUC provide useful evidence about minority-class detection and probability ranking.</p>
+                <div class="table-wrapper"><table class="data-table"><thead><tr><th>Information</th><th>Value</th></tr></thead><tbody>
+                    <tr><td>X_train</td><td>{{ results.training_shape }}</td></tr><tr><td>X_test</td><td>{{ results.testing_shape }}</td></tr>
+                    <tr><td>No Churn</td><td>{{ results.target_counts.no_churn }} ({{ '%.3f'|format(results.no_churn_percentage) }}%)</td></tr>
+                    <tr><td>Churn</td><td>{{ results.target_counts.churn }} ({{ '%.3f'|format(results.churn_percentage) }}%)</td></tr>
+                </tbody></table></div>
+            </div>
+
+            <div class="approach-card">
+                <h2>Select Logistic Regression Approach</h2>
+                <p>Choose whether to view Logistic Regression without regularization, with regularization, or compare all models.</p>
+                <div class="approach-control"><label for="logisticApproach">Approach:</label><select id="logisticApproach" class="approach-select" onchange="changeLogisticApproach()"><option value="without" selected>Without Regularization</option><option value="with">With Regularization</option><option value="all">Compare All</option></select></div>
+            </div>
+
+            <div id="logisticWithout" class="selection-section show">
+                {% set logistic = results.models['Logistic Regression'] %}
+                <div class="section-card"><h2>Without Regularization</h2><p>Logistic Regression without an L1 or L2 regularization penalty.</p><div class="table-wrapper"><table class="data-table"><thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1 Score</th><th>ROC-AUC</th></tr></thead><tbody><tr><td>Logistic Regression</td><td>{{ '%.6f'|format(logistic.accuracy) }}</td><td>{{ '%.6f'|format(logistic.precision) }}</td><td>{{ '%.6f'|format(logistic.recall) }}</td><td>{{ '%.6f'|format(logistic.f1) }}</td><td>{{ '%.6f'|format(logistic.roc_auc) }}</td></tr></tbody></table></div></div>
+                <div class="section-card"><h2>Confusion Matrix</h2><div class="logistic-single-plot"><img src="{{ url_for('static', filename='charts/logistic_regression_confusion_matrix.png') }}" alt="Logistic Regression confusion matrix"></div></div>
+                <div class="section-card"><h2>ROC Curve</h2><div class="logistic-single-plot"><img src="{{ url_for('static', filename='charts/logistic_regression_roc_curve.png') }}" alt="Logistic Regression ROC curve"></div></div>
+            </div>
+
+            <div id="logisticWith" class="selection-section">
+                <div class="section-card"><h2>With Regularization</h2><p>Regularized Logistic Regression using L2 and L1 penalties. L2 shrinks coefficients toward zero, while L1 can drive some coefficients exactly to zero.</p><div class="table-wrapper"><table class="data-table"><thead><tr><th>Model</th><th>Regularization</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1 Score</th><th>ROC-AUC</th></tr></thead><tbody>{% for name, regularization in [('Ridge Logistic Regression', 'L2'), ('Lasso Logistic Regression', 'L1')] %}{% set model = results.models[name] %}<tr><td>{{ name }}</td><td>{{ regularization }}</td><td>{{ '%.6f'|format(model.accuracy) }}</td><td>{{ '%.6f'|format(model.precision) }}</td><td>{{ '%.6f'|format(model.recall) }}</td><td>{{ '%.6f'|format(model.f1) }}</td><td>{{ '%.6f'|format(model.roc_auc) }}</td></tr>{% endfor %}</tbody></table></div></div>
+                <div class="section-card"><h2>Confusion Matrices</h2><div class="logistic-plot-grid">{% for name, base, label in [('Ridge Logistic Regression', 'ridge_logistic', 'Ridge Logistic Regression — L2'), ('Lasso Logistic Regression', 'lasso_logistic', 'Lasso Logistic Regression — L1')] %}<div class="logistic-plot-card"><h4>{{ label }}</h4><img src="{{ url_for('static', filename='charts/' + base + '_confusion_matrix.png') }}" alt="{{ label }} confusion matrix"></div>{% endfor %}</div></div>
+                <div class="section-card"><h2>ROC Curves</h2><div class="logistic-plot-grid">{% for name, base, label in [('Ridge Logistic Regression', 'ridge_logistic', 'Ridge Logistic Regression — L2'), ('Lasso Logistic Regression', 'lasso_logistic', 'Lasso Logistic Regression — L1')] %}<div class="logistic-plot-card"><h4>{{ label }}</h4><img src="{{ url_for('static', filename='charts/' + base + '_roc_curve.png') }}" alt="{{ label }} ROC curve"></div>{% endfor %}</div></div>
+            </div>
+
+            <div id="logisticAll" class="selection-section">
+                <div class="section-card"><h2>Complete Model Comparison</h2><div class="table-wrapper"><table class="data-table"><thead><tr><th>Category</th><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1 Score</th><th>ROC-AUC</th></tr></thead><tbody>{% for row in results.comparison_rows %}<tr><td>{% if row.Model == 'Logistic Regression' %}Without Regularization{% else %}With Regularization{% endif %}</td><td>{{ row.Model }}</td><td>{{ '%.6f'|format(row.Accuracy) }}</td><td>{{ '%.6f'|format(row.Precision) }}</td><td>{{ '%.6f'|format(row.Recall) }}</td><td>{{ '%.6f'|format(row.F1) }}</td><td>{{ '%.6f'|format(row['ROC-AUC']) }}</td></tr>{% endfor %}</tbody></table></div></div>
+                <div class="section-card"><h2>Model Performance Comparison</h2><div class="logistic-single-plot"><img src="{{ url_for('static', filename='charts/logistic_regression_model_comparison.png') }}" alt="Logistic Regression comparison"></div></div>
+                <div class="section-card"><h2>Confusion Matrices</h2><div class="logistic-plot-grid">{% for name, base, label in [('Logistic Regression', 'logistic_regression', 'Logistic Regression'), ('Ridge Logistic Regression', 'ridge_logistic', 'Ridge Logistic Regression — L2'), ('Lasso Logistic Regression', 'lasso_logistic', 'Lasso Logistic Regression — L1')] %}<div class="logistic-plot-card"><h4>{{ label }}</h4><img src="{{ url_for('static', filename='charts/' + base + '_confusion_matrix.png') }}" alt="{{ label }} confusion matrix"></div>{% endfor %}</div></div>
+                <div class="section-card"><h2>ROC Curves</h2><div class="logistic-plot-grid">{% for name, base, label in [('Logistic Regression', 'logistic_regression', 'Logistic Regression'), ('Ridge Logistic Regression', 'ridge_logistic', 'Ridge Logistic Regression — L2'), ('Lasso Logistic Regression', 'lasso_logistic', 'Lasso Logistic Regression — L1')] %}<div class="logistic-plot-card"><h4>{{ label }}</h4><img src="{{ url_for('static', filename='charts/' + base + '_roc_curve.png') }}" alt="{{ label }} ROC curve"></div>{% endfor %}</div></div>
+                <div class="section-card"><h2>Regularization</h2><p>Logistic Regression has no L1/L2 penalty. Ridge Logistic Regression uses L2 regularization to shrink coefficients, while Lasso Logistic Regression uses L1 regularization and can set some coefficients to zero.</p></div>
+                <div class="section-card"><h2>Interpretation</h2><p>Compare precision, recall, F1 Score, and ROC-AUC together when evaluating churn detection. These metrics make the trade-offs between identifying churners and limiting false alerts visible.</p></div>
+            </div>
+        {% endif %}
+    </main>
+</div>
+<script>
+function changeLogisticApproach() {
+    const value = document.getElementById('logisticApproach').value;
+    const withoutSection = document.getElementById('logisticWithout');
+    const withSection = document.getElementById('logisticWith');
+    const allSection = document.getElementById('logisticAll');
+    withoutSection.classList.remove('show'); withSection.classList.remove('show'); allSection.classList.remove('show');
+    if (value === 'without') withoutSection.classList.add('show');
+    else if (value === 'with') withSection.classList.add('show');
+    else if (value === 'all') allSection.classList.add('show');
+}
+</script>
+</body>
+</html>
