@@ -784,3 +784,1058 @@ body {
         transition-duration: 0.01ms !important;
     }
 }
+
+.content h4 {
+    margin: 24px 0 10px;
+    color: #dcecff;
+    font-size: 16px;
+}
+
+.report-details {
+    margin: 0 0 24px;
+    padding: 12px 16px;
+    background: #0a1729;
+    border: 1px solid #1c324c;
+    border-radius: 8px;
+    color: #aebed1;
+}
+
+.report-details summary {
+    cursor: pointer;
+    color: #dcecff;
+    font-weight: 600;
+}
+
+.report-details pre {
+    overflow-x: auto;
+    color: #aebed1;
+}
+
+/* =========================================================
+   LINEAR REGRESSION MODEL PRESENTATION
+   ========================================================= */
+
+.model-overview,
+.model-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.model-overview {
+    margin: 0 0 28px;
+}
+
+.model-overview span,
+.model-details span {
+    padding: 8px 12px;
+    color: #b8c9dc;
+    background: #0b1a2e;
+    border: 1px solid #1c3855;
+    border-radius: 7px;
+    font-size: 13px;
+}
+
+.model-section {
+    margin: 38px 0;
+}
+
+.section-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    margin-bottom: 16px;
+}
+
+.section-heading > span {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    color: #c9efff;
+    background: #12365a;
+    border: 1px solid #28638f;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.section-heading h3,
+.section-heading p {
+    margin: 0;
+}
+
+.section-heading p {
+    margin-top: 2px;
+    font-size: 14px;
+}
+
+.model-card {
+    padding: 24px;
+    background: linear-gradient(145deg, #0b1728, #091321);
+    border: 1px solid #203c59;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+}
+
+.linear-model-card { border-left: 4px solid #28c7ff; }
+.ridge-model-card { border-left: 4px solid #6fb8ff; }
+.lasso-model-card { border-left: 4px solid #68b984; }
+
+.model-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 16px;
+}
+
+.model-header h3 {
+    margin: 0;
+}
+
+.model-eyebrow {
+    margin: 0 0 2px !important;
+    color: #7e9ab7 !important;
+    font-size: 12px !important;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.regularization-badge {
+    padding: 6px 10px;
+    border: 1px solid;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.badge-none { color: #aeeaff; background: #0c3042; border-color: #23789b; }
+.badge-l2 { color: #cae3ff; background: #162d4c; border-color: #3b6fa2; }
+.badge-l1 { color: #bcebd1; background: #153b30; border-color: #3e8569; }
+
+.model-card h4 {
+    margin-top: 22px;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.metric-item {
+    min-width: 0;
+    padding: 11px 12px;
+    background: #0b1b2f;
+    border: 1px solid #1d3956;
+    border-radius: 8px;
+}
+
+.metric-item span,
+.confusion-grid span {
+    display: block;
+    color: #8fa7c0;
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+.metric-item strong,
+.confusion-grid strong {
+    display: block;
+    margin-top: 3px;
+    color: #f0f7ff;
+    font-size: 16px;
+}
+
+.model-evidence {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.95fr) minmax(320px, 1.05fr);
+    gap: 22px;
+    margin-top: 22px;
+}
+
+.confusion-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.confusion-grid > div {
+    padding: 11px;
+    background: #0b1b2f;
+    border: 1px solid #1d3956;
+    border-radius: 8px;
+}
+
+.model-card .report-details {
+    margin: 12px 0 0;
+}
+
+.model-chart {
+    margin: 0;
+    padding: 10px;
+    background: #07101f;
+    border: 1px solid #203650;
+    border-radius: 9px;
+}
+
+.model-chart img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    background: #fff;
+}
+
+.model-chart figcaption {
+    padding: 7px 3px 0;
+    color: #9eb1c8;
+    font-size: 12px;
+}
+
+.regularized-cards {
+    display: grid;
+    gap: 20px;
+}
+
+.lasso-callout,
+.regularization-info {
+    padding: 17px 19px;
+    background: #10283a;
+    border: 1px solid #24546d;
+    border-left: 4px solid #68b984;
+    border-radius: 9px;
+    color: #b9cddd;
+}
+
+.lasso-callout { margin-top: 16px; }
+
+.comparison-chart {
+    max-width: 950px;
+    margin: 0 0 28px;
+}
+
+.comparison-chart img { min-height: 0; }
+
+.regularization-info { margin-top: 38px; }
+.regularization-info h3 { margin-top: 0; }
+.regularization-info p { margin: 8px 0; }
+.regularization-info .alpha-note { color: #d8efff; font-weight: 600; }
+
+@media (max-width: 900px) {
+    .model-evidence { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 700px) {
+    .model-card { padding: 17px; }
+    .model-header { flex-direction: column; }
+    .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* =========================================================
+   POST-EDA MODEL PAGES
+   Shared PolicyPulse-inspired structure, kept in StreamStay's
+   existing navy/cyan visual system.
+   ========================================================= */
+
+.section-card {
+    width: 100%;
+    margin: 24px 0;
+    padding: 24px;
+    background: #0b1728;
+    border: 1px solid #203c59;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.section-card h3 {
+    margin: 0 0 8px;
+    color: #dcecff;
+    font-size: 20px;
+}
+
+.section-card > p {
+    margin: 0 0 16px;
+    color: #aebed1;
+}
+
+.compact-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0 0 24px;
+}
+
+.compact-cards .card {
+    padding: 18px;
+    background: #0b1728;
+    border-color: #203c59;
+}
+
+.compact-cards .card h3 {
+    color: #91a9c2;
+    font-size: 13px;
+}
+
+.compact-cards .card p {
+    color: #dcecff;
+    font-size: 22px;
+}
+
+.compact-cards .card .model-name {
+    font-size: 17px;
+}
+
+.algorithm-form {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.algorithm-form label {
+    color: #dcecff;
+    font-weight: 600;
+}
+
+.algorithm-select {
+    min-width: 260px;
+    height: 42px;
+    padding: 0 12px;
+    color: #dcecff;
+    background: #091321;
+    border: 1px solid #28638f;
+    border-radius: 7px;
+    font: inherit;
+}
+
+.algorithm-select:focus {
+    outline: none;
+    border-color: #28c7ff;
+    box-shadow: 0 0 0 2px rgba(40, 199, 255, 0.16);
+}
+
+.run-button {
+    height: 42px;
+    padding: 0 18px;
+    color: #07101f;
+    background: #28c7ff;
+    border: 1px solid #55d5ff;
+    border-radius: 7px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.run-button:hover { background: #64d8ff; }
+
+.model-plot-grid,
+.two-plot-grid {
+    display: grid;
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.model-plot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.two-plot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.section-card .plot-card {
+    margin-top: 0;
+    padding: 14px;
+    background: #091321;
+    border-color: #203c59;
+}
+
+.section-card .plot-card h4 {
+    margin: 0 0 12px;
+    color: #dcecff;
+    text-align: center;
+}
+
+.section-card .plot-card img {
+    min-height: 0;
+    width: 100%;
+}
+
+@media (max-width: 1100px) {
+    .compact-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .model-plot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 700px) {
+    .section-card { padding: 18px; }
+    .compact-cards, .model-plot-grid, .two-plot-grid { grid-template-columns: 1fr; }
+    .algorithm-form { align-items: stretch; flex-direction: column; }
+    .algorithm-select, .run-button { width: 100%; }
+}
+
+/* =========================================================
+   PREPROCESSING PAGE
+   The page follows the PolicyPulse card hierarchy while its
+   selectors are scoped so frozen StreamStay pages are unchanged.
+   ========================================================= */
+
+.preprocessing-body {
+    min-height: 100vh;
+    background: #f5f7fb;
+    color: #253b57;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+.preprocessing-body .topbar {
+    position: static;
+    display: block;
+    height: auto;
+    padding: 28px 34px 24px;
+    background: #12365a;
+    border: 0;
+    box-shadow: none;
+}
+
+.preprocessing-body .topbar h1 {
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.preprocessing-body .topbar h1::after { content: none; }
+
+.preprocessing-body .topbar p {
+    margin: 7px 0 0;
+    color: #cfeeff;
+    font-size: 16px;
+}
+
+.preprocessing-body .layout {
+    min-height: calc(100vh - 120px);
+    background: #f5f7fb;
+}
+
+.preprocessing-body .sidebar {
+    position: static;
+    width: 250px;
+    height: auto;
+    padding: 26px 14px;
+    background: #163f67;
+    border: 0;
+}
+
+.preprocessing-body .sidebar li { margin-bottom: 4px; }
+
+.preprocessing-body .menu-item {
+    min-height: 52px;
+    padding: 0 17px;
+    color: #ffffff;
+    border: 0;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.preprocessing-body .menu-item:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border: 0;
+    transform: none;
+}
+
+.preprocessing-body .menu-item.active {
+    color: #12365a;
+    background: #ffffff;
+    border: 0;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.08);
+}
+
+.preprocessing-body .menu-item.active::before { display: none; }
+
+.preprocessing-body .content {
+    padding: 38px 42px 60px;
+    background: #f5f7fb;
+    animation: none;
+}
+
+.preprocessing-body .content h1 {
+    margin: 0 0 8px;
+    color: #12365a;
+    font-size: 29px;
+    line-height: 1.25;
+}
+
+.preprocessing-body .page-intro {
+    max-width: 850px;
+    margin: 0 0 26px;
+    color: #5c6d82;
+    font-size: 16px;
+}
+
+.preprocessing-body .preprocessing-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin: 0 0 30px;
+}
+
+.preprocessing-body .card,
+.preprocessing-body .section-card {
+    background: #ffffff;
+    border: 1px solid #dfe6ef;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(30, 55, 80, 0.05);
+}
+
+.preprocessing-body .card { padding: 20px; }
+
+.preprocessing-body .card h3 {
+    margin: 0 0 10px;
+    color: #52667e;
+    font-size: 14px;
+}
+
+.preprocessing-body .card p {
+    margin: 0;
+    color: #12365a;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.preprocessing-body .section-card {
+    margin: 24px 0;
+    padding: 25px;
+}
+
+.preprocessing-body .section-card h2 {
+    margin: 0 0 10px;
+    color: #12365a;
+    font-size: 22px;
+}
+
+.preprocessing-body .section-card h3 {
+    margin: 0 0 10px;
+    color: #294866;
+    font-size: 16px;
+}
+
+.preprocessing-body .section-card p,
+.preprocessing-body .section-card li {
+    color: #5c6d82;
+    font-size: 15px;
+}
+
+.preprocessing-body .section-card ul {
+    margin: 0;
+    padding-left: 20px;
+    line-height: 1.8;
+}
+
+.preprocessing-body .two-column-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.preprocessing-body .two-column-details > div {
+    padding: 18px;
+    background: #f8fafc;
+    border: 1px solid #dfe6ef;
+    border-radius: 8px;
+}
+
+.preprocessing-body .two-column-details p { margin: 0; }
+
+.preprocessing-body .table-wrapper {
+    max-height: none;
+    margin: 16px 0 0;
+    background: #ffffff;
+    border-color: #dfe6ef;
+    box-shadow: none;
+}
+
+.preprocessing-body .data-table { min-width: 0; }
+
+.preprocessing-body .data-table thead {
+    position: static;
+    background: #eef4f8;
+}
+
+.preprocessing-body .data-table th {
+    color: #294866;
+    border-color: #dfe6ef;
+}
+
+.preprocessing-body .data-table td {
+    color: #5d6e82;
+    border-color: #e8edf3;
+    white-space: normal;
+}
+
+.preprocessing-body .data-table tbody tr,
+.preprocessing-body .data-table tbody tr:nth-child(even) { background: #ffffff; }
+
+.preprocessing-body .data-table tbody tr:hover { background: #f8fafc; }
+
+.preprocessing-body code {
+    padding: 2px 5px;
+    color: #12365a;
+    background: #e8f2f8;
+    border-radius: 4px;
+}
+
+.preprocessing-body .next-stage-card {
+    display: block;
+    padding: 21px 24px;
+    color: #12365a;
+    text-decoration: none;
+    background: #ffffff;
+    border: 1px solid #cddce8;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(30, 55, 80, 0.05);
+}
+
+.preprocessing-body .next-stage-card:hover { border-color: #78a7c8; }
+
+.preprocessing-body .next-stage-card span {
+    display: block;
+    margin-bottom: 3px;
+    color: #5c6d82;
+    font-size: 13px;
+}
+
+.preprocessing-body .next-stage-card strong { font-size: 17px; }
+
+@media (max-width: 1100px) {
+    .preprocessing-body .preprocessing-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 800px) {
+    .preprocessing-body .layout { flex-direction: column; }
+    .preprocessing-body .sidebar { width: 100%; padding: 12px; }
+    .preprocessing-body .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; }
+    .preprocessing-body .sidebar li { margin: 0; }
+    .preprocessing-body .menu-item { width: auto; min-height: 44px; }
+    .preprocessing-body .content { padding: 30px 20px 45px; }
+    .preprocessing-body .two-column-details { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 550px) {
+    .preprocessing-body .topbar { padding: 23px 20px; }
+    .preprocessing-body .preprocessing-summary { grid-template-columns: 1fr; }
+    .preprocessing-body .section-card { padding: 18px; }
+}
+
+/* =========================================================
+   LINEAR REGRESSION PAGE
+   Scoped to preserve approved preprocessing, data-loading and EDA pages.
+   ========================================================= */
+
+.linear-regression-body {
+    min-height: 100vh;
+    background: #f5f7fb;
+    color: #253b57;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+.linear-regression-body .topbar { position: static; display: block; height: auto; padding: 28px 34px 24px; background: #12365a; border: 0; box-shadow: none; }
+.linear-regression-body .topbar h1 { color: #fff; font-size: 30px; font-weight: 700; }
+.linear-regression-body .topbar h1::after { content: none; }
+.linear-regression-body .topbar p { margin: 7px 0 0; color: #cfeeff; font-size: 16px; }
+.linear-regression-body .layout { min-height: calc(100vh - 120px); background: #f5f7fb; }
+.linear-regression-body .sidebar { position: static; width: 250px; height: auto; padding: 26px 14px; background: #163f67; border: 0; }
+.linear-regression-body .sidebar li { margin-bottom: 4px; }
+.linear-regression-body .menu-item { min-height: 52px; padding: 0 17px; color: #fff; border: 0; border-radius: 8px; font-size: 15px; font-weight: 600; transition: background-color .2s ease, color .2s ease; }
+.linear-regression-body .menu-item:hover { color: #fff; background: rgba(255,255,255,.12); border: 0; transform: none; }
+.linear-regression-body .menu-item.active { color: #12365a; background: #fff; border: 0; box-shadow: 0 2px 7px rgba(0,0,0,.08); }
+.linear-regression-body .menu-item.active::before { display: none; }
+.linear-regression-body .content { padding: 38px 42px 60px; background: #f5f7fb; animation: none; }
+.linear-regression-body .content h1 { margin: 0 0 8px; color: #12365a; font-size: 29px; line-height: 1.25; }
+.linear-regression-body .page-intro { max-width: 850px; margin: 0 0 26px; color: #5c6d82; font-size: 16px; }
+.linear-regression-body .regression-summary { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; margin: 0 0 30px; }
+.linear-regression-body .card, .linear-regression-body .section-card { background: #fff; border: 1px solid #dfe6ef; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
+.linear-regression-body .card { padding: 20px; }
+.linear-regression-body .card h3 { margin: 0 0 10px; color: #52667e; font-size: 14px; }
+.linear-regression-body .card p { margin: 0; color: #12365a; font-size: 25px; font-weight: 700; }
+.linear-regression-body .section-card { margin: 24px 0; padding: 25px; }
+.linear-regression-body .section-card h2 { margin: 0 0 10px; color: #12365a; font-size: 22px; }
+.linear-regression-body .section-card h3 { margin: 0 0 10px; color: #294866; font-size: 16px; }
+.linear-regression-body .section-card p { color: #5c6d82; font-size: 15px; }
+.linear-regression-body .table-wrapper { max-height: none; margin: 16px 0 0; background: #fff; border-color: #dfe6ef; box-shadow: none; }
+.linear-regression-body .data-table { min-width: 0; }
+.linear-regression-body .regression-metrics { min-width: 650px; }
+.linear-regression-body .data-table thead { position: static; background: #eef4f8; }
+.linear-regression-body .data-table th { color: #294866; border-color: #dfe6ef; }
+.linear-regression-body .data-table td { color: #5d6e82; border-color: #e8edf3; white-space: normal; }
+.linear-regression-body .data-table tbody tr, .linear-regression-body .data-table tbody tr:nth-child(even) { background: #fff; }
+.linear-regression-body .data-table tbody tr:hover { background: #f8fafc; }
+.linear-regression-body .prediction-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; margin-top: 18px; }
+.linear-regression-body .plot-card { margin-top: 0; padding: 15px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 9px; text-align: center; }
+.linear-regression-body .plot-card h4 { margin: 0 0 12px; color: #294866; font-size: 15px; }
+.linear-regression-body .plot-card img { display: block; width: 100%; min-height: 0; height: auto; margin: 0 auto; background: #fff; }
+.linear-regression-body .comparison-plot { max-width: 1000px; margin-top: 16px; }
+.linear-regression-body .approach-selector-card { margin-bottom: 24px; }
+.linear-regression-body .form-field { display: flex; align-items: center; gap: 14px; margin-top: 20px; }
+.linear-regression-body .form-field label { color: #294866; font-size: 15px; font-weight: 700; }
+.linear-regression-body .form-field select { min-width: 280px; padding: 11px 38px 11px 13px; color: #294866; background: #fff; border: 1px solid #b9cad8; border-radius: 7px; font: inherit; font-size: 15px; cursor: pointer; }
+.linear-regression-body .form-field select:focus { outline: 2px solid #78a7c8; outline-offset: 2px; }
+.linear-regression-body .approach-panel[hidden] { display: none; }
+.linear-regression-body .single-model-chart { max-width: 690px; margin-top: 20px; }
+.linear-regression-body .regularization-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 20px; }
+.linear-regression-body .regularization-note { display: flex; flex-direction: column; gap: 5px; padding: 16px 18px; color: #5c6d82; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 8px; }
+.linear-regression-body .regularization-note strong { color: #294866; font-size: 15px; }
+.linear-regression-body .regularization-note span { font-size: 14px; }
+.linear-regression-body .two-up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.linear-regression-body .coefficient-chart { margin-top: 20px; }
+.linear-regression-body .three-column-details { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; margin-top: 18px; }
+.linear-regression-body .three-column-details > div { padding: 18px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 8px; }
+.linear-regression-body .three-column-details p { margin: 0; }
+.linear-regression-body .coefficient-title { margin: 25px 0 0 !important; }
+.linear-regression-body .next-stage-card { display: block; padding: 21px 24px; color: #12365a; text-decoration: none; background: #fff; border: 1px solid #cddce8; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
+.linear-regression-body .next-stage-card:hover { border-color: #78a7c8; }
+.linear-regression-body .next-stage-card span { display: block; margin-bottom: 3px; color: #5c6d82; font-size: 13px; }
+.linear-regression-body .next-stage-card strong { font-size: 17px; }
+
+@media (max-width: 1100px) {
+    .linear-regression-body .regression-summary { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .linear-regression-body .prediction-grid { grid-template-columns: 1fr; }
+    .linear-regression-body .two-up { grid-template-columns: 1fr; }
+}
+@media (max-width: 800px) {
+    .linear-regression-body .layout { flex-direction: column; }
+    .linear-regression-body .sidebar { width: 100%; padding: 12px; }
+    .linear-regression-body .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; }
+    .linear-regression-body .sidebar li { margin: 0; }
+    .linear-regression-body .menu-item { width: auto; min-height: 44px; }
+    .linear-regression-body .content { padding: 30px 20px 45px; }
+    .linear-regression-body .three-column-details { grid-template-columns: 1fr; }
+    .linear-regression-body .regularization-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 550px) {
+    .linear-regression-body .topbar { padding: 23px 20px; }
+    .linear-regression-body .regression-summary { grid-template-columns: 1fr; }
+    .linear-regression-body .section-card { padding: 18px; }
+    .linear-regression-body .form-field { align-items: stretch; flex-direction: column; gap: 8px; }
+    .linear-regression-body .form-field select { width: 100%; min-width: 0; }
+}
+
+/* =========================================================
+   LOGISTIC REGRESSION PAGE
+   Scoped to keep frozen Stage 4 and Stage 5 presentations intact.
+   ========================================================= */
+
+.logistic-regression-body {
+    min-height: 100vh;
+    background: #f5f7fb;
+    color: #253b57;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+.logistic-regression-body .topbar { position: static; display: block; height: auto; padding: 28px 34px 24px; background: #12365a; border: 0; box-shadow: none; }
+.logistic-regression-body .topbar h1 { color: #fff; font-size: 30px; font-weight: 700; }
+.logistic-regression-body .topbar h1::after { content: none; }
+.logistic-regression-body .topbar p { margin: 7px 0 0; color: #cfeeff; font-size: 16px; }
+.logistic-regression-body .layout { min-height: calc(100vh - 120px); background: #f5f7fb; }
+.logistic-regression-body .sidebar { position: static; width: 250px; height: auto; padding: 26px 14px; background: #163f67; border: 0; }
+.logistic-regression-body .sidebar li { margin-bottom: 4px; }
+.logistic-regression-body .menu-item { min-height: 52px; padding: 0 17px; color: #fff; border: 0; border-radius: 8px; font-size: 15px; font-weight: 600; transition: background-color .2s ease, color .2s ease; }
+.logistic-regression-body .menu-item:hover { color: #fff; background: rgba(255,255,255,.12); border: 0; transform: none; }
+.logistic-regression-body .menu-item.active { color: #12365a; background: #fff; border: 0; box-shadow: 0 2px 7px rgba(0,0,0,.08); }
+.logistic-regression-body .menu-item.active::before { display: none; }
+.logistic-regression-body .content { padding: 38px 42px 60px; background: #f5f7fb; animation: none; }
+.logistic-regression-body .content h1 { margin: 0 0 8px; color: #12365a; font-size: 29px; line-height: 1.25; }
+.logistic-regression-body .page-intro { max-width: 850px; margin: 0 0 26px; color: #5c6d82; font-size: 16px; }
+.logistic-regression-body .logistic-summary { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; margin: 0 0 30px; }
+.logistic-regression-body .card, .logistic-regression-body .section-card { background: #fff; border: 1px solid #dfe6ef; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
+.logistic-regression-body .card { padding: 20px; }
+.logistic-regression-body .card h3 { margin: 0 0 10px; color: #52667e; font-size: 14px; }
+.logistic-regression-body .card p { margin: 0; color: #12365a; font-size: 25px; font-weight: 700; }
+.logistic-regression-body .section-card { margin: 24px 0; padding: 25px; }
+.logistic-regression-body .section-card h2 { margin: 0 0 10px; color: #12365a; font-size: 22px; }
+.logistic-regression-body .section-card h3 { margin: 0 0 10px; color: #294866; font-size: 16px; }
+.logistic-regression-body .section-card p { color: #5c6d82; font-size: 15px; }
+.logistic-regression-body .table-wrapper { max-height: none; margin: 16px 0 0; background: #fff; border-color: #dfe6ef; box-shadow: none; }
+.logistic-regression-body .data-table { min-width: 0; }
+.logistic-regression-body .logistic-metrics { min-width: 700px; }
+.logistic-regression-body .data-table thead { position: static; background: #eef4f8; }
+.logistic-regression-body .data-table th { color: #294866; border-color: #dfe6ef; }
+.logistic-regression-body .data-table td { color: #5d6e82; border-color: #e8edf3; white-space: normal; }
+.logistic-regression-body .data-table tbody tr, .logistic-regression-body .data-table tbody tr:nth-child(even) { background: #fff; }
+.logistic-regression-body .data-table tbody tr:hover { background: #f8fafc; }
+.logistic-regression-body .plot-card { margin-top: 0; padding: 15px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 9px; text-align: center; }
+.logistic-regression-body .plot-card h4 { margin: 0 0 12px; color: #294866; font-size: 15px; }
+.logistic-regression-body .plot-card img { display: block; width: 100%; min-height: 0; height: auto; margin: 0 auto; background: #fff; }
+.logistic-regression-body .comparison-plot { max-width: 1000px; margin-top: 16px; }
+.logistic-regression-body .three-plot-grid, .logistic-regression-body .three-column-details { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; margin-top: 18px; }
+.logistic-regression-body .three-column-details > div { padding: 18px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 8px; }
+.logistic-regression-body .three-column-details p { margin: 0; }
+.logistic-regression-body .matrix-values { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 5px; margin-top: 12px; }
+.logistic-regression-body .matrix-values span { padding: 5px; color: #52667e; background: #fff; border: 1px solid #dfe6ef; border-radius: 5px; font-size: 12px; }
+.logistic-regression-body code { padding: 2px 5px; color: #12365a; background: #e8f2f8; border-radius: 4px; }
+.logistic-regression-body .next-stage-card { display: block; padding: 21px 24px; color: #12365a; text-decoration: none; background: #fff; border: 1px solid #cddce8; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
+.logistic-regression-body .next-stage-card:hover { border-color: #78a7c8; }
+.logistic-regression-body .next-stage-card span { display: block; margin-bottom: 3px; color: #5c6d82; font-size: 13px; }
+.logistic-regression-body .next-stage-card strong { font-size: 17px; }
+
+@media (max-width: 1100px) {
+    .logistic-regression-body .logistic-summary { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .logistic-regression-body .three-plot-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 800px) {
+    .logistic-regression-body .layout { flex-direction: column; }
+    .logistic-regression-body .sidebar { width: 100%; padding: 12px; }
+    .logistic-regression-body .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; }
+    .logistic-regression-body .sidebar li { margin: 0; }
+    .logistic-regression-body .menu-item { width: auto; min-height: 44px; }
+    .logistic-regression-body .content { padding: 30px 20px 45px; }
+    .logistic-regression-body .three-plot-grid, .logistic-regression-body .three-column-details { grid-template-columns: 1fr; }
+}
+@media (max-width: 550px) {
+    .logistic-regression-body .topbar { padding: 23px 20px; }
+    .logistic-regression-body .logistic-summary { grid-template-columns: 1fr; }
+    .logistic-regression-body .section-card { padding: 18px; }
+}
+
+/* =========================================================
+   TREE BASED MODELS PAGE
+   Scoped Stage 7 presentation matching the approved light-card family.
+   ========================================================= */
+
+.tree-based-body { min-height: 100vh; background: #f5f7fb; color: #253b57; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; }
+.tree-based-body .topbar { position: static; display: block; height: auto; padding: 28px 34px 24px; background: #12365a; border: 0; box-shadow: none; }
+.tree-based-body .topbar h1 { color: #fff; font-size: 30px; font-weight: 700; }
+.tree-based-body .topbar h1::after { content: none; }
+.tree-based-body .topbar p { margin: 7px 0 0; color: #cfeeff; font-size: 16px; }
+.tree-based-body .layout { min-height: calc(100vh - 120px); background: #f5f7fb; }
+.tree-based-body .sidebar { position: static; width: 250px; height: auto; padding: 26px 14px; background: #163f67; border: 0; }
+.tree-based-body .sidebar li { margin-bottom: 4px; }
+.tree-based-body .menu-item { min-height: 52px; padding: 0 17px; color: #fff; border: 0; border-radius: 8px; font-size: 15px; font-weight: 600; transition: background-color .2s ease, color .2s ease; }
+.tree-based-body .menu-item:hover { color: #fff; background: rgba(255,255,255,.12); border: 0; transform: none; }
+.tree-based-body .menu-item.active { color: #12365a; background: #fff; border: 0; box-shadow: 0 2px 7px rgba(0,0,0,.08); }
+.tree-based-body .menu-item.active::before { display: none; }
+.tree-based-body .content { padding: 38px 42px 60px; background: #f5f7fb; animation: none; }
+.tree-based-body .content h1 { margin: 0 0 8px; color: #12365a; font-size: 29px; line-height: 1.25; }
+.tree-based-body .page-intro { max-width: 850px; margin: 0 0 26px; color: #5c6d82; font-size: 16px; }
+.tree-based-body .tree-summary { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; margin: 0 0 30px; }
+.tree-based-body .card, .tree-based-body .section-card { background: #fff; border: 1px solid #dfe6ef; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
+.tree-based-body .card { padding: 20px; }
+.tree-based-body .card h3 { margin: 0 0 10px; color: #52667e; font-size: 14px; }
+.tree-based-body .card p { margin: 0; color: #12365a; font-size: 25px; font-weight: 700; }
+.tree-based-body .section-card { margin: 24px 0; padding: 25px; }
+.tree-based-body .section-card h2 { margin: 0 0 10px; color: #12365a; font-size: 22px; }
+.tree-based-body .section-card p { color: #5c6d82; font-size: 15px; }
+.tree-based-body .table-wrapper { max-height: none; margin: 16px 0 0; background: #fff; border-color: #dfe6ef; box-shadow: none; }
+.tree-based-body .data-table { min-width: 0; }
+.tree-based-body .tree-metrics { min-width: 760px; }
+.tree-based-body .data-table thead { position: static; background: #eef4f8; }
+.tree-based-body .data-table th { color: #294866; border-color: #dfe6ef; }
+.tree-based-body .data-table td { color: #5d6e82; border-color: #e8edf3; white-space: normal; }
+.tree-based-body .data-table tbody tr, .tree-based-body .data-table tbody tr:nth-child(even) { background: #fff; }
+.tree-based-body .data-table tbody tr:hover { background: #f8fafc; }
+.tree-based-body .algorithm-form { display: flex; align-items: center; gap: 14px; margin-top: 16px; }
+.tree-based-body .algorithm-form label { color: #294866; font-weight: 600; }
+.tree-based-body .algorithm-select { min-width: 280px; height: 42px; padding: 0 12px; color: #253b57; background: #fff; border: 1px solid #9db5c9; border-radius: 7px; font: inherit; }
+.tree-based-body .algorithm-select:focus { outline: none; border-color: #12365a; box-shadow: 0 0 0 2px rgba(18,54,90,.14); }
+.tree-based-body .run-button { height: 42px; padding: 0 18px; color: #fff; background: #12365a; border: 1px solid #12365a; border-radius: 7px; font: inherit; font-weight: 700; cursor: pointer; }
+.tree-based-body .run-button:hover { background: #0c2c4c; }
+.tree-based-body .selected-chart { margin-top: 16px; padding: 15px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 9px; text-align: center; }
+.tree-based-body .selected-chart img { display: block; width: 100%; max-width: 1000px; height: auto; margin: 0 auto; background: #fff; }
+.tree-based-body .matrix-values { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; margin-top: 12px; }
+.tree-based-body .matrix-values span { padding: 8px; color: #52667e; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 6px; text-align: center; font-size: 13px; }
+
+@media (max-width: 1100px) { .tree-based-body .tree-summary { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 800px) {
+    .tree-based-body .layout { flex-direction: column; }
+    .tree-based-body .sidebar { width: 100%; padding: 12px; }
+    .tree-based-body .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; }
+    .tree-based-body .sidebar li { margin: 0; }
+    .tree-based-body .menu-item { width: auto; min-height: 44px; }
+    .tree-based-body .content { padding: 30px 20px 45px; }
+    .tree-based-body .algorithm-form { align-items: stretch; flex-direction: column; }
+    .tree-based-body .algorithm-select, .tree-based-body .run-button { width: 100%; }
+    .tree-based-body .matrix-values { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 550px) {
+    .tree-based-body .topbar { padding: 23px 20px; }
+    .tree-based-body .tree-summary { grid-template-columns: 1fr; }
+    .tree-based-body .section-card { padding: 18px; }
+}
+
+/* =========================================================
+   LINEAR REGRESSION — POLICY PULSE REFERENCE STRUCTURE
+   Kept body-scoped so frozen stages remain unchanged.
+   ========================================================= */
+.linear-regression-body { background: #f5f7fb; color: #253b57; }
+.linear-regression-body .topbar { width: 100%; padding: 32px 34px 27px; background: #244b75; color: #fff; border-bottom: 1px solid #d7e0ea; }
+.linear-regression-body .topbar h1 { margin-bottom: 10px; color: #fff; font-size: 32px; font-weight: 700; }
+.linear-regression-body .topbar p { margin: 0; color: #e5edf6; font-size: 16px; }
+.linear-regression-body .layout { align-items: stretch; min-height: calc(100vh - 126px); }
+.linear-regression-body .sidebar { width: 250px; min-width: 250px; padding: 0; background: #2b5683; min-height: calc(100vh - 126px); }
+.linear-regression-body .sidebar ul { width: 100%; padding: 32px 14px; }
+.linear-regression-body .sidebar li { margin: 0; }
+.linear-regression-body .menu-item { min-height: 56px; padding: 0 18px; margin-bottom: 4px; color: #fff; border-radius: 9px; font-size: 17px; font-weight: 600; }
+.linear-regression-body .menu-item:hover { background: rgba(255,255,255,.10); }
+.linear-regression-body .menu-item.active { color: #244b75; background: #fff; box-shadow: 0 2px 7px rgba(0,0,0,.08); }
+.linear-regression-body .content { padding: 42px 44px 60px; background: #f5f7fb; }
+.linear-regression-body .content > h1 { margin: 0 0 10px; color: #244b75; font-size: 29px; line-height: 1.25; font-weight: 700; }
+.linear-regression-body .content > p { margin: 0 0 26px; color: #5c6d82; font-size: 16px; line-height: 1.6; }
+.linear-regression-body .regression-summary { width: 100%; margin-bottom: 30px; }
+.linear-regression-body .card { padding: 21px; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.04); }
+.linear-regression-body .card h3 { margin-bottom: 13px; color: #52667e; font-size: 16px; }
+.linear-regression-body .card p { color: #244b75; font-size: 26px; }
+.linear-regression-body .approach-card { width: 100%; padding: 24px; margin-bottom: 24px; background: #fff; border: 1px solid #dfe6ef; border-radius: 12px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
+.linear-regression-body .approach-card h2 { margin: 0 0 8px; color: #244b75; font-size: 22px; }
+.linear-regression-body .approach-card p { margin: 0 0 18px; color: #5c6d82; }
+.linear-regression-body .approach-control { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+.linear-regression-body .approach-control label { color: #294866; font-size: 16px; font-weight: 600; }
+.linear-regression-body .approach-select { width: 360px; height: 48px; padding: 0 15px; color: #253b57; background: #fff; border: 1px solid #aebfd2; border-radius: 7px; font-size: 16px; cursor: pointer; outline: none; }
+.linear-regression-body .approach-select:focus { border-color: #244b75; box-shadow: 0 0 0 2px rgba(36,75,117,.15); }
+.linear-regression-body .selection-section { display: none; }
+.linear-regression-body .selection-section.show { display: block; }
+.linear-regression-body .regression-page .section-card { width: 100%; min-width: 0; padding: 26px; margin: 24px 0 0; border-radius: 12px; box-sizing: border-box; float: none; clear: both; }
+.linear-regression-body .section-card h2 { margin: 0 0 9px; color: #244b75; font-size: 24px; }
+.linear-regression-body .section-card h4 { margin: 0 0 15px; color: #294866; font-size: 16px; }
+.linear-regression-body .section-card p { margin: 0 0 18px; color: #5c6d82; font-size: 15px; line-height: 1.6; }
+.linear-regression-body .regression-page .table-wrapper { width: 100%; max-width: 100%; overflow-x: auto; border: 1px solid #dfe6ef; border-radius: 9px; }
+.linear-regression-body .regression-page .data-table { width: 100%; min-width: 650px; border-collapse: collapse; }
+.linear-regression-body .data-table thead { background: #f1f5f9; }
+.linear-regression-body .data-table th { padding: 15px; color: #294866; font-size: 14px; border-bottom: 1px solid #dfe6ef; }
+.linear-regression-body .data-table td { padding: 14px 15px; color: #5d6e82; font-size: 14px; border-bottom: 1px solid #e8edf3; }
+.linear-regression-body .regression-plot { width: 100%; padding: 20px; margin-top: 20px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; text-align: center; box-sizing: border-box; overflow: hidden; }
+.linear-regression-body .regression-plot img { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; }
+.linear-regression-body .prediction-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; width: 100%; }
+.linear-regression-body .prediction-card { min-width: 0; padding: 18px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; text-align: center; }
+.linear-regression-body .prediction-card h4 { margin: 0 0 15px; color: #294866; font-size: 16px; }
+.linear-regression-body .prediction-card img { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; }
+.linear-regression-body .regularization-labels { display: flex; gap: 20px; flex-wrap: wrap; margin: 0 0 18px; color: #5c6d82; font-size: 15px; }
+.linear-regression-body .regularization-labels strong { color: #294866; }
+
+@media (max-width: 1100px) { .linear-regression-body .prediction-grid { grid-template-columns: 1fr; } }
+@media (max-width: 800px) {
+    .linear-regression-body .layout { flex-direction: column; }
+    .linear-regression-body .sidebar { width: 100%; min-width: 100%; min-height: auto; }
+    .linear-regression-body .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; padding: 12px; }
+    .linear-regression-body .menu-item { width: auto; min-height: 46px; margin-bottom: 0; }
+    .linear-regression-body .content { padding: 30px 20px; }
+    .linear-regression-body .approach-control { align-items: stretch; flex-direction: column; }
+    .linear-regression-body .approach-select { width: 100%; }
+}
+@media (max-width: 550px) {
+    .linear-regression-body .topbar { padding: 24px 20px; }
+    .linear-regression-body .topbar h1 { font-size: 27px; }
+    .linear-regression-body .content { padding: 25px 15px 40px; }
+    .linear-regression-body .regression-page .section-card { padding: 18px; }
+    .linear-regression-body .data-table th, .linear-regression-body .data-table td { padding: 11px; }
+}
+
+/* =========================================================
+   STREAMSTAY SHARED APPLICATION SHELL
+   PolicyPulse-derived, applied after all legacy page rules.
+   ========================================================= */
+body.application-shell { min-height: 100vh; background: #f5f7fb; color: #253b57; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; }
+.application-shell .topbar { position: static; display: block; width: 100%; height: auto; padding: 32px 34px 27px; background: #244b75; color: #fff; border: 0; border-bottom: 1px solid #d7e0ea; box-shadow: none; }
+.application-shell .topbar h1 { margin: 0 0 10px; color: #fff; font-size: 32px; font-weight: 700; letter-spacing: normal; }
+.application-shell .topbar h1::after { content: none; }
+.application-shell .topbar p { margin: 0; color: #e5edf6; font-size: 16px; }
+.application-shell .layout { display: flex; align-items: stretch; min-height: calc(100vh - 126px); background: #f5f7fb; }
+.application-shell .sidebar { position: static; width: 250px; min-width: 250px; height: auto; min-height: calc(100vh - 126px); padding: 0; background: #2b5683; border: 0; overflow: visible; }
+.application-shell .sidebar ul { width: 100%; margin: 0; padding: 32px 14px; list-style: none; }
+.application-shell .sidebar li { margin: 0; }
+.application-shell .menu-item { display: flex; align-items: center; width: 100%; min-height: 56px; margin-bottom: 4px; padding: 0 18px; color: #fff; border: 0; border-radius: 9px; font-size: 17px; font-weight: 600; text-decoration: none; transition: background-color .2s ease, color .2s ease; }
+.application-shell .menu-item:hover { color: #fff; background: rgba(255,255,255,.10); border: 0; transform: none; }
+.application-shell .menu-item.active { color: #244b75; background: #fff; border: 0; box-shadow: 0 2px 7px rgba(0,0,0,.08); }
+.application-shell .menu-item.active::before { display: none; }
+.application-shell .content { flex: 1; min-width: 0; padding: 42px 44px 60px; background: #f5f7fb; animation: none; }
+.application-shell .content > h1, .application-shell .content > h2 { margin: 0 0 10px; color: #244b75; font-size: 29px; font-weight: 700; line-height: 1.25; }
+.application-shell .content > p { margin: 0 0 26px; color: #5c6d82; font-size: 16px; line-height: 1.6; }
+.application-shell .page-intro { max-width: none; margin: 0 0 26px; color: #5c6d82; font-size: 16px; }
+.application-shell .card-container, .application-shell .regression-summary, .application-shell .preprocessing-summary, .application-shell .logistic-summary, .application-shell .tree-summary { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; width: 100%; margin: 0 0 30px; }
+.application-shell .card { padding: 21px; background: #fff; border: 1px solid #dfe6ef; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.04); }
+.application-shell .card h3 { margin: 0 0 13px; color: #52667e; font-size: 16px; }
+.application-shell .card p { margin: 0; color: #244b75; font-size: 26px; font-weight: 700; }
+.application-shell .section-card { width: 100%; min-width: 0; margin: 24px 0 0; padding: 26px; background: #fff; border: 1px solid #dfe6ef; border-radius: 12px; box-shadow: 0 2px 8px rgba(30,55,80,.05); box-sizing: border-box; }
+.application-shell .section-card h2 { margin: 0 0 9px; color: #244b75; font-size: 24px; }
+.application-shell .section-card h3 { color: #244b75; font-size: 20px; }
+.application-shell .section-card h4 { margin: 0 0 15px; color: #294866; font-size: 16px; }
+.application-shell .section-card p { margin: 0 0 18px; color: #5c6d82; font-size: 15px; line-height: 1.6; }
+.application-shell .table-wrapper { width: 100%; max-width: 100%; margin-top: 16px; overflow-x: auto; background: #fff; border: 1px solid #dfe6ef; border-radius: 9px; box-shadow: none; }
+.application-shell .data-table { width: 100%; min-width: 650px; border-collapse: collapse; background: #fff; }
+.application-shell .data-table thead { position: static; background: #f1f5f9; }
+.application-shell .data-table th { padding: 15px; color: #294866; font-size: 14px; font-weight: 700; text-align: left; border-bottom: 1px solid #dfe6ef; white-space: nowrap; }
+.application-shell .data-table td { padding: 14px 15px; color: #5d6e82; font-size: 14px; line-height: 1.5; border-bottom: 1px solid #e8edf3; white-space: normal; }
+.application-shell .data-table tbody tr, .application-shell .data-table tbody tr:nth-child(even) { background: #fff; }
+.application-shell .data-table tbody tr:hover { background: #f8fafc; }
+.application-shell .plot-card, .application-shell .selected-chart, .application-shell .regression-plot { width: 100%; margin-top: 20px; padding: 20px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; text-align: center; overflow: hidden; box-sizing: border-box; }
+.application-shell .plot-card img, .application-shell .selected-chart img, .application-shell .regression-plot img { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border-radius: 6px; }
+.application-shell .prediction-card { padding: 18px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; }
+.application-shell .algorithm-form { margin-top: 20px; gap: 16px; }
+.application-shell .algorithm-form label { color: #294866; font-size: 16px; font-weight: 600; }
+.application-shell .algorithm-select, .application-shell .approach-select { width: 360px; height: 48px; padding: 0 15px; color: #253b57; background: #fff; border: 1px solid #aebfd2; border-radius: 7px; font-size: 16px; }
+.application-shell .run-button { height: 48px; padding: 0 25px; color: #fff; background: #244b75; border: 0; border-radius: 7px; font-size: 16px; font-weight: 600; }
+.application-shell .run-button:hover { background: #1d3e63; }
+
+@media (max-width: 1100px) {
+    .application-shell .card-container, .application-shell .regression-summary, .application-shell .preprocessing-summary, .application-shell .logistic-summary, .application-shell .tree-summary { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 800px) {
+    .application-shell .layout { flex-direction: column; }
+    .application-shell .sidebar { width: 100%; min-width: 100%; min-height: auto; }
+    .application-shell .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; padding: 12px; }
+    .application-shell .menu-item { width: auto; min-height: 46px; margin-bottom: 0; }
+    .application-shell .content { padding: 30px 20px; }
+    .application-shell .algorithm-form { align-items: stretch; flex-direction: column; }
+    .application-shell .algorithm-select, .application-shell .approach-select, .application-shell .run-button { width: 100%; }
+}
+@media (max-width: 550px) {
+    .application-shell .topbar { padding: 24px 20px; }
+    .application-shell .topbar h1 { font-size: 27px; }
+    .application-shell .content { padding: 25px 15px 40px; }
+    .application-shell .section-card { padding: 18px; }
+    .application-shell .card-container, .application-shell .regression-summary, .application-shell .preprocessing-summary, .application-shell .logistic-summary, .application-shell .tree-summary { grid-template-columns: 1fr; }
+    .application-shell .data-table th, .application-shell .data-table td { padding: 11px; }
+}
+
+/* Legacy Stage 1 and Stage 3 content, visually normalized only. */
+.application-shell .content h3 { margin: 26px 0 12px; color: #244b75; font-size: 20px; }
+.application-shell .summary-table { width: 100%; margin: 0 0 24px; border-collapse: separate; border-spacing: 0; background: #fff; border: 1px solid #dfe6ef; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
+.application-shell .summary-table td { padding: 14px 15px; color: #5d6e82; border-bottom: 1px solid #e8edf3; }
+.application-shell .summary-table tr:last-child td { border-bottom: 0; }
+.application-shell .summary-table td:first-child { width: 42%; color: #294866; font-weight: 700; background: #f8fafc; }
+.application-shell .chart-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; margin-top: 20px; }
+.application-shell .chart-card { padding: 20px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; text-align: center; overflow: hidden; }
+.application-shell .chart-card img { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border-radius: 6px; }
+@media (max-width: 800px) { .application-shell .chart-grid { grid-template-columns: 1fr; } }
+
+/* Stage 6 Logistic Regression reference-specific content hierarchy. */
+.application-shell .approach-card { width: 100%; padding: 24px; margin: 24px 0 0; background: #fff; border: 1px solid #dfe6ef; border-radius: 12px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
+.application-shell .approach-card h2 { margin: 0 0 8px; color: #244b75; font-size: 22px; }
+.application-shell .approach-card p { margin: 0 0 18px; color: #5c6d82; }
+.application-shell .approach-control { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+.application-shell .approach-control label { color: #294866; font-size: 16px; font-weight: 600; }
+.application-shell .selection-section { display: none; }
+.application-shell .selection-section.show { display: block; }
+.application-shell .logistic-context { margin-top: 24px; }
+.application-shell .logistic-single-plot { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 20px; padding: 20px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; overflow: hidden; box-sizing: border-box; }
+.application-shell .logistic-single-plot img { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border-radius: 6px; }
+.application-shell .logistic-plot-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; width: 100%; margin-top: 20px; }
+.application-shell .logistic-plot-card { min-width: 0; padding: 18px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; text-align: center; overflow: hidden; }
+.application-shell .logistic-plot-card h4 { margin: 0 0 15px; color: #294866; font-size: 16px; line-height: 1.4; }
+.application-shell .logistic-plot-card img { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border-radius: 6px; }
+@media (max-width: 1100px) { .application-shell .logistic-plot-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 800px) {
+    .application-shell .logistic-plot-grid { grid-template-columns: 1fr; }
+    .application-shell .approach-control { align-items: stretch; flex-direction: column; }
+}
+
+/* Stage 6 final layout containment: keep wide comparison tables inside their card. */
+html, body.application-shell { width: 100%; max-width: 100%; overflow-x: hidden; }
+.application-shell .layout { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
+.application-shell .content { width: auto; max-width: calc(100vw - 250px); min-width: 0; overflow-x: hidden; box-sizing: border-box; }
+.application-shell .logistic-page, .application-shell .logistic-page > *, .application-shell .logistic-context, .application-shell .logistic-page .section-card { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
+.application-shell .logistic-context p { max-width: 100%; overflow-wrap: anywhere; word-wrap: break-word; }
+.application-shell .logistic-page .table-wrapper { width: 100%; max-width: 100%; min-width: 0; overflow-x: auto; overflow-y: hidden; box-sizing: border-box; }
+.application-shell .logistic-page .data-table { min-width: 900px; }
+@media (max-width: 800px) {
+    .application-shell .content { max-width: 100%; }
+    .application-shell .logistic-page .data-table { min-width: 800px; }
+}

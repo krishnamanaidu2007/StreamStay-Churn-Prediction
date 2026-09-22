@@ -9,37 +9,52 @@
           href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<body>
+<body class="application-shell">
 
 <header class="topbar">
     <h1>StreamStay</h1>
+    <p>Churn Prediction</p>
 </header>
 
 <div class="layout">
 
     <!-- LEFT SIDEBAR -->
 
-    <nav class="sidebar">
+    <aside class="sidebar">
 
         <ul>
 
-            <li>
-                <a href="{{ url_for('data_loading') }}"
-                   class="menu-item">
-                    Data Loading
-                </a>
-            </li>
+            <li><a href="{{ url_for('index') }}" class="menu-item">🏠&nbsp; Home</a></li>
+            <li><a href="{{ url_for('data_loading') }}" class="menu-item">📁&nbsp; Data Loading</a></li>
 
             <li>
                 <a href="{{ url_for('eda') }}"
                    class="menu-item active">
-                    EDA
+                    📊&nbsp; EDA
                 </a>
             </li>
 
+            <!-- PREPROCESSING -->
+            <li>
+                <a href="{{ url_for('preprocessing') }}"
+                   class="menu-item">
+                    ⚙️&nbsp; Preprocessing
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('linear_regression') }}"
+                   class="menu-item">
+                    📈&nbsp; Linear Regression
+                </a>
+            </li>
+
+            <li><a href="{{ url_for('logistic_regression') }}" class="menu-item">🔢&nbsp; Logistic Regression</a></li>
+            <li><a href="{{ url_for('tree_based') }}" class="menu-item">🌳&nbsp; Tree Based Models</a></li>
+
         </ul>
 
-    </nav>
+    </aside>
 
 
     <!-- MAIN CONTENT -->

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamStay - Tree Based Models</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="application-shell tree-based-body">
+<header class="topbar"><h1>StreamStay</h1><p>Churn Prediction</p></header>
+<div class="layout">
+    <aside class="sidebar"><ul>
+        <li><a href="{{ url_for('index') }}" class="menu-item">🏠&nbsp; Home</a></li>
+        <li><a href="{{ url_for('data_loading') }}" class="menu-item">📁&nbsp; Data Loading</a></li>
+        <li><a href="{{ url_for('eda') }}" class="menu-item">📊&nbsp; EDA</a></li>
+        <li><a href="{{ url_for('preprocessing') }}" class="menu-item">⚙️&nbsp; Preprocessing</a></li>
+        <li><a href="{{ url_for('linear_regression') }}" class="menu-item">📈&nbsp; Linear Regression</a></li>
+        <li><a href="{{ url_for('logistic_regression') }}" class="menu-item">🔢&nbsp; Logistic Regression</a></li>
+        <li><a href="{{ url_for('tree_based') }}" class="menu-item active">🌳&nbsp; Tree Based Models</a></li>
+    </ul></aside>
+    <main class="content tree-based-page">
+        <h1>Tree Based Models</h1>
+        <p class="page-intro">Evaluate seven tree-based classification algorithms for StreamStay churn prediction.</p>
+        {% if error %}<div class="error">{{ error }}</div>{% endif %}
+        <section class="section-card"><h2>1. Tree-Based Classification Overview</h2><p>Tree-based classifiers learn decision patterns from the approved transformed StreamStay features. Churn is the minority class, so precision, recall, F1, and ROC-AUC complement accuracy.</p></section>
+        {% if result %}
+            <div class="card-container tree-summary"><div class="card"><h3>Training Records</h3><p>{{ result.training_shape[0] }}</p></div><div class="card"><h3>Testing Records</h3><p>{{ result.testing_shape[0] }}</p></div><div class="card"><h3>Transformed Features</h3><p>{{ result.feature_count }}</p></div><div class="card"><h3>Algorithms</h3><p>{{ result.algorithm_count }}</p></div></div>
+            <section class="section-card"><h2>2. Dataset &amp; Class Distribution</h2><div class="table-wrapper"><table class="data-table"><thead><tr><th>Information</th><th>Value</th></tr></thead><tbody><tr><td>X_train</td><td>{{ result.training_shape }}</td></tr><tr><td>X_test</td><td>{{ result.testing_shape }}</td></tr><tr><td>No Churn</td><td>{{ result.target_counts.no_churn }} ({{ '%.3f'|format(result.no_churn_percentage) }}%)</td></tr><tr><td>Churn</td><td>{{ result.target_counts.churn }} ({{ '%.3f'|format(result.churn_percentage) }}%)</td></tr></tbody></table></div></section>
+        {% endif %}
+        <section class="section-card"><h2>3. Algorithm Selection</h2><p>Select an algorithm. The explicit Run Model action evaluates all seven models on the same approved test set, then displays detailed results for your selection.</p><form method="post" class="algorithm-form"><label for="algorithm">Algorithm</label><select id="algorithm" name="algorithm" class="algorithm-select"><option value="decision_tree" {% if selected_algorithm == 'decision_tree' %}selected{% endif %}>Decision Tree</option><option value="random_forest" {% if selected_algorithm == 'random_forest' %}selected{% endif %}>Random Forest</option><option value="extra_trees" {% if selected_algorithm == 'extra_trees' %}selected{% endif %}>Extra Trees</option><option value="gradient_boosting" {% if selected_algorithm == 'gradient_boosting' %}selected{% endif %}>Gradient Boosting</option><option value="adaboost" {% if selected_algorithm == 'adaboost' %}selected{% endif %}>AdaBoost</option><option value="xgboost" {% if selected_algorithm == 'xgboost' %}selected{% endif %}>XGBoost</option><option value="lightgbm" {% if selected_algorithm == 'lightgbm' %}selected{% endif %}>LightGBM</option></select><button type="submit" class="run-button">Run Model</button></form></section>
+        {% if result %}
+            {% set selected = result.selected %}
+            <section class="section-card"><h2>4. Selected Model Configuration</h2><div class="table-wrapper"><table class="data-table"><thead><tr><th>Algorithm</th><th>Parameters Used</th></tr></thead><tbody><tr><td>{{ selected.algorithm }}</td><td>{{ selected.configuration }}</td></tr></tbody></table></div></section>
+            <section class="section-card"><h2>5. Selected Model Evaluation</h2><div class="table-wrapper"><table class="data-table"><thead><tr><th>Metric</th><th>Score</th></tr></thead><tbody><tr><td>Accuracy</td><td>{{ '%.4f'|format(selected.accuracy) }}</td></tr><tr><td>Precision</td><td>{{ '%.4f'|format(selected.precision) }}</td></tr><tr><td>Recall</td><td>{{ '%.4f'|format(selected.recall) }}</td></tr><tr><td>F1 Score</td><td>{{ '%.4f'|format(selected.f1) }}</td></tr><tr><td>ROC-AUC</td><td>{{ '%.4f'|format(selected.roc_auc) }}</td></tr></tbody></table></div></section>
+            <section class="section-card"><h2>6. Confusion Matrix</h2><div class="selected-chart"><img src="{{ url_for('static', filename='charts/' + selected.confusion_matrix_plot) }}" alt="{{ selected.algorithm }} confusion matrix"></div><div class="matrix-values"><span>TN {{ selected.confusion_matrix[0][0] }}</span><span>FP {{ selected.confusion_matrix[0][1] }}</span><span>FN {{ selected.confusion_matrix[1][0] }}</span><span>TP {{ selected.confusion_matrix[1][1] }}</span></div></section>
+            <section class="section-card"><h2>7. ROC Curve</h2><div class="selected-chart"><img src="{{ url_for('static', filename='charts/' + selected.roc_curve_plot) }}" alt="{{ selected.algorithm }} ROC curve"></div></section>
+            <section class="section-card"><h2>8. All-Model Comparison</h2><p>Each model below was evaluated on the same held-out test set.</p><div class="table-wrapper"><table class="data-table tree-metrics"><thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>ROC-AUC</th></tr></thead><tbody>{% for row in result.comparison_rows %}<tr><td>{{ row.Model }}</td><td>{{ '%.4f'|format(row.Accuracy) }}</td><td>{{ '%.4f'|format(row.Precision) }}</td><td>{{ '%.4f'|format(row.Recall) }}</td><td>{{ '%.4f'|format(row.F1) }}</td><td>{{ '%.4f'|format(row['ROC-AUC']) }}</td></tr>{% endfor %}</tbody></table></div><div class="selected-chart"><img src="{{ url_for('static', filename='charts/' + result.comparison_plot) }}" alt="Tree-based model comparison"></div></section>
+            <section class="section-card"><h2>9. Feature Importance</h2>{% if selected.feature_importance %}<p>Top transformed features reported by {{ selected.algorithm }}.</p><div class="selected-chart"><img src="{{ url_for('static', filename='charts/' + selected.feature_importance_plot) }}" alt="{{ selected.algorithm }} feature importance"></div><div class="table-wrapper"><table class="data-table"><thead><tr><th>Processed Feature</th><th>Importance</th></tr></thead><tbody>{% for item in selected.feature_importance %}<tr><td>{{ item.feature }}</td><td>{{ '%.6f'|format(item.importance) }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<p>{{ selected.algorithm }} does not expose feature importances through its current estimator API.</p>{% endif %}</section>
+            <section class="section-card"><h2>10. Interpretation</h2><p>The table presents measurable differences across the seven evaluated algorithms. Use the displayed precision, recall, F1, and ROC-AUC values together when discussing minority-churn detection and probability ranking.</p></section>
+        {% endif %}
+    </main>
+</div>
+</body>
+</html>
