@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamStay - Linear Regression</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="application-shell linear-regression-body">
+<div class="topbar">
+    <h1>StreamStay</h1>
+    <p>Churn Prediction</p>
+</div>
+
+<div class="layout">
+    <aside class="sidebar">
+        <ul>
+            <li><a href="{{ url_for('index') }}" class="menu-item">🏠&nbsp; Home</a></li>
+            <li><a href="{{ url_for('data_loading') }}" class="menu-item">📁&nbsp; Data Loading</a></li>
+            <li><a href="{{ url_for('eda') }}" class="menu-item">📊&nbsp; EDA</a></li>
+            <li><a href="{{ url_for('preprocessing') }}" class="menu-item">⚙️&nbsp; Preprocessing</a></li>
+            <li><a href="{{ url_for('linear_regression') }}" class="menu-item active">📈&nbsp; Linear Regression</a></li>
+            <li><a href="{{ url_for('logistic_regression') }}" class="menu-item">🔢&nbsp; Logistic Regression</a></li>
+            <li><a href="{{ url_for('tree_based') }}" class="menu-item">🌳&nbsp; Tree Based Models</a></li>
+        </ul>
+    </aside>
+
+    <main class="content regression-page">
+        <h1>Linear Regression</h1>
+        <p>V4 — Linear Regression with and without regularization using the preprocessed dataset.</p>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        {% if results is not none %}
+            <div class="regression-summary">
+                <div class="card"><h3>Dataset Rows</h3><p>{{ results.training_shape[0] + results.testing_shape[0] }}</p></div>
+                <div class="card"><h3>Features</h3><p>{{ results.training_shape[1] }}</p></div>
+                <div class="card"><h3>Training Records</h3><p>{{ results.training_shape[0] }}</p></div>
+                <div class="card"><h3>Testing Records</h3><p>{{ results.testing_shape[0] }}</p></div>
+            </div>
+
+            <div class="approach-card">
+                <h2>Select Regression Approach</h2>
+                <p>Choose whether to view the model without regularization, with regularization, or compare all models.</p>
+                <div class="approach-control">
+                    <label for="linearApproach">Approach:</label>
+                    <select id="linearApproach" class="approach-select" onchange="changeLinearApproach()">
+                        <option value="without" selected>Without Regularization</option>
+                        <option value="with">With Regularization</option>
+                        <option value="all">Compare All</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="linearWithout" class="selection-section show">
+                <div class="section-card">
+                    <h2>Without Regularization</h2>
+                    <p>Ordinary Linear Regression without L1 or L2 regularization.</p>
+                    {% set linear = results['Linear Regression']['metrics'] %}
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead><tr><th>Model</th><th>MAE</th><th>MSE</th><th>RMSE</th><th>R² Score</th></tr></thead>
+                            <tbody><tr><td>Linear Regression</td><td>{{ '%.6f'|format(linear.mae) }}</td><td>{{ '%.6f'|format(linear.mse) }}</td><td>{{ '%.6f'|format(linear.rmse) }}</td><td>{{ '%.6f'|format(linear.r2) }}</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <h2>Actual vs Predicted</h2>
+                    <div class="regression-plot">
+                        <h4>Linear Regression</h4>
+                        <img src="{{ url_for('static', filename='charts/linear_regression_actual_vs_predicted.png') }}" alt="Linear Regression predictions">
+                    </div>
+                </div>
+            </div>
+
+            <div id="linearWith" class="selection-section">
+                <div class="section-card">
+                    <h2>With Regularization</h2>
+                    <p>Regularization controls model complexity by adding L2 and L1 penalties to the same approved StreamStay regression inputs.</p>
+                    <div class="regularization-labels">
+                        <span><strong>Ridge Regression</strong> — L2 Regularization</span>
+                        <span><strong>Lasso Regression</strong> — L1 Regularization</span>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead><tr><th>Model</th><th>MAE</th><th>MSE</th><th>RMSE</th><th>R² Score</th></tr></thead>
+                            <tbody>
+                                {% for name in ['Ridge Regression', 'Lasso Regression'] %}
+                                    {% set metrics = results[name]['metrics'] %}
+                                    <tr><td>{{ name }}</td><td>{{ '%.6f'|format(metrics.mae) }}</td><td>{{ '%.6f'|format(metrics.mse) }}</td><td>{{ '%.6f'|format(metrics.rmse) }}</td><td>{{ '%.6f'|format(metrics.r2) }}</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <h2>Regularized Predictions</h2>
+                    <div class="prediction-grid">
+                        <div class="prediction-card"><h4>Ridge Regression — L2</h4><img src="{{ url_for('static', filename='charts/ridge_regression_actual_vs_predicted.png') }}" alt="Ridge Regression predictions"></div>
+                        <div class="prediction-card"><h4>Lasso Regression — L1</h4><img src="{{ url_for('static', filename='charts/lasso_regression_actual_vs_predicted.png') }}" alt="Lasso Regression predictions"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="linearAll" class="selection-section">
+                <div class="section-card">
+                    <h2>Compare All Models</h2>
+                    <p>This view compares the three regression approaches using the same approved training and testing matrices.</p>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead><tr><th>Model</th><th>MAE</th><th>MSE</th><th>RMSE</th><th>R² Score</th></tr></thead>
+                            <tbody>
+                                {% for row in results.comparison_rows %}
+                                    <tr><td>{{ row['Model'] }}</td><td>{{ '%.6f'|format(row['MAE']) }}</td><td>{{ '%.6f'|format(row['MSE']) }}</td><td>{{ '%.6f'|format(row['RMSE']) }}</td><td>{{ '%.6f'|format(row['R²']) }}</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <h2>Model Comparison</h2>
+                    <div class="regression-plot"><img src="{{ url_for('static', filename='charts/linear_regression_model_comparison.png') }}" alt="Linear Regression comparison"></div>
+                </div>
+                <div class="section-card">
+                    <h2>Actual vs Predicted</h2>
+                    <div class="prediction-grid">
+                        <div class="prediction-card"><h4>Linear Regression</h4><img src="{{ url_for('static', filename='charts/linear_regression_actual_vs_predicted.png') }}" alt="Linear Regression predictions"></div>
+                        <div class="prediction-card"><h4>Ridge Regression — L2</h4><img src="{{ url_for('static', filename='charts/ridge_regression_actual_vs_predicted.png') }}" alt="Ridge Regression predictions"></div>
+                        <div class="prediction-card"><h4>Lasso Regression — L1</h4><img src="{{ url_for('static', filename='charts/lasso_regression_actual_vs_predicted.png') }}" alt="Lasso Regression predictions"></div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </main>
+</div>
+
+<script>
+function changeLinearApproach() {
+    const value = document.getElementById('linearApproach').value;
+    const withoutSection = document.getElementById('linearWithout');
+    const withSection = document.getElementById('linearWith');
+    const allSection = document.getElementById('linearAll');
+
+    withoutSection.classList.remove('show');
+    withSection.classList.remove('show');
+    allSection.classList.remove('show');
+
+    if (value === 'without') withoutSection.classList.add('show');
+    else if (value === 'with') withSection.classList.add('show');
+    else if (value === 'all') allSection.classList.add('show');
+}
+</script>
+</body>
+</html>
