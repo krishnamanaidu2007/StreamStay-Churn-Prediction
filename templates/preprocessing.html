@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamStay - Preprocessing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="application-shell preprocessing-body">
+<header class="topbar">
+    <h1>StreamStay</h1>
+    <p>Churn Prediction</p>
+</header>
+<div class="layout">
+    <aside class="sidebar"><ul>
+        <li><a href="{{ url_for('index') }}" class="menu-item">🏠&nbsp; Home</a></li>
+        <li><a href="{{ url_for('data_loading') }}" class="menu-item">📁&nbsp; Data Loading</a></li>
+        <li><a href="{{ url_for('eda') }}" class="menu-item">📊&nbsp; EDA</a></li>
+        <li><a href="{{ url_for('preprocessing') }}" class="menu-item active">⚙️&nbsp; Preprocessing</a></li>
+        <li><a href="{{ url_for('linear_regression') }}" class="menu-item">📈&nbsp; Linear Regression</a></li>
+        <li><a href="{{ url_for('logistic_regression') }}" class="menu-item">🔢&nbsp; Logistic Regression</a></li>
+        <li><a href="{{ url_for('tree_based') }}" class="menu-item">🌳&nbsp; Tree Based Models</a></li>
+    </ul></aside>
+    <main class="content preprocessing-page">
+        <h1>Data Preprocessing</h1>
+        <p class="page-intro">Prepare StreamStay customer and transaction features for later churn-model stages. All transformations are learned from training data only.</p>
+        {% if error %}<div class="error">{{ error }}</div>{% endif %}
+        {% if results %}
+            <div class="card-container preprocessing-summary">
+                <div class="card"><h3>Original Features</h3><p>{{ results.original_feature_count }}</p></div>
+                <div class="card"><h3>Transformed Features</h3><p>{{ results.transformed_feature_count }}</p></div>
+                <div class="card"><h3>Training Records</h3><p>{{ results.y_train.shape[0] }}</p></div>
+                <div class="card"><h3>Testing Records</h3><p>{{ results.y_test.shape[0] }}</p></div>
+            </div>
+            <section class="section-card"><h2>1. Preprocessing Overview</h2><p>The target is <strong>{{ results.target }}</strong>. Duplicate rows are removed before features and target are separated. A single train/test split and one fitted preprocessing pipeline are used.</p></section>
+            <section class="section-card"><h2>2. Features Used</h2><p>StreamStay uses existing engineered customer, registration, and transaction features from the approved dataset.</p><div class="two-column-details"><div><h3>Numerical Features</h3><ul>{% for feature in results.numerical_columns %}<li>{{ feature }}</li>{% endfor %}</ul></div><div><h3>Categorical Features</h3><ul>{% for feature in results.categorical_columns %}<li>{{ feature }}</li>{% endfor %}</ul></div></div></section>
+            <section class="section-card"><h2>3. Features Removed</h2><p>Identifiers, raw source values, and raw date values are excluded where approved derived features already exist.</p><div class="table-wrapper"><table class="data-table"><thead><tr><th>Removed Feature</th><th>Reason</th></tr></thead><tbody>{% for feature in results.removed_columns %}<tr><td>{{ feature }}</td><td>{% if feature == 'msno' %}Customer identifier; it must not be predictive input.{% elif feature == 'bd' %}Raw source for the engineered age field.{% else %}Raw date value represented by registration year and month features.{% endif %}</td></tr>{% endfor %}</tbody></table></div></section>
+            <section class="section-card"><h2>4. Missing Value Handling</h2><div class="two-column-details method-grid"><div><h3>Numerical</h3><p>Median imputation, learned from training data.</p></div><div><h3>Categorical</h3><p>Most-frequent-value imputation, learned from training data.</p></div></div></section>
+            <section class="section-card"><h2>5. Categorical Encoding</h2><p>One-Hot Encoding is applied with <code>handle_unknown=&quot;ignore&quot;</code>, so unseen categories do not break later transformations.</p></section>
+            <section class="section-card"><h2>6. Feature Scaling</h2><p>Numerical features use <strong>StandardScaler</strong>. The scaler is fitted only on <code>X_train</code>, then used to transform <code>X_test</code> to prevent leakage.</p></section>
+            <section class="section-card"><h2>7. Train/Test Split</h2><div class="table-wrapper"><table class="data-table"><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Training data</td><td>{{ results.split_details.training_percentage }}%</td></tr><tr><td>Testing data</td><td>{{ results.split_details.testing_percentage }}%</td></tr><tr><td>Random state</td><td>{{ results.split_details.random_state }}</td></tr><tr><td>Split strategy</td><td>Stratified by {{ results.target }}</td></tr></tbody></table></div></section>
+            <section class="section-card"><h2>8. Final Processed Feature Information</h2><div class="table-wrapper"><table class="data-table"><thead><tr><th>Information</th><th>Count</th></tr></thead><tbody><tr><td>Original features</td><td>{{ results.original_feature_count }}</td></tr><tr><td>Transformed features</td><td>{{ results.transformed_feature_count }}</td></tr><tr><td>Numerical source features</td><td>{{ results.numerical_columns|length }}</td></tr><tr><td>Categorical source features</td><td>{{ results.categorical_columns|length }}</td></tr></tbody></table></div></section>
+            <section class="section-card"><h2>9. Train/Test Shape Summary</h2><div class="table-wrapper"><table class="data-table"><thead><tr><th>Dataset</th><th>Shape</th></tr></thead><tbody><tr><td>X_train</td><td>{{ results.X_train.shape }}</td></tr><tr><td>X_test</td><td>{{ results.X_test.shape }}</td></tr><tr><td>y_train</td><td>{{ results.y_train.shape }}</td></tr><tr><td>y_test</td><td>{{ results.y_test.shape }}</td></tr></tbody></table></div></section>
+            <a class="next-stage-card" href="{{ url_for('linear_regression') }}"><span>Next Stage</span><strong>Continue to Linear Regression</strong></a>
+        {% endif %}
+    </main>
+</div>
+</body>
+</html>
