@@ -3,10 +3,63 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StreamStay</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        /* Clustering sidebar submenu */
+        .clustering-menu details {
+            width: 100%;
+        }
+
+        .clustering-menu summary {
+            list-style: none;
+            cursor: pointer;
+        }
+
+        .clustering-menu summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .clustering-menu summary::after {
+            content: "▾";
+            margin-left: auto;
+            font-size: 13px;
+            color: #9eb0c7;
+        }
+
+        .clustering-menu details:not([open]) summary::after {
+            content: "▸";
+        }
+
+        .clustering-submenu {
+            list-style: none;
+            margin: 4px 0 8px 26px !important;
+            padding: 0 0 0 16px !important;
+            border-left: 1px solid #294563;
+        }
+
+        .sidebar .clustering-submenu li {
+            margin: 2px 0;
+        }
+
+        .clustering-subitem {
+            display: block;
+            padding: 8px 10px;
+            color: #9eb0c7;
+            font-size: 13px;
+            line-height: 1.5;
+            border-radius: 6px;
+        }
+
+        .clustering-subitem:hover {
+            color: #eaf7ff;
+            background: #10243c;
+        }
+    </style>
 </head>
 
 <body class="application-shell">
@@ -20,12 +73,25 @@
 
     <!-- LEFT SIDEBAR -->
     <aside class="sidebar">
-
         <ul>
 
-            <li><a href="{{ url_for('index') }}" class="menu-item {% if active == 'none' %}active{% endif %}">🏠&nbsp; Home</a></li>
-            <li><a href="{{ url_for('data_loading') }}" class="menu-item {% if active == 'data-loading' %}active{% endif %}">📁&nbsp; Data Loading</a></li>
+            <!-- 1. HOME -->
+            <li>
+                <a href="{{ url_for('index') }}"
+                   class="menu-item {% if active == 'none' %}active{% endif %}">
+                    🏠&nbsp; Home
+                </a>
+            </li>
 
+            <!-- 2. DATA LOADING -->
+            <li>
+                <a href="{{ url_for('data_loading') }}"
+                   class="menu-item {% if active == 'data-loading' %}active{% endif %}">
+                    📁&nbsp; Data Loading
+                </a>
+            </li>
+
+            <!-- 3. EDA -->
             <li>
                 <a href="{{ url_for('eda') }}"
                    class="menu-item {% if active == 'eda' %}active{% endif %}">
@@ -33,7 +99,7 @@
                 </a>
             </li>
 
-            <!-- PREPROCESSING -->
+            <!-- 4. PREPROCESSING -->
             <li>
                 <a href="{{ url_for('preprocessing') }}"
                    class="menu-item {% if active == 'preprocessing' %}active{% endif %}">
@@ -41,6 +107,7 @@
                 </a>
             </li>
 
+            <!-- 5. LINEAR REGRESSION -->
             <li>
                 <a href="{{ url_for('linear_regression') }}"
                    class="menu-item {% if active == 'linear-regression' %}active{% endif %}">
@@ -48,13 +115,53 @@
                 </a>
             </li>
 
-            <li><a href="{{ url_for('logistic_regression') }}" class="menu-item {% if active == 'logistic-regression' %}active{% endif %}">🔢&nbsp; Logistic Regression</a></li>
-            <li><a href="{{ url_for('tree_based') }}" class="menu-item {% if active == 'tree-based' %}active{% endif %}">🌳&nbsp; Tree Based Models</a></li>
+            <!-- 6. LOGISTIC REGRESSION -->
+            <li>
+                <a href="{{ url_for('logistic_regression') }}"
+                   class="menu-item {% if active == 'logistic-regression' %}active{% endif %}">
+                    🔢&nbsp; Logistic Regression
+                </a>
+            </li>
+
+            <!-- 7. TREE BASED MODELS -->
+            <li>
+                <a href="{{ url_for('tree_based') }}"
+                   class="menu-item {% if active == 'tree-based' %}active{% endif %}">
+                    🌳&nbsp; Tree Based Models
+                </a>
+            </li>
+
+            <!-- 8. CLUSTERING -->
+            <li class="clustering-menu">
+                <details open>
+                    <summary class="menu-item">
+                        🧩&nbsp; Clustering
+                    </summary>
+
+                    <ul class="clustering-submenu">
+                        <li>
+                            <span class="clustering-subitem">
+                                ├─ K-Means
+                            </span>
+                        </li>
+
+                        <li>
+                            <span class="clustering-subitem">
+                                ├─ Hierarchical Clustering
+                            </span>
+                        </li>
+
+                        <li>
+                            <span class="clustering-subitem">
+                                └─ DBSCAN
+                            </span>
+                        </li>
+                    </ul>
+                </details>
+            </li>
 
         </ul>
-
     </aside>
-
 
     <!-- MAIN CONTENT -->
     <main class="content">
@@ -70,27 +177,21 @@
 
         {% endif %}
 
-
         <!-- DATA LOADING -->
         {% if active == 'data-loading' %}
 
             <h2>Data Loading</h2>
 
             {% if error %}
-
                 <div class="error">
                     {{ error }}
                 </div>
-
             {% endif %}
-
 
             {% if summary %}
 
-                <!-- Dataset Summary -->
-
+                <!-- DATASET SUMMARY -->
                 <table class="summary-table">
-
                     <tr>
                         <td>Rows</td>
                         <td>{{ summary.n_rows }}</td>
@@ -100,97 +201,59 @@
                         <td>Columns</td>
                         <td>{{ summary.n_cols }}</td>
                     </tr>
-
                 </table>
 
-
-                <!-- Column Information -->
-
+                <!-- COLUMN INFORMATION -->
                 <h3>Column Information</h3>
 
                 <div class="table-wrapper">
-
                     <table class="data-table">
-
                         <thead>
-
                             <tr>
                                 <th>Column</th>
                                 <th>Dtype</th>
                                 <th>Missing Values</th>
                             </tr>
-
                         </thead>
 
                         <tbody>
-
-                        {% for col in summary.columns %}
-
-                            <tr>
-
-                                <td>{{ col }}</td>
-
-                                <td>{{ summary.dtypes[col] }}</td>
-
-                                <td>{{ summary.missing_counts[col] }}</td>
-
-                            </tr>
-
-                        {% endfor %}
-
+                            {% for col in summary.columns %}
+                                <tr>
+                                    <td>{{ col }}</td>
+                                    <td>{{ summary.dtypes[col] }}</td>
+                                    <td>{{ summary.missing_counts[col] }}</td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
-
                     </table>
-
                 </div>
 
-
-                <!-- First 10 Rows -->
-
+                <!-- FIRST 10 ROWS -->
                 <h3>Preview (First 10 Rows)</h3>
 
                 <div class="table-wrapper">
-
                     <table class="data-table">
-
                         <thead>
-
                             <tr>
-
-                            {% for col in summary.columns %}
-
-                                <th>{{ col }}</th>
-
-                            {% endfor %}
-
+                                {% for col in summary.columns %}
+                                    <th>{{ col }}</th>
+                                {% endfor %}
                             </tr>
-
                         </thead>
 
                         <tbody>
-
-                        {% for row in summary.preview %}
-
-                            <tr>
-
-                            {% for col in summary.columns %}
-
-                                <td>{{ row[col] }}</td>
-
+                            {% for row in summary.preview %}
+                                <tr>
+                                    {% for col in summary.columns %}
+                                        <td>{{ row[col] }}</td>
+                                    {% endfor %}
+                                </tr>
                             {% endfor %}
-
-                            </tr>
-
-                        {% endfor %}
-
                         </tbody>
-
                     </table>
-
                 </div>
 
             {% endif %}
-
         {% endif %}
 
     </main>
@@ -198,5 +261,4 @@
 </div>
 
 </body>
-
 </html>
