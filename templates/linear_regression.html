@@ -70,7 +70,7 @@
                     <h2>Actual vs Predicted</h2>
                     <div class="regression-plot">
                         <h4>Linear Regression</h4>
-                        <img src="{{ url_for('static', filename='charts/linear_regression_actual_vs_predicted.png') }}" alt="Linear Regression predictions">
+                        <img src="{{ url_for('static', filename='charts/' + results.chart_files['linear_regression_actual_vs_predicted.png']) }}" alt="Linear Regression predictions">
                     </div>
                 </div>
             </div>
@@ -98,8 +98,8 @@
                 <div class="section-card">
                     <h2>Regularized Predictions</h2>
                     <div class="prediction-grid">
-                        <div class="prediction-card"><h4>Ridge Regression — L2</h4><img src="{{ url_for('static', filename='charts/ridge_regression_actual_vs_predicted.png') }}" alt="Ridge Regression predictions"></div>
-                        <div class="prediction-card"><h4>Lasso Regression — L1</h4><img src="{{ url_for('static', filename='charts/lasso_regression_actual_vs_predicted.png') }}" alt="Lasso Regression predictions"></div>
+                        <div class="prediction-card"><h4>Ridge Regression — L2</h4><img src="{{ url_for('static', filename='charts/' + results.chart_files['ridge_regression_actual_vs_predicted.png']) }}" alt="Ridge Regression predictions"></div>
+                        <div class="prediction-card"><h4>Lasso Regression — L1</h4><img src="{{ url_for('static', filename='charts/' + results.chart_files['lasso_regression_actual_vs_predicted.png']) }}" alt="Lasso Regression predictions"></div>
                     </div>
                 </div>
             </div>
@@ -121,14 +121,14 @@
                 </div>
                 <div class="section-card">
                     <h2>Model Comparison</h2>
-                    <div class="regression-plot"><img src="{{ url_for('static', filename='charts/linear_regression_model_comparison.png') }}" alt="Linear Regression comparison"></div>
+                    <div class="regression-plot"><img src="{{ url_for('static', filename='charts/' + results.chart_files['linear_regression_model_comparison.png']) }}" alt="Linear Regression comparison"></div>
                 </div>
                 <div class="section-card">
                     <h2>Actual vs Predicted</h2>
                     <div class="prediction-grid">
-                        <div class="prediction-card"><h4>Linear Regression</h4><img src="{{ url_for('static', filename='charts/linear_regression_actual_vs_predicted.png') }}" alt="Linear Regression predictions"></div>
-                        <div class="prediction-card"><h4>Ridge Regression — L2</h4><img src="{{ url_for('static', filename='charts/ridge_regression_actual_vs_predicted.png') }}" alt="Ridge Regression predictions"></div>
-                        <div class="prediction-card"><h4>Lasso Regression — L1</h4><img src="{{ url_for('static', filename='charts/lasso_regression_actual_vs_predicted.png') }}" alt="Lasso Regression predictions"></div>
+                        <div class="prediction-card"><h4>Linear Regression</h4><img src="{{ url_for('static', filename='charts/' + results.chart_files['linear_regression_actual_vs_predicted.png']) }}" alt="Linear Regression predictions"></div>
+                        <div class="prediction-card"><h4>Ridge Regression — L2</h4><img src="{{ url_for('static', filename='charts/' + results.chart_files['ridge_regression_actual_vs_predicted.png']) }}" alt="Ridge Regression predictions"></div>
+                        <div class="prediction-card"><h4>Lasso Regression — L1</h4><img src="{{ url_for('static', filename='charts/' + results.chart_files['lasso_regression_actual_vs_predicted.png']) }}" alt="Lasso Regression predictions"></div>
                     </div>
                 </div>
             </div>

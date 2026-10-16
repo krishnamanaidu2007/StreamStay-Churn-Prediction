@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request
 import traceback
 
@@ -18,7 +19,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-
     return render_template(
         "index.html",
         active="none"
@@ -31,26 +31,19 @@ def index():
 
 @app.route("/data-loading")
 def data_loading():
-
     error = None
     summary = None
 
     try:
-
         summary = get_data_summary()
 
     except FileNotFoundError as e:
-
         traceback.print_exc()
-
         error = str(e)
 
     except Exception as e:
-
         traceback.print_exc()
-
         error = f"Unexpected error: {e}"
-
 
     return render_template(
         "index.html",
@@ -66,26 +59,19 @@ def data_loading():
 
 @app.route("/eda")
 def eda():
-
     error = None
     eda_output = None
 
     try:
-
         eda_output = run_eda()
 
     except FileNotFoundError as e:
-
         traceback.print_exc()
-
         error = str(e)
 
     except Exception as e:
-
         traceback.print_exc()
-
         error = f"Unexpected error: {e}"
-
 
     return render_template(
         "eda.html",
@@ -101,26 +87,19 @@ def eda():
 
 @app.route("/preprocessing")
 def preprocessing():
-
     error = None
     preprocessing_output = None
 
     try:
-
         preprocessing_output = preprocess_data()
 
     except FileNotFoundError as e:
-
         traceback.print_exc()
-
         error = str(e)
 
     except Exception as e:
-
         traceback.print_exc()
-
         error = f"Unexpected error: {e}"
-
 
     return render_template(
         "preprocessing.html",
@@ -136,7 +115,6 @@ def preprocessing():
 
 @app.route("/linear-regression")
 def linear_regression():
-
     error = None
     linear_regression_output = None
 
@@ -170,6 +148,7 @@ def logistic_regression():
 
     try:
         logistic_output = run_logistic_regression()
+
     except Exception as e:
         traceback.print_exc()
         error = f"Unexpected error: {e}"
@@ -183,7 +162,7 @@ def logistic_regression():
 
 
 # =========================================================
-# TREE BASED MODELS
+# TREE-BASED MODELS
 # =========================================================
 
 @app.route("/tree-based", methods=["GET", "POST"])
@@ -193,9 +172,14 @@ def tree_based():
     selected_algorithm = "random_forest"
 
     if request.method == "POST":
-        selected_algorithm = request.form.get("algorithm", selected_algorithm)
+        selected_algorithm = request.form.get(
+            "algorithm",
+            selected_algorithm
+        )
+
         try:
             result = run_tree_models(selected_algorithm)
+
         except Exception as e:
             traceback.print_exc()
             error = f"Unexpected error: {e}"
@@ -214,18 +198,13 @@ def tree_based():
 # =========================================================
 
 if __name__ == "__main__":
-
     print("========================================")
     print("      STREAMSTAY FLASK APPLICATION")
     print("========================================")
-
-    print(
-        "Starting StreamStay on "
-        "http://127.0.0.1:5001"
-    )
+    print("Starting StreamStay on http://localhost:5001")
 
     app.run(
-        host="127.0.0.1",
+        host="0.0.0.0",
         port=5001,
-        debug=True
+        debug=False
     )

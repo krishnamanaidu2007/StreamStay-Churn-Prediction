@@ -1,4 +1,7 @@
-from load_data import load_data
+import copy
+import threading
+
+from load_data import load_data_with_fingerprint
 
 from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
@@ -11,18 +14,40 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 # STREAMSTAY DATA PREPROCESSING
 # =========================================================
 
-def preprocess_data():
+# The canonical result remains private.  Each public call returns independent
+# arrays, Series, metadata lists, and a deep-copied fitted transformer.
+_PREPROCESSING_CACHE = {
+    "fingerprint": None,
+    "result": None,
+}
+_PREPROCESSING_CACHE_LOCK = threading.RLock()
+
+
+def _copy_preprocessing_result(result: dict) -> dict:
+    """Clone every mutable value exposed by preprocess_data()."""
+    return {
+        "X_train": result["X_train"].copy(),
+        "X_test": result["X_test"].copy(),
+        "y_train": result["y_train"].copy(deep=True),
+        "y_test": result["y_test"].copy(deep=True),
+        "preprocessor": copy.deepcopy(result["preprocessor"]),
+        "numerical_columns": list(result["numerical_columns"]),
+        "categorical_columns": list(result["categorical_columns"]),
+        "feature_names": list(result["feature_names"]),
+        "original_feature_count": result["original_feature_count"],
+        "transformed_feature_count": result["transformed_feature_count"],
+        "removed_columns": list(result["removed_columns"]),
+        "target": result["target"],
+        "split_details": dict(result["split_details"]),
+    }
+
+
+def _build_preprocessing_result(df):
 
     print("=" * 80)
     print("STREAMSTAY DATA PREPROCESSING")
     print("=" * 80)
 
-
-    # =====================================================
-    # 1. LOAD DATA
-    # =====================================================
-
-    df = load_data()
 
     print("\n1. DATA LOADED")
     print("Dataset shape:", df.shape)
@@ -401,6 +426,35 @@ def preprocess_data():
         }
 
     }
+
+
+# =========================================================
+# PUBLIC PREPROCESSING ACCESS
+# =========================================================
+
+def preprocess_data():
+    """Return a defensive copy of the result for the current CSV contents.
+
+    The source CSV fingerprint is checked on every call.  A changed file
+    invalidates the cached fitted transformer and transformed matrices before
+    they can be returned to a page or model module.
+    """
+    with _PREPROCESSING_CACHE_LOCK:
+        while True:
+            df, fingerprint = load_data_with_fingerprint()
+
+            if _PREPROCESSING_CACHE["fingerprint"] == fingerprint:
+                return _copy_preprocessing_result(_PREPROCESSING_CACHE["result"])
+
+            result = _build_preprocessing_result(df)
+
+            # Do not cache a result if the CSV changed while transformations
+            # were being fitted.  Retry against the new immutable snapshot.
+            _, current_fingerprint = load_data_with_fingerprint()
+            if current_fingerprint == fingerprint:
+                _PREPROCESSING_CACHE["fingerprint"] = fingerprint
+                _PREPROCESSING_CACHE["result"] = result
+                return _copy_preprocessing_result(result)
 
 
 # =========================================================
