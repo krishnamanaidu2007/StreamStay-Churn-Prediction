@@ -1,1841 +1,450 @@
-/* =========================================================
-   STREAMSTAY - GLOBAL STYLES
-   ========================================================= */
-
-* {
-    box-sizing: border-box;
+/* StreamStay — Midnight Glass design system */
+:root,
+:root[data-theme="dark"] {
+    --bg: #07111f;
+    --bg-deep: #050c18;
+    --glass: rgba(20, 38, 66, 0.68);
+    --glass-strong: rgba(25, 46, 78, 0.88);
+    --text: #f1f5f9;
+    --muted: #a9b8cc;
+    --accent: #60a5fa;
+    --cyan: #22d3ee;
+    --border: rgba(148, 181, 220, 0.18);
+    --border-bright: rgba(148, 203, 255, 0.32);
+    --table-text: #f1f5f9;
+    --shadow: 0 18px 45px rgba(0, 4, 15, 0.26), 0 3px 12px rgba(0, 18, 44, 0.18);
+    --radius: 14px;
+    --page-glow-one: rgba(34, 211, 238, 0.13);
+    --page-glow-two: rgba(96, 165, 250, 0.15);
+    --page-end: #0a1830;
+    --topbar-bg: linear-gradient(105deg, rgba(7, 20, 39, 0.93), rgba(15, 38, 69, 0.72));
+    --sidebar-bg: linear-gradient(180deg, rgba(8, 24, 47, 0.86), rgba(5, 16, 32, 0.82));
+    --heading: #f8fbff;
+    --subheading: #eaf4ff;
+    --brand-subtitle: #b9d4ee;
+    --sidebar-text: #c5d5e8;
+    --menu-hover: rgba(96, 165, 250, .10);
+    --menu-active: linear-gradient(100deg, rgba(66, 137, 220, .32), rgba(29, 85, 147, .20));
+    --detail-surface: rgba(6, 20, 40, .42);
+    --table-wrapper-bg: rgba(4, 15, 31, .48);
+    --table-header-bg: rgba(56, 98, 143, .40);
+    --table-cell-bg: rgba(7, 19, 37, .52);
+    --table-key-bg: rgba(22, 44, 73, .56);
+    --table-hover-bg: rgba(54, 123, 197, .31);
+    --input-bg: rgba(6, 20, 40, .70);
+    --input-option-bg: #102846;
+    --chart-surface: rgba(6, 19, 38, .54);
+    --next-stage-bg: rgba(17, 42, 70, .66);
+    --next-stage-hover: rgba(29, 66, 105, .73);
+    --scroll-track: rgba(7, 17, 31, .72);
+    --scroll-thumb: #3a5d86;
+    --toggle-bg: rgba(16, 43, 74, .74);
+    --toggle-hover: rgba(41, 87, 133, .82);
+    --toggle-icon: #dff4ff;
+    --control-text: #edf6ff;
+    --metric-label: #9fb3c9;
+    --metric-value: #f5faff;
+    --code-text: #c8ecff;
+    --badge-text: #dff4ff;
+    --space-section: 24px;
+    --space-grid: 18px;
+    --space-card: 24px;
 }
 
-html {
-    scroll-behavior: smooth;
+:root[data-theme="light"] {
+    --bg: #f3f6fb;
+    --bg-deep: #f3f6fb;
+    --glass: rgba(255, 255, 255, .94);
+    --glass-strong: rgba(255, 255, 255, .96);
+    --text: #172b45;
+    --muted: #52667d;
+    --accent: #1769c2;
+    --cyan: #087ea4;
+    --border: rgba(35, 79, 124, .17);
+    --border-bright: rgba(24, 103, 189, .35);
+    --table-text: #182b42;
+    --shadow: 0 18px 45px rgba(35, 65, 98, .14), 0 3px 12px rgba(35, 65, 98, .08);
+    --page-glow-one: rgba(56, 189, 248, .06);
+    --page-glow-two: rgba(59, 130, 246, .05);
+    --page-end: #f3f6fb;
+    --topbar-bg: linear-gradient(105deg, #174a7e, #2563a6);
+    --sidebar-bg: linear-gradient(180deg, #174a7e, #123f70);
+    --heading: #132f52;
+    --subheading: #1d426c;
+    --brand-subtitle: #ffffff;
+    --sidebar-text: rgba(255, 255, 255, .92);
+    --menu-hover: rgba(255, 255, 255, .14);
+    --menu-active: linear-gradient(100deg, #ffffff, #e8f3ff);
+    --detail-surface: rgba(232, 241, 251, .76);
+    --table-wrapper-bg: rgba(255, 255, 255, .75);
+    --table-header-bg: rgba(202, 224, 247, .82);
+    --table-cell-bg: rgba(255, 255, 255, .84);
+    --table-key-bg: rgba(227, 239, 252, .92);
+    --table-hover-bg: rgba(183, 218, 250, .72);
+    --input-bg: rgba(255, 255, 255, .90);
+    --input-option-bg: #ffffff;
+    --chart-surface: rgba(242, 248, 255, .86);
+    --next-stage-bg: rgba(224, 239, 254, .86);
+    --next-stage-hover: rgba(207, 230, 253, .96);
+    --scroll-track: rgba(218, 231, 246, .88);
+    --scroll-thumb: #7ba3ce;
+    --toggle-bg: rgba(255, 255, 255, .18);
+    --toggle-hover: rgba(255, 255, 255, .30);
+    --toggle-icon: #ffffff;
+    --control-text: #172b45;
+    --metric-label: #496681;
+    --metric-value: #132f52;
+    --code-text: #125783;
+    --badge-text: #174b70;
+    --space-section: 28px;
+    --space-grid: 18px;
+    --space-card: 24px;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-
-    background: #07101f;
-    color: #e8f0fb;
-
-    font-family:
-        "Segoe UI",
-        Inter,
-        Arial,
-        sans-serif;
-
-    font-size: 15px;
-    line-height: 1.6;
-
+*, *::before, *::after { box-sizing: border-box; }
+html { min-width: 320px; background: var(--bg-deep); }
+body.application-shell {
+    min-width: 320px;
     min-height: 100vh;
-}
-
-
-/* =========================================================
-   TOP HEADER
-   ========================================================= */
-
-.topbar {
-    height: 74px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 0 30px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #07101f,
-            #091525
-        );
-
-    border-bottom: 1px solid #1b2d46;
-
-    position: sticky;
-    top: 0;
-
-    z-index: 100;
-
-    box-shadow:
-        0 5px 25px rgba(0, 0, 0, 0.18);
-}
-
-.topbar h1 {
     margin: 0;
-
-    font-size: 22px;
-    font-weight: 600;
-
-    letter-spacing: 0.2px;
-
-    color: #f3f7fc;
-}
-
-
-/* BLUE CHURN PREDICTION TEXT */
-
-.topbar h1::after {
-    content: " - Churn Prediction";
-
-    color: #28c7ff;
-}
-
-
-/* =========================================================
-   MAIN LAYOUT
-   ========================================================= */
-
-.layout {
-    display: flex;
-
-    min-height: calc(100vh - 74px);
-
+    color: var(--text);
     background:
-        radial-gradient(
-            circle at 85% 10%,
-            rgba(22, 126, 170, 0.07),
-            transparent 35%
-        ),
-        #07101f;
-}
-
-
-/* =========================================================
-   LEFT SIDEBAR
-   ========================================================= */
-
-.sidebar {
-    width: 242px;
-
-    flex-shrink: 0;
-
-    background:
-        linear-gradient(
-            180deg,
-            #0a1425,
-            #08111f
-        );
-
-    border-right: 1px solid #1b2d46;
-
-    padding: 28px 14px;
-
-    position: sticky;
-    top: 74px;
-
-    height: calc(100vh - 74px);
-
-    overflow-y: auto;
-}
-
-.sidebar ul {
-    list-style: none;
-
-    margin: 0;
-    padding: 0;
-}
-
-.sidebar li {
-    margin-bottom: 8px;
-}
-
-
-/* =========================================================
-   SIDEBAR MENU
-   ========================================================= */
-
-.menu-item {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    width: 100%;
-
-    padding: 14px 16px;
-
-    color: #9eb0c7;
-
-    text-decoration: none;
-
-    border-radius: 9px;
-
-    border: 1px solid transparent;
-
-    font-size: 14px;
-    font-weight: 500;
-
-    transition:
-        color 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
-}
-
-.menu-item:hover {
-    color: #eaf7ff;
-
-    background: #10243c;
-
-    border-color: #1b4262;
-
-    transform: translateX(2px);
-}
-
-
-/* =========================================================
-   ACTIVE MENU
-   ========================================================= */
-
-.menu-item.active {
-    color: #ffffff;
-
-    background:
-        linear-gradient(
-            90deg,
-            #12365a,
-            #102943
-        );
-
-    border-color: #245b87;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.18);
-}
-
-.menu-item.active::before {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    top: 20%;
-
-    width: 4px;
-    height: 60%;
-
-    border-radius: 0 4px 4px 0;
-
-    background: #27c7ff;
-
-    box-shadow:
-        0 0 10px rgba(39, 199, 255, 0.45);
-}
-
-
-/* =========================================================
-   MAIN CONTENT
-   ========================================================= */
-
-.content {
-    flex: 1;
-
-    min-width: 0;
-
-    padding: 34px 40px 60px;
-
-    overflow-x: hidden;
-
-    animation:
-        contentAppear 0.35s ease both;
-}
-
-@keyframes contentAppear {
-
-    from {
-        opacity: 0;
-
-        transform: translateY(5px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform: translateY(0);
-    }
-}
-
-
-/* =========================================================
-   HEADINGS
-   ========================================================= */
-
-.content h2 {
-    margin: 0 0 28px;
-
-    color: #f2f6fc;
-
-    font-size: 30px;
-
-    font-weight: 650;
-
-    letter-spacing: -0.4px;
-}
-
-.content h3 {
-    margin: 32px 0 14px;
-
-    color: #edf4fb;
-
-    font-size: 19px;
-
-    font-weight: 600;
-
-    letter-spacing: -0.1px;
-}
-
-.content p {
-    color: #9eafc4;
-
+        radial-gradient(900px 560px at 88% -12%, var(--page-glow-one), transparent 62%),
+        radial-gradient(720px 520px at -8% 22%, var(--page-glow-two), transparent 60%),
+        linear-gradient(145deg, var(--bg-deep) 0%, var(--bg) 46%, var(--page-end) 100%);
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
     font-size: 15px;
+    line-height: 1.55;
 }
+::selection { color: #05101d; background: #9bd7ff; }
 
-
-/* =========================================================
-   ERROR BOX
-   ========================================================= */
-
-.error {
-    padding: 14px 17px;
-
-    margin-bottom: 22px;
-
-    color: #ffd7d7;
-
-    background: #32151b;
-
-    border: 1px solid #74313a;
-
-    border-left: 4px solid #ef626c;
-
-    border-radius: 8px;
-
-    font-size: 14px;
+/* Brand and navigation */
+.application-shell .topbar {
+    position: relative;
+    z-index: 1;
+    padding: 20px 88px 18px 38px;
+    background: var(--topbar-bg);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 8px 26px rgba(0, 6, 18, 0.24);
 }
-
-
-/* =========================================================
-   SUMMARY TABLE
-   ========================================================= */
-
-.summary-table {
-    width: 100%;
-
-    max-width: 520px;
-
-    border-collapse: separate;
-
-    border-spacing: 0;
-
-    margin-bottom: 30px;
-
-    background: #0a1729;
-
-    border: 1px solid #1c324c;
-
-    border-radius: 10px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.12);
-}
-
-.summary-table tr {
-    transition:
-        background 0.2s ease;
-}
-
-.summary-table tr:hover {
-    background: #0e2036;
-}
-
-.summary-table td {
-    padding: 13px 16px;
-
-    border-bottom: 1px solid #182b43;
-
-    color: #aebed1;
-}
-
-.summary-table tr:last-child td {
-    border-bottom: none;
-}
-
-.summary-table td:first-child {
-    width: 55%;
-
-    color: #9eb1c8;
-
-    font-weight: 500;
-}
-
-.summary-table td:last-child {
-    color: #f1f6fc;
-
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   TABLE WRAPPER
-   ========================================================= */
-
-.table-wrapper {
-    width: 100%;
-
-    max-height: 420px;
-
-    overflow: auto;
-
-    border: 1px solid #1b324c;
-
-    border-radius: 10px;
-
-    background: #091525;
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.12);
-
-    margin-bottom: 30px;
-}
-
-
-/* =========================================================
-   DATA TABLE
-   ========================================================= */
-
-.data-table {
-    width: 100%;
-
-    border-collapse: collapse;
-
-    min-width: 650px;
-}
-
-.data-table thead {
-    position: sticky;
-
-    top: 0;
-
-    z-index: 5;
-
-    background:
-        linear-gradient(
-            90deg,
-            #102849,
-            #132e51
-        );
-}
-
-.data-table th {
-    padding: 13px 14px;
-
-    text-align: left;
-
-    color: #dcecff;
-
-    font-size: 13px;
-
-    font-weight: 600;
-
-    letter-spacing: 0.3px;
-
-    border-bottom: 1px solid #254364;
-}
-
-.data-table td {
-    padding: 12px 14px;
-
-    color: #aebed0;
-
-    font-size: 13px;
-
-    border-bottom: 1px solid #172b42;
-
-    white-space: nowrap;
-}
-
-.data-table tbody tr {
-    background: #091525;
-
-    transition:
-        background 0.18s ease;
-}
-
-.data-table tbody tr:nth-child(even) {
-    background: #0b192b;
-}
-
-.data-table tbody tr:hover {
-    background: #10253d;
-}
-
-.data-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
-
-.table-wrapper::-webkit-scrollbar,
-.sidebar::-webkit-scrollbar {
-    width: 8px;
-
-    height: 8px;
-}
-
-.table-wrapper::-webkit-scrollbar-track,
-.sidebar::-webkit-scrollbar-track {
-    background: #07101f;
-}
-
-.table-wrapper::-webkit-scrollbar-thumb,
-.sidebar::-webkit-scrollbar-thumb {
-    background: #27435f;
-
-    border-radius: 10px;
-}
-
-.table-wrapper::-webkit-scrollbar-thumb:hover,
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #35617f;
-}
-
-
-/* =========================================================
-   LARGE EDA CHART GRID
-   ========================================================= */
-
-.chart-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 28px;
-
-    width: 100%;
-
-    margin-top: 22px;
-}
-
-
-/* =========================================================
-   LARGE CHART CARD
-   ========================================================= */
-
-.chart-card {
-    width: 100%;
-
-    min-width: 0;
-
-    padding: 14px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #0b1728,
-            #091321
-        );
-
-    border: 1px solid #203650;
-
-    border-radius: 10px;
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.18);
-
-    transition:
-        transform 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
-
-    animation:
-        chartAppear 0.5s ease both;
-}
-
-
-/* =========================================================
-   BIGGER GRAPH
-   ========================================================= */
-
-.chart-card img {
-    display: block;
-
-    width: 100%;
-
-    height: auto;
-
-    min-height: 430px;
-
-    object-fit: contain;
-
-    border-radius: 7px;
-
-    background: #ffffff;
-
-    transition:
-        transform 0.25s ease;
-}
-
-
-/* =========================================================
-   CHART HOVER
-   ========================================================= */
-
-.chart-card:hover {
-    transform: translateY(-4px);
-
-    border-color: #2b5b7c;
-
-    box-shadow:
-        0 14px 35px rgba(0, 0, 0, 0.28),
-        0 0 18px rgba(32, 199, 255, 0.06);
-}
-
-.chart-card:hover img {
-    transform: scale(1.005);
-}
-
-
-/* =========================================================
-   CHART ANIMATION
-   ========================================================= */
-
-@keyframes chartAppear {
-
-    from {
-        opacity: 0;
-
-        transform: translateY(12px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform: translateY(0);
-    }
-}
-
-
-/* =========================================================
-   CHART STAGGER ANIMATION
-   ========================================================= */
-
-.chart-card:nth-child(2) {
-    animation-delay: 0.04s;
-}
-
-.chart-card:nth-child(3) {
-    animation-delay: 0.08s;
-}
-
-.chart-card:nth-child(4) {
-    animation-delay: 0.12s;
-}
-
-.chart-card:nth-child(5) {
-    animation-delay: 0.16s;
-}
-
-.chart-card:nth-child(6) {
-    animation-delay: 0.20s;
-}
-
-
-/* =========================================================
-   RESPONSIVE - TABLET
-   ========================================================= */
-
-@media (max-width: 1100px) {
-
-    .sidebar {
-        width: 210px;
-    }
-
-    .content {
-        padding: 30px 28px 50px;
-    }
-
-    .chart-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .chart-card img {
-        min-height: 380px;
-    }
-}
-
-
-/* =========================================================
-   RESPONSIVE - MOBILE
-   ========================================================= */
-
-@media (max-width: 700px) {
-
-    .topbar {
-        height: 64px;
-
-        padding: 0 18px;
-    }
-
-    .topbar h1 {
-        font-size: 18px;
-    }
-
-    .layout {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        position: relative;
-
-        top: 0;
-
-        width: 100%;
-
-        height: auto;
-
-        padding: 10px;
-
-        border-right: none;
-
-        border-bottom: 1px solid #1b2d46;
-    }
-
-    .sidebar ul {
-        display: flex;
-
-        gap: 8px;
-    }
-
-    .sidebar li {
-        flex: 1;
-
-        margin-bottom: 0;
-    }
-
-    .menu-item {
-        justify-content: center;
-
-        padding: 11px 8px;
-
-        font-size: 13px;
-    }
-
-    .menu-item.active::before {
-        display: none;
-    }
-
-    .content {
-        padding: 25px 16px 40px;
-    }
-
-    .content h2 {
-        font-size: 25px;
-
-        margin-bottom: 22px;
-    }
-
-    .content h3 {
-        font-size: 18px;
-    }
-
-    .summary-table {
-        max-width: 100%;
-    }
-
-    .chart-grid {
-        grid-template-columns: 1fr;
-
-        gap: 20px;
-    }
-
-    .chart-card {
-        padding: 10px;
-    }
-
-    .chart-card img {
-        min-height: 300px;
-    }
-}
-
-
-/* =========================================================
-   REDUCE MOTION FOR ACCESSIBILITY
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    html {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-
-        animation-iteration-count: 1 !important;
-
-        transition-duration: 0.01ms !important;
-    }
-}
-
-.content h4 {
-    margin: 24px 0 10px;
-    color: #dcecff;
-    font-size: 16px;
-}
-
-.report-details {
-    margin: 0 0 24px;
-    padding: 12px 16px;
-    background: #0a1729;
-    border: 1px solid #1c324c;
-    border-radius: 8px;
-    color: #aebed1;
-}
-
-.report-details summary {
-    cursor: pointer;
-    color: #dcecff;
-    font-weight: 600;
-}
-
-.report-details pre {
-    overflow-x: auto;
-    color: #aebed1;
-}
-
-/* =========================================================
-   LINEAR REGRESSION MODEL PRESENTATION
-   ========================================================= */
-
-.model-overview,
-.model-details {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.model-overview {
-    margin: 0 0 28px;
-}
-
-.model-overview span,
-.model-details span {
-    padding: 8px 12px;
-    color: #b8c9dc;
-    background: #0b1a2e;
-    border: 1px solid #1c3855;
-    border-radius: 7px;
-    font-size: 13px;
-}
-
-.model-section {
-    margin: 38px 0;
-}
-
-.section-heading {
-    display: flex;
-    align-items: flex-start;
-    gap: 13px;
-    margin-bottom: 16px;
-}
-
-.section-heading > span {
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    flex: 0 0 34px;
-    color: #c9efff;
-    background: #12365a;
-    border: 1px solid #28638f;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.section-heading h3,
-.section-heading p {
+.application-shell .topbar h1 {
     margin: 0;
+    color: var(--heading);
+    font-size: clamp(27px, 3vw, 34px);
+    font-weight: 750;
+    letter-spacing: -0.55px;
+    line-height: 1.15;
 }
-
-.section-heading p {
-    margin-top: 2px;
-    font-size: 14px;
+.application-shell .topbar h1::after { content: none; }
+.application-shell .topbar p { margin: 6px 0 0; color: var(--brand-subtitle); font-size: 14px; font-weight: 500; }
+.application-shell .layout { display: flex; align-items: stretch; min-height: calc(100vh - 99px); }
+.application-shell .sidebar {
+    width: 252px;
+    min-width: 252px;
+    padding: 20px 13px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    box-shadow: inset -1px 0 rgba(255,255,255,.025);
 }
-
-.model-card {
-    padding: 24px;
-    background: linear-gradient(145deg, #0b1728, #091321);
-    border: 1px solid #203c59;
-    border-radius: 12px;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
-}
-
-.linear-model-card { border-left: 4px solid #28c7ff; }
-.ridge-model-card { border-left: 4px solid #6fb8ff; }
-.lasso-model-card { border-left: 4px solid #68b984; }
-
-.model-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 18px;
-    margin-bottom: 16px;
-}
-
-.model-header h3 {
-    margin: 0;
-}
-
-.model-eyebrow {
-    margin: 0 0 2px !important;
-    color: #7e9ab7 !important;
-    font-size: 12px !important;
+.application-shell .sidebar ul { margin: 0; padding: 0; list-style: none; }
+.application-shell .sidebar li { margin: 0 0 5px; }
+.application-shell .sidebar-section-title {
+    margin: 18px 12px 7px;
+    color: var(--brand-subtitle);
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.8px;
+    letter-spacing: .12em;
     text-transform: uppercase;
 }
-
-.regularization-badge {
-    padding: 6px 10px;
-    border: 1px solid;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.badge-none { color: #aeeaff; background: #0c3042; border-color: #23789b; }
-.badge-l2 { color: #cae3ff; background: #162d4c; border-color: #3b6fa2; }
-.badge-l1 { color: #bcebd1; background: #153b30; border-color: #3e8569; }
-
-.model-card h4 {
-    margin-top: 22px;
-}
-
-.metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 9px;
-}
-
-.metric-item {
-    min-width: 0;
-    padding: 11px 12px;
-    background: #0b1b2f;
-    border: 1px solid #1d3956;
-    border-radius: 8px;
-}
-
-.metric-item span,
-.confusion-grid span {
-    display: block;
-    color: #8fa7c0;
-    font-size: 11px;
-    line-height: 1.35;
-}
-
-.metric-item strong,
-.confusion-grid strong {
-    display: block;
-    margin-top: 3px;
-    color: #f0f7ff;
-    font-size: 16px;
-}
-
-.model-evidence {
-    display: grid;
-    grid-template-columns: minmax(280px, 0.95fr) minmax(320px, 1.05fr);
-    gap: 22px;
-    margin-top: 22px;
-}
-
-.confusion-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-}
-
-.confusion-grid > div {
-    padding: 11px;
-    background: #0b1b2f;
-    border: 1px solid #1d3956;
-    border-radius: 8px;
-}
-
-.model-card .report-details {
-    margin: 12px 0 0;
-}
-
-.model-chart {
-    margin: 0;
-    padding: 10px;
-    background: #07101f;
-    border: 1px solid #203650;
-    border-radius: 9px;
-}
-
-.model-chart img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-    background: #fff;
-}
-
-.model-chart figcaption {
-    padding: 7px 3px 0;
-    color: #9eb1c8;
-    font-size: 12px;
-}
-
-.regularized-cards {
-    display: grid;
-    gap: 20px;
-}
-
-.lasso-callout,
-.regularization-info {
-    padding: 17px 19px;
-    background: #10283a;
-    border: 1px solid #24546d;
-    border-left: 4px solid #68b984;
-    border-radius: 9px;
-    color: #b9cddd;
-}
-
-.lasso-callout { margin-top: 16px; }
-
-.comparison-chart {
-    max-width: 950px;
-    margin: 0 0 28px;
-}
-
-.comparison-chart img { min-height: 0; }
-
-.regularization-info { margin-top: 38px; }
-.regularization-info h3 { margin-top: 0; }
-.regularization-info p { margin: 8px 0; }
-.regularization-info .alpha-note { color: #d8efff; font-weight: 600; }
-
-@media (max-width: 900px) {
-    .model-evidence { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 700px) {
-    .model-card { padding: 17px; }
-    .model-header { flex-direction: column; }
-    .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-/* =========================================================
-   POST-EDA MODEL PAGES
-   Shared PolicyPulse-inspired structure, kept in StreamStay's
-   existing navy/cyan visual system.
-   ========================================================= */
-
-.section-card {
-    width: 100%;
-    margin: 24px 0;
-    padding: 24px;
-    background: #0b1728;
-    border: 1px solid #203c59;
-    border-radius: 10px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-}
-
-.section-card h3 {
-    margin: 0 0 8px;
-    color: #dcecff;
-    font-size: 20px;
-}
-
-.section-card > p {
-    margin: 0 0 16px;
-    color: #aebed1;
-}
-
-.compact-cards {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    margin: 0 0 24px;
-}
-
-.compact-cards .card {
-    padding: 18px;
-    background: #0b1728;
-    border-color: #203c59;
-}
-
-.compact-cards .card h3 {
-    color: #91a9c2;
-    font-size: 13px;
-}
-
-.compact-cards .card p {
-    color: #dcecff;
-    font-size: 22px;
-}
-
-.compact-cards .card .model-name {
-    font-size: 17px;
-}
-
-.algorithm-form {
+.application-shell .sidebar-section-title:first-child { margin-top: 2px; }
+.application-shell .menu-item {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-top: 16px;
-}
-
-.algorithm-form label {
-    color: #dcecff;
-    font-weight: 600;
-}
-
-.algorithm-select {
-    min-width: 260px;
-    height: 42px;
-    padding: 0 12px;
-    color: #dcecff;
-    background: #091321;
-    border: 1px solid #28638f;
-    border-radius: 7px;
-    font: inherit;
-}
-
-.algorithm-select:focus {
-    outline: none;
-    border-color: #28c7ff;
-    box-shadow: 0 0 0 2px rgba(40, 199, 255, 0.16);
-}
-
-.run-button {
-    height: 42px;
-    padding: 0 18px;
-    color: #07101f;
-    background: #28c7ff;
-    border: 1px solid #55d5ff;
-    border-radius: 7px;
-    font: inherit;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.run-button:hover { background: #64d8ff; }
-
-.model-plot-grid,
-.two-plot-grid {
-    display: grid;
-    gap: 18px;
-    margin-top: 18px;
-}
-
-.model-plot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.two-plot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-.section-card .plot-card {
-    margin-top: 0;
-    padding: 14px;
-    background: #091321;
-    border-color: #203c59;
-}
-
-.section-card .plot-card h4 {
-    margin: 0 0 12px;
-    color: #dcecff;
-    text-align: center;
-}
-
-.section-card .plot-card img {
-    min-height: 0;
-    width: 100%;
-}
-
-@media (max-width: 1100px) {
-    .compact-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .model-plot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-@media (max-width: 700px) {
-    .section-card { padding: 18px; }
-    .compact-cards, .model-plot-grid, .two-plot-grid { grid-template-columns: 1fr; }
-    .algorithm-form { align-items: stretch; flex-direction: column; }
-    .algorithm-select, .run-button { width: 100%; }
-}
-
-/* =========================================================
-   PREPROCESSING PAGE
-   The page follows the PolicyPulse card hierarchy while its
-   selectors are scoped so frozen StreamStay pages are unchanged.
-   ========================================================= */
-
-.preprocessing-body {
-    min-height: 100vh;
-    background: #f5f7fb;
-    color: #253b57;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-}
-
-.preprocessing-body .topbar {
-    position: static;
-    display: block;
-    height: auto;
-    padding: 28px 34px 24px;
-    background: #12365a;
-    border: 0;
-    box-shadow: none;
-}
-
-.preprocessing-body .topbar h1 {
-    color: #ffffff;
-    font-size: 30px;
-    font-weight: 700;
-}
-
-.preprocessing-body .topbar h1::after { content: none; }
-
-.preprocessing-body .topbar p {
-    margin: 7px 0 0;
-    color: #cfeeff;
-    font-size: 16px;
-}
-
-.preprocessing-body .layout {
-    min-height: calc(100vh - 120px);
-    background: #f5f7fb;
-}
-
-.preprocessing-body .sidebar {
-    position: static;
-    width: 250px;
-    height: auto;
-    padding: 26px 14px;
-    background: #163f67;
-    border: 0;
-}
-
-.preprocessing-body .sidebar li { margin-bottom: 4px; }
-
-.preprocessing-body .menu-item {
-    min-height: 52px;
-    padding: 0 17px;
-    color: #ffffff;
-    border: 0;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.preprocessing-body .menu-item:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: #ffffff;
-    border: 0;
-    transform: none;
-}
-
-.preprocessing-body .menu-item.active {
-    color: #12365a;
-    background: #ffffff;
-    border: 0;
-    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.08);
-}
-
-.preprocessing-body .menu-item.active::before { display: none; }
-
-.preprocessing-body .content {
-    padding: 38px 42px 60px;
-    background: #f5f7fb;
-    animation: none;
-}
-
-.preprocessing-body .content h1 {
-    margin: 0 0 8px;
-    color: #12365a;
-    font-size: 29px;
-    line-height: 1.25;
-}
-
-.preprocessing-body .page-intro {
-    max-width: 850px;
-    margin: 0 0 26px;
-    color: #5c6d82;
-    font-size: 16px;
-}
-
-.preprocessing-body .preprocessing-summary {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px;
-    margin: 0 0 30px;
-}
-
-.preprocessing-body .card,
-.preprocessing-body .section-card {
-    background: #ffffff;
-    border: 1px solid #dfe6ef;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(30, 55, 80, 0.05);
-}
-
-.preprocessing-body .card { padding: 20px; }
-
-.preprocessing-body .card h3 {
-    margin: 0 0 10px;
-    color: #52667e;
+    min-height: 47px;
+    padding: 0 14px;
+    color: var(--sidebar-text);
+    border: 1px solid transparent;
+    border-radius: 9px;
     font-size: 14px;
-}
-
-.preprocessing-body .card p {
-    margin: 0;
-    color: #12365a;
-    font-size: 25px;
-    font-weight: 700;
-}
-
-.preprocessing-body .section-card {
-    margin: 24px 0;
-    padding: 25px;
-}
-
-.preprocessing-body .section-card h2 {
-    margin: 0 0 10px;
-    color: #12365a;
-    font-size: 22px;
-}
-
-.preprocessing-body .section-card h3 {
-    margin: 0 0 10px;
-    color: #294866;
-    font-size: 16px;
-}
-
-.preprocessing-body .section-card p,
-.preprocessing-body .section-card li {
-    color: #5c6d82;
-    font-size: 15px;
-}
-
-.preprocessing-body .section-card ul {
-    margin: 0;
-    padding-left: 20px;
-    line-height: 1.8;
-}
-
-.preprocessing-body .two-column-details {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
-    margin-top: 18px;
-}
-
-.preprocessing-body .two-column-details > div {
-    padding: 18px;
-    background: #f8fafc;
-    border: 1px solid #dfe6ef;
-    border-radius: 8px;
-}
-
-.preprocessing-body .two-column-details p { margin: 0; }
-
-.preprocessing-body .table-wrapper {
-    max-height: none;
-    margin: 16px 0 0;
-    background: #ffffff;
-    border-color: #dfe6ef;
-    box-shadow: none;
-}
-
-.preprocessing-body .data-table { min-width: 0; }
-
-.preprocessing-body .data-table thead {
-    position: static;
-    background: #eef4f8;
-}
-
-.preprocessing-body .data-table th {
-    color: #294866;
-    border-color: #dfe6ef;
-}
-
-.preprocessing-body .data-table td {
-    color: #5d6e82;
-    border-color: #e8edf3;
-    white-space: normal;
-}
-
-.preprocessing-body .data-table tbody tr,
-.preprocessing-body .data-table tbody tr:nth-child(even) { background: #ffffff; }
-
-.preprocessing-body .data-table tbody tr:hover { background: #f8fafc; }
-
-.preprocessing-body code {
-    padding: 2px 5px;
-    color: #12365a;
-    background: #e8f2f8;
-    border-radius: 4px;
-}
-
-.preprocessing-body .next-stage-card {
-    display: block;
-    padding: 21px 24px;
-    color: #12365a;
+    font-weight: 600;
     text-decoration: none;
-    background: #ffffff;
-    border: 1px solid #cddce8;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(30, 55, 80, 0.05);
+    transition: color .18s ease, background-color .18s ease, border-color .18s ease, transform .18s ease;
+}
+.application-shell .menu-item:hover,
+.application-shell .menu-item:focus-visible {
+    color: var(--heading);
+    background: var(--menu-hover);
+    border-color: rgba(148,203,255,.20);
+    outline: none;
+    transform: translateX(2px);
+}
+.application-shell .menu-item.active {
+    color: var(--heading);
+    background: var(--menu-active);
+    border-color: rgba(115, 188, 255, .36);
+    box-shadow: 0 6px 20px rgba(25, 105, 189, .16), inset 0 1px rgba(255,255,255,.10);
+}
+:root[data-theme="light"] .application-shell .menu-item.active { color: #174a7e; }
+.application-shell .menu-item.active::before {
+    position: absolute;
+    left: -1px;
+    width: 3px;
+    height: 58%;
+    content: "";
+    background: var(--cyan);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 0 12px rgba(34,211,238,.75);
 }
 
-.preprocessing-body .next-stage-card:hover { border-color: #78a7c8; }
-
-.preprocessing-body .next-stage-card span {
-    display: block;
-    margin-bottom: 3px;
-    color: #5c6d82;
-    font-size: 13px;
+/* Layout, typography, glass surfaces */
+.application-shell .content { flex: 1; min-width: 0; max-width: calc(100vw - 252px); padding: 40px 44px 66px; overflow: hidden; }
+.application-shell .content > h1,
+.application-shell .content > h2 {
+    margin: 0 0 8px;
+    color: var(--heading);
+    font-size: clamp(27px, 3vw, 32px);
+    font-weight: 750;
+    letter-spacing: -.5px;
+    line-height: 1.25;
+    text-shadow: 0 1px 16px rgba(96,165,250,.18);
 }
-
-.preprocessing-body .next-stage-card strong { font-size: 17px; }
-
-@media (max-width: 1100px) {
-    .preprocessing-body .preprocessing-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.application-shell .content h3 { margin: 27px 0 12px; color: var(--subheading); font-size: 19px; font-weight: 700; line-height: 1.35; }
+.application-shell .content h4 { margin: 0 0 12px; color: var(--subheading); font-size: 15px; font-weight: 700; line-height: 1.4; }
+.application-shell .content p,
+.application-shell .page-intro,
+.application-shell .section-card p,
+.application-shell .approach-card p,
+.application-shell .method-grid p { color: var(--muted); font-weight: 400; }
+.application-shell .content > p,
+.application-shell .page-intro { max-width: 920px; margin: 0 0 27px; font-size: 16px; line-height: 1.65; }
+.application-shell .section-card,
+.application-shell .approach-card,
+.application-shell .card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow), inset 0 1px rgba(255,255,255,.045);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
+    backdrop-filter: blur(18px) saturate(120%);
 }
+.application-shell .section-card,
+.application-shell .approach-card { width: 100%; min-width: 0; margin: var(--space-section) 0 0; padding: var(--space-card); border-radius: var(--radius); }
+.application-shell .section-card h2,
+.application-shell .approach-card h2 { margin: 0 0 9px; color: var(--heading); font-size: 21px; font-weight: 720; line-height: 1.35; }
+.application-shell .section-card > p,
+.application-shell .approach-card > p { margin: 0 0 17px; }
+.application-shell .section-card li,
+.application-shell .two-column-details li { color: var(--text); }
+.application-shell .error { margin: 20px 0; padding: 13px 16px; color: #ffd7dc; background: rgba(111, 20, 42, .55); border: 1px solid rgba(255,148,166,.36); border-radius: 9px; }
+.application-shell code { padding: 2px 5px; color: var(--code-text); background: rgba(34,211,238,.10); border: 1px solid rgba(34,211,238,.14); border-radius: 4px; font-family: "Cascadia Code", Consolas, monospace; font-size: .9em; }
 
-@media (max-width: 800px) {
-    .preprocessing-body .layout { flex-direction: column; }
-    .preprocessing-body .sidebar { width: 100%; padding: 12px; }
-    .preprocessing-body .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; }
-    .preprocessing-body .sidebar li { margin: 0; }
-    .preprocessing-body .menu-item { width: auto; min-height: 44px; }
-    .preprocessing-body .content { padding: 30px 20px 45px; }
-    .preprocessing-body .two-column-details { grid-template-columns: 1fr; }
+/* Metrics and compact evidence panels */
+.application-shell .card-container,
+.application-shell .regression-summary,
+.application-shell .preprocessing-summary,
+.application-shell .logistic-summary,
+.application-shell .tree-summary { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: var(--space-grid); width: 100%; margin: var(--space-section) 0 0; }
+.application-shell .card { min-width: 0; padding: 20px; border-radius: 12px; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.application-shell .card:hover { border-color: var(--border-bright); box-shadow: 0 20px 40px rgba(0, 8, 24, .30), 0 0 22px rgba(96,165,250,.08); transform: translateY(-2px); }
+.application-shell .card h3 { margin: 0 0 9px; color: var(--metric-label); font-size: 13px; font-weight: 650; line-height: 1.35; }
+.application-shell .card p { margin: 0; color: var(--metric-value); font-size: 27px; font-weight: 750; line-height: 1.2; }
+.application-shell .two-column-details,
+.application-shell .three-column-details,
+.application-shell .method-grid,
+.application-shell .regularization-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--space-grid); margin-top: var(--space-grid); }
+.application-shell .three-column-details { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.application-shell .two-column-details > div,
+.application-shell .three-column-details > div,
+.application-shell .method-grid > div,
+.application-shell .regularization-note {
+    min-width: 0;
+    padding: 16px 18px;
+    background: var(--detail-surface);
+    border: 1px solid rgba(148,181,220,.13);
+    border-radius: 9px;
 }
+.application-shell .two-column-details h3,
+.application-shell .three-column-details h3,
+.application-shell .method-grid h3 { margin: 0 0 8px; color: var(--subheading); font-size: 15px; }
+.application-shell .two-column-details p,
+.application-shell .three-column-details p,
+.application-shell .method-grid p { margin: 0; }
 
-@media (max-width: 550px) {
-    .preprocessing-body .topbar { padding: 23px 20px; }
-    .preprocessing-body .preprocessing-summary { grid-template-columns: 1fr; }
-    .preprocessing-body .section-card { padding: 18px; }
+/* Tables retain a clear light foreground on dark glass. */
+.application-shell .table-wrapper {
+    width: 100%; max-width: 100%; margin-top: 16px; overflow-x: auto; overflow-y: hidden;
+    background: var(--table-wrapper-bg); border: 1px solid var(--border); border-radius: 10px;
+    box-shadow: inset 0 1px rgba(255,255,255,.035); scrollbar-color: var(--scroll-thumb) var(--scroll-track); scrollbar-width: thin;
 }
-
-/* =========================================================
-   LINEAR REGRESSION PAGE
-   Scoped to preserve approved preprocessing, data-loading and EDA pages.
-   ========================================================= */
-
-.linear-regression-body {
-    min-height: 100vh;
-    background: #f5f7fb;
-    color: #253b57;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-}
-
-.linear-regression-body .topbar { position: static; display: block; height: auto; padding: 28px 34px 24px; background: #12365a; border: 0; box-shadow: none; }
-.linear-regression-body .topbar h1 { color: #fff; font-size: 30px; font-weight: 700; }
-.linear-regression-body .topbar h1::after { content: none; }
-.linear-regression-body .topbar p { margin: 7px 0 0; color: #cfeeff; font-size: 16px; }
-.linear-regression-body .layout { min-height: calc(100vh - 120px); background: #f5f7fb; }
-.linear-regression-body .sidebar { position: static; width: 250px; height: auto; padding: 26px 14px; background: #163f67; border: 0; }
-.linear-regression-body .sidebar li { margin-bottom: 4px; }
-.linear-regression-body .menu-item { min-height: 52px; padding: 0 17px; color: #fff; border: 0; border-radius: 8px; font-size: 15px; font-weight: 600; transition: background-color .2s ease, color .2s ease; }
-.linear-regression-body .menu-item:hover { color: #fff; background: rgba(255,255,255,.12); border: 0; transform: none; }
-.linear-regression-body .menu-item.active { color: #12365a; background: #fff; border: 0; box-shadow: 0 2px 7px rgba(0,0,0,.08); }
-.linear-regression-body .menu-item.active::before { display: none; }
-.linear-regression-body .content { padding: 38px 42px 60px; background: #f5f7fb; animation: none; }
-.linear-regression-body .content h1 { margin: 0 0 8px; color: #12365a; font-size: 29px; line-height: 1.25; }
-.linear-regression-body .page-intro { max-width: 850px; margin: 0 0 26px; color: #5c6d82; font-size: 16px; }
-.linear-regression-body .regression-summary { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; margin: 0 0 30px; }
-.linear-regression-body .card, .linear-regression-body .section-card { background: #fff; border: 1px solid #dfe6ef; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
-.linear-regression-body .card { padding: 20px; }
-.linear-regression-body .card h3 { margin: 0 0 10px; color: #52667e; font-size: 14px; }
-.linear-regression-body .card p { margin: 0; color: #12365a; font-size: 25px; font-weight: 700; }
-.linear-regression-body .section-card { margin: 24px 0; padding: 25px; }
-.linear-regression-body .section-card h2 { margin: 0 0 10px; color: #12365a; font-size: 22px; }
-.linear-regression-body .section-card h3 { margin: 0 0 10px; color: #294866; font-size: 16px; }
-.linear-regression-body .section-card p { color: #5c6d82; font-size: 15px; }
-.linear-regression-body .table-wrapper { max-height: none; margin: 16px 0 0; background: #fff; border-color: #dfe6ef; box-shadow: none; }
-.linear-regression-body .data-table { min-width: 0; }
-.linear-regression-body .regression-metrics { min-width: 650px; }
-.linear-regression-body .data-table thead { position: static; background: #eef4f8; }
-.linear-regression-body .data-table th { color: #294866; border-color: #dfe6ef; }
-.linear-regression-body .data-table td { color: #5d6e82; border-color: #e8edf3; white-space: normal; }
-.linear-regression-body .data-table tbody tr, .linear-regression-body .data-table tbody tr:nth-child(even) { background: #fff; }
-.linear-regression-body .data-table tbody tr:hover { background: #f8fafc; }
-.linear-regression-body .prediction-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; margin-top: 18px; }
-.linear-regression-body .plot-card { margin-top: 0; padding: 15px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 9px; text-align: center; }
-.linear-regression-body .plot-card h4 { margin: 0 0 12px; color: #294866; font-size: 15px; }
-.linear-regression-body .plot-card img { display: block; width: 100%; min-height: 0; height: auto; margin: 0 auto; background: #fff; }
-.linear-regression-body .comparison-plot { max-width: 1000px; margin-top: 16px; }
-.linear-regression-body .approach-selector-card { margin-bottom: 24px; }
-.linear-regression-body .form-field { display: flex; align-items: center; gap: 14px; margin-top: 20px; }
-.linear-regression-body .form-field label { color: #294866; font-size: 15px; font-weight: 700; }
-.linear-regression-body .form-field select { min-width: 280px; padding: 11px 38px 11px 13px; color: #294866; background: #fff; border: 1px solid #b9cad8; border-radius: 7px; font: inherit; font-size: 15px; cursor: pointer; }
-.linear-regression-body .form-field select:focus { outline: 2px solid #78a7c8; outline-offset: 2px; }
-.linear-regression-body .approach-panel[hidden] { display: none; }
-.linear-regression-body .single-model-chart { max-width: 690px; margin-top: 20px; }
-.linear-regression-body .regularization-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 20px; }
-.linear-regression-body .regularization-note { display: flex; flex-direction: column; gap: 5px; padding: 16px 18px; color: #5c6d82; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 8px; }
-.linear-regression-body .regularization-note strong { color: #294866; font-size: 15px; }
-.linear-regression-body .regularization-note span { font-size: 14px; }
-.linear-regression-body .two-up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.linear-regression-body .coefficient-chart { margin-top: 20px; }
-.linear-regression-body .three-column-details { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; margin-top: 18px; }
-.linear-regression-body .three-column-details > div { padding: 18px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 8px; }
-.linear-regression-body .three-column-details p { margin: 0; }
-.linear-regression-body .coefficient-title { margin: 25px 0 0 !important; }
-.linear-regression-body .next-stage-card { display: block; padding: 21px 24px; color: #12365a; text-decoration: none; background: #fff; border: 1px solid #cddce8; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
-.linear-regression-body .next-stage-card:hover { border-color: #78a7c8; }
-.linear-regression-body .next-stage-card span { display: block; margin-bottom: 3px; color: #5c6d82; font-size: 13px; }
-.linear-regression-body .next-stage-card strong { font-size: 17px; }
-
-@media (max-width: 1100px) {
-    .linear-regression-body .regression-summary { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    .linear-regression-body .prediction-grid { grid-template-columns: 1fr; }
-    .linear-regression-body .two-up { grid-template-columns: 1fr; }
-}
-@media (max-width: 800px) {
-    .linear-regression-body .layout { flex-direction: column; }
-    .linear-regression-body .sidebar { width: 100%; padding: 12px; }
-    .linear-regression-body .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; }
-    .linear-regression-body .sidebar li { margin: 0; }
-    .linear-regression-body .menu-item { width: auto; min-height: 44px; }
-    .linear-regression-body .content { padding: 30px 20px 45px; }
-    .linear-regression-body .three-column-details { grid-template-columns: 1fr; }
-    .linear-regression-body .regularization-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 550px) {
-    .linear-regression-body .topbar { padding: 23px 20px; }
-    .linear-regression-body .regression-summary { grid-template-columns: 1fr; }
-    .linear-regression-body .section-card { padding: 18px; }
-    .linear-regression-body .form-field { align-items: stretch; flex-direction: column; gap: 8px; }
-    .linear-regression-body .form-field select { width: 100%; min-width: 0; }
-}
-
-/* =========================================================
-   LOGISTIC REGRESSION PAGE
-   Scoped to keep frozen Stage 4 and Stage 5 presentations intact.
-   ========================================================= */
-
-.logistic-regression-body {
-    min-height: 100vh;
-    background: #f5f7fb;
-    color: #253b57;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-}
-
-.logistic-regression-body .topbar { position: static; display: block; height: auto; padding: 28px 34px 24px; background: #12365a; border: 0; box-shadow: none; }
-.logistic-regression-body .topbar h1 { color: #fff; font-size: 30px; font-weight: 700; }
-.logistic-regression-body .topbar h1::after { content: none; }
-.logistic-regression-body .topbar p { margin: 7px 0 0; color: #cfeeff; font-size: 16px; }
-.logistic-regression-body .layout { min-height: calc(100vh - 120px); background: #f5f7fb; }
-.logistic-regression-body .sidebar { position: static; width: 250px; height: auto; padding: 26px 14px; background: #163f67; border: 0; }
-.logistic-regression-body .sidebar li { margin-bottom: 4px; }
-.logistic-regression-body .menu-item { min-height: 52px; padding: 0 17px; color: #fff; border: 0; border-radius: 8px; font-size: 15px; font-weight: 600; transition: background-color .2s ease, color .2s ease; }
-.logistic-regression-body .menu-item:hover { color: #fff; background: rgba(255,255,255,.12); border: 0; transform: none; }
-.logistic-regression-body .menu-item.active { color: #12365a; background: #fff; border: 0; box-shadow: 0 2px 7px rgba(0,0,0,.08); }
-.logistic-regression-body .menu-item.active::before { display: none; }
-.logistic-regression-body .content { padding: 38px 42px 60px; background: #f5f7fb; animation: none; }
-.logistic-regression-body .content h1 { margin: 0 0 8px; color: #12365a; font-size: 29px; line-height: 1.25; }
-.logistic-regression-body .page-intro { max-width: 850px; margin: 0 0 26px; color: #5c6d82; font-size: 16px; }
-.logistic-regression-body .logistic-summary { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; margin: 0 0 30px; }
-.logistic-regression-body .card, .logistic-regression-body .section-card { background: #fff; border: 1px solid #dfe6ef; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
-.logistic-regression-body .card { padding: 20px; }
-.logistic-regression-body .card h3 { margin: 0 0 10px; color: #52667e; font-size: 14px; }
-.logistic-regression-body .card p { margin: 0; color: #12365a; font-size: 25px; font-weight: 700; }
-.logistic-regression-body .section-card { margin: 24px 0; padding: 25px; }
-.logistic-regression-body .section-card h2 { margin: 0 0 10px; color: #12365a; font-size: 22px; }
-.logistic-regression-body .section-card h3 { margin: 0 0 10px; color: #294866; font-size: 16px; }
-.logistic-regression-body .section-card p { color: #5c6d82; font-size: 15px; }
-.logistic-regression-body .table-wrapper { max-height: none; margin: 16px 0 0; background: #fff; border-color: #dfe6ef; box-shadow: none; }
-.logistic-regression-body .data-table { min-width: 0; }
-.logistic-regression-body .logistic-metrics { min-width: 700px; }
-.logistic-regression-body .data-table thead { position: static; background: #eef4f8; }
-.logistic-regression-body .data-table th { color: #294866; border-color: #dfe6ef; }
-.logistic-regression-body .data-table td { color: #5d6e82; border-color: #e8edf3; white-space: normal; }
-.logistic-regression-body .data-table tbody tr, .logistic-regression-body .data-table tbody tr:nth-child(even) { background: #fff; }
-.logistic-regression-body .data-table tbody tr:hover { background: #f8fafc; }
-.logistic-regression-body .plot-card { margin-top: 0; padding: 15px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 9px; text-align: center; }
-.logistic-regression-body .plot-card h4 { margin: 0 0 12px; color: #294866; font-size: 15px; }
-.logistic-regression-body .plot-card img { display: block; width: 100%; min-height: 0; height: auto; margin: 0 auto; background: #fff; }
-.logistic-regression-body .comparison-plot { max-width: 1000px; margin-top: 16px; }
-.logistic-regression-body .three-plot-grid, .logistic-regression-body .three-column-details { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; margin-top: 18px; }
-.logistic-regression-body .three-column-details > div { padding: 18px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 8px; }
-.logistic-regression-body .three-column-details p { margin: 0; }
-.logistic-regression-body .matrix-values { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 5px; margin-top: 12px; }
-.logistic-regression-body .matrix-values span { padding: 5px; color: #52667e; background: #fff; border: 1px solid #dfe6ef; border-radius: 5px; font-size: 12px; }
-.logistic-regression-body code { padding: 2px 5px; color: #12365a; background: #e8f2f8; border-radius: 4px; }
-.logistic-regression-body .next-stage-card { display: block; padding: 21px 24px; color: #12365a; text-decoration: none; background: #fff; border: 1px solid #cddce8; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
-.logistic-regression-body .next-stage-card:hover { border-color: #78a7c8; }
-.logistic-regression-body .next-stage-card span { display: block; margin-bottom: 3px; color: #5c6d82; font-size: 13px; }
-.logistic-regression-body .next-stage-card strong { font-size: 17px; }
-
-@media (max-width: 1100px) {
-    .logistic-regression-body .logistic-summary { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    .logistic-regression-body .three-plot-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-}
-@media (max-width: 800px) {
-    .logistic-regression-body .layout { flex-direction: column; }
-    .logistic-regression-body .sidebar { width: 100%; padding: 12px; }
-    .logistic-regression-body .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; }
-    .logistic-regression-body .sidebar li { margin: 0; }
-    .logistic-regression-body .menu-item { width: auto; min-height: 44px; }
-    .logistic-regression-body .content { padding: 30px 20px 45px; }
-    .logistic-regression-body .three-plot-grid, .logistic-regression-body .three-column-details { grid-template-columns: 1fr; }
-}
-@media (max-width: 550px) {
-    .logistic-regression-body .topbar { padding: 23px 20px; }
-    .logistic-regression-body .logistic-summary { grid-template-columns: 1fr; }
-    .logistic-regression-body .section-card { padding: 18px; }
-}
-
-/* =========================================================
-   TREE BASED MODELS PAGE
-   Scoped Stage 7 presentation matching the approved light-card family.
-   ========================================================= */
-
-.tree-based-body { min-height: 100vh; background: #f5f7fb; color: #253b57; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; }
-.tree-based-body .topbar { position: static; display: block; height: auto; padding: 28px 34px 24px; background: #12365a; border: 0; box-shadow: none; }
-.tree-based-body .topbar h1 { color: #fff; font-size: 30px; font-weight: 700; }
-.tree-based-body .topbar h1::after { content: none; }
-.tree-based-body .topbar p { margin: 7px 0 0; color: #cfeeff; font-size: 16px; }
-.tree-based-body .layout { min-height: calc(100vh - 120px); background: #f5f7fb; }
-.tree-based-body .sidebar { position: static; width: 250px; height: auto; padding: 26px 14px; background: #163f67; border: 0; }
-.tree-based-body .sidebar li { margin-bottom: 4px; }
-.tree-based-body .menu-item { min-height: 52px; padding: 0 17px; color: #fff; border: 0; border-radius: 8px; font-size: 15px; font-weight: 600; transition: background-color .2s ease, color .2s ease; }
-.tree-based-body .menu-item:hover { color: #fff; background: rgba(255,255,255,.12); border: 0; transform: none; }
-.tree-based-body .menu-item.active { color: #12365a; background: #fff; border: 0; box-shadow: 0 2px 7px rgba(0,0,0,.08); }
-.tree-based-body .menu-item.active::before { display: none; }
-.tree-based-body .content { padding: 38px 42px 60px; background: #f5f7fb; animation: none; }
-.tree-based-body .content h1 { margin: 0 0 8px; color: #12365a; font-size: 29px; line-height: 1.25; }
-.tree-based-body .page-intro { max-width: 850px; margin: 0 0 26px; color: #5c6d82; font-size: 16px; }
-.tree-based-body .tree-summary { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; margin: 0 0 30px; }
-.tree-based-body .card, .tree-based-body .section-card { background: #fff; border: 1px solid #dfe6ef; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
-.tree-based-body .card { padding: 20px; }
-.tree-based-body .card h3 { margin: 0 0 10px; color: #52667e; font-size: 14px; }
-.tree-based-body .card p { margin: 0; color: #12365a; font-size: 25px; font-weight: 700; }
-.tree-based-body .section-card { margin: 24px 0; padding: 25px; }
-.tree-based-body .section-card h2 { margin: 0 0 10px; color: #12365a; font-size: 22px; }
-.tree-based-body .section-card p { color: #5c6d82; font-size: 15px; }
-.tree-based-body .table-wrapper { max-height: none; margin: 16px 0 0; background: #fff; border-color: #dfe6ef; box-shadow: none; }
-.tree-based-body .data-table { min-width: 0; }
-.tree-based-body .tree-metrics { min-width: 760px; }
-.tree-based-body .data-table thead { position: static; background: #eef4f8; }
-.tree-based-body .data-table th { color: #294866; border-color: #dfe6ef; }
-.tree-based-body .data-table td { color: #5d6e82; border-color: #e8edf3; white-space: normal; }
-.tree-based-body .data-table tbody tr, .tree-based-body .data-table tbody tr:nth-child(even) { background: #fff; }
-.tree-based-body .data-table tbody tr:hover { background: #f8fafc; }
-.tree-based-body .algorithm-form { display: flex; align-items: center; gap: 14px; margin-top: 16px; }
-.tree-based-body .algorithm-form label { color: #294866; font-weight: 600; }
-.tree-based-body .algorithm-select { min-width: 280px; height: 42px; padding: 0 12px; color: #253b57; background: #fff; border: 1px solid #9db5c9; border-radius: 7px; font: inherit; }
-.tree-based-body .algorithm-select:focus { outline: none; border-color: #12365a; box-shadow: 0 0 0 2px rgba(18,54,90,.14); }
-.tree-based-body .run-button { height: 42px; padding: 0 18px; color: #fff; background: #12365a; border: 1px solid #12365a; border-radius: 7px; font: inherit; font-weight: 700; cursor: pointer; }
-.tree-based-body .run-button:hover { background: #0c2c4c; }
-.tree-based-body .selected-chart { margin-top: 16px; padding: 15px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 9px; text-align: center; }
-.tree-based-body .selected-chart img { display: block; width: 100%; max-width: 1000px; height: auto; margin: 0 auto; background: #fff; }
-.tree-based-body .matrix-values { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; margin-top: 12px; }
-.tree-based-body .matrix-values span { padding: 8px; color: #52667e; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 6px; text-align: center; font-size: 13px; }
-
-@media (max-width: 1100px) { .tree-based-body .tree-summary { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-@media (max-width: 800px) {
-    .tree-based-body .layout { flex-direction: column; }
-    .tree-based-body .sidebar { width: 100%; padding: 12px; }
-    .tree-based-body .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; }
-    .tree-based-body .sidebar li { margin: 0; }
-    .tree-based-body .menu-item { width: auto; min-height: 44px; }
-    .tree-based-body .content { padding: 30px 20px 45px; }
-    .tree-based-body .algorithm-form { align-items: stretch; flex-direction: column; }
-    .tree-based-body .algorithm-select, .tree-based-body .run-button { width: 100%; }
-    .tree-based-body .matrix-values { grid-template-columns: repeat(2, minmax(0,1fr)); }
-}
-@media (max-width: 550px) {
-    .tree-based-body .topbar { padding: 23px 20px; }
-    .tree-based-body .tree-summary { grid-template-columns: 1fr; }
-    .tree-based-body .section-card { padding: 18px; }
-}
-
-/* =========================================================
-   LINEAR REGRESSION — POLICY PULSE REFERENCE STRUCTURE
-   Kept body-scoped so frozen stages remain unchanged.
-   ========================================================= */
-.linear-regression-body { background: #f5f7fb; color: #253b57; }
-.linear-regression-body .topbar { width: 100%; padding: 32px 34px 27px; background: #244b75; color: #fff; border-bottom: 1px solid #d7e0ea; }
-.linear-regression-body .topbar h1 { margin-bottom: 10px; color: #fff; font-size: 32px; font-weight: 700; }
-.linear-regression-body .topbar p { margin: 0; color: #e5edf6; font-size: 16px; }
-.linear-regression-body .layout { align-items: stretch; min-height: calc(100vh - 126px); }
-.linear-regression-body .sidebar { width: 250px; min-width: 250px; padding: 0; background: #2b5683; min-height: calc(100vh - 126px); }
-.linear-regression-body .sidebar ul { width: 100%; padding: 32px 14px; }
-.linear-regression-body .sidebar li { margin: 0; }
-.linear-regression-body .menu-item { min-height: 56px; padding: 0 18px; margin-bottom: 4px; color: #fff; border-radius: 9px; font-size: 17px; font-weight: 600; }
-.linear-regression-body .menu-item:hover { background: rgba(255,255,255,.10); }
-.linear-regression-body .menu-item.active { color: #244b75; background: #fff; box-shadow: 0 2px 7px rgba(0,0,0,.08); }
-.linear-regression-body .content { padding: 42px 44px 60px; background: #f5f7fb; }
-.linear-regression-body .content > h1 { margin: 0 0 10px; color: #244b75; font-size: 29px; line-height: 1.25; font-weight: 700; }
-.linear-regression-body .content > p { margin: 0 0 26px; color: #5c6d82; font-size: 16px; line-height: 1.6; }
-.linear-regression-body .regression-summary { width: 100%; margin-bottom: 30px; }
-.linear-regression-body .card { padding: 21px; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.04); }
-.linear-regression-body .card h3 { margin-bottom: 13px; color: #52667e; font-size: 16px; }
-.linear-regression-body .card p { color: #244b75; font-size: 26px; }
-.linear-regression-body .approach-card { width: 100%; padding: 24px; margin-bottom: 24px; background: #fff; border: 1px solid #dfe6ef; border-radius: 12px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
-.linear-regression-body .approach-card h2 { margin: 0 0 8px; color: #244b75; font-size: 22px; }
-.linear-regression-body .approach-card p { margin: 0 0 18px; color: #5c6d82; }
-.linear-regression-body .approach-control { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-.linear-regression-body .approach-control label { color: #294866; font-size: 16px; font-weight: 600; }
-.linear-regression-body .approach-select { width: 360px; height: 48px; padding: 0 15px; color: #253b57; background: #fff; border: 1px solid #aebfd2; border-radius: 7px; font-size: 16px; cursor: pointer; outline: none; }
-.linear-regression-body .approach-select:focus { border-color: #244b75; box-shadow: 0 0 0 2px rgba(36,75,117,.15); }
-.linear-regression-body .selection-section { display: none; }
-.linear-regression-body .selection-section.show { display: block; }
-.linear-regression-body .regression-page .section-card { width: 100%; min-width: 0; padding: 26px; margin: 24px 0 0; border-radius: 12px; box-sizing: border-box; float: none; clear: both; }
-.linear-regression-body .section-card h2 { margin: 0 0 9px; color: #244b75; font-size: 24px; }
-.linear-regression-body .section-card h4 { margin: 0 0 15px; color: #294866; font-size: 16px; }
-.linear-regression-body .section-card p { margin: 0 0 18px; color: #5c6d82; font-size: 15px; line-height: 1.6; }
-.linear-regression-body .regression-page .table-wrapper { width: 100%; max-width: 100%; overflow-x: auto; border: 1px solid #dfe6ef; border-radius: 9px; }
-.linear-regression-body .regression-page .data-table { width: 100%; min-width: 650px; border-collapse: collapse; }
-.linear-regression-body .data-table thead { background: #f1f5f9; }
-.linear-regression-body .data-table th { padding: 15px; color: #294866; font-size: 14px; border-bottom: 1px solid #dfe6ef; }
-.linear-regression-body .data-table td { padding: 14px 15px; color: #5d6e82; font-size: 14px; border-bottom: 1px solid #e8edf3; }
-.linear-regression-body .regression-plot { width: 100%; padding: 20px; margin-top: 20px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; text-align: center; box-sizing: border-box; overflow: hidden; }
-.linear-regression-body .regression-plot img { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; }
-.linear-regression-body .prediction-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; width: 100%; }
-.linear-regression-body .prediction-card { min-width: 0; padding: 18px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; text-align: center; }
-.linear-regression-body .prediction-card h4 { margin: 0 0 15px; color: #294866; font-size: 16px; }
-.linear-regression-body .prediction-card img { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; }
-.linear-regression-body .regularization-labels { display: flex; gap: 20px; flex-wrap: wrap; margin: 0 0 18px; color: #5c6d82; font-size: 15px; }
-.linear-regression-body .regularization-labels strong { color: #294866; }
-
-@media (max-width: 1100px) { .linear-regression-body .prediction-grid { grid-template-columns: 1fr; } }
-@media (max-width: 800px) {
-    .linear-regression-body .layout { flex-direction: column; }
-    .linear-regression-body .sidebar { width: 100%; min-width: 100%; min-height: auto; }
-    .linear-regression-body .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; padding: 12px; }
-    .linear-regression-body .menu-item { width: auto; min-height: 46px; margin-bottom: 0; }
-    .linear-regression-body .content { padding: 30px 20px; }
-    .linear-regression-body .approach-control { align-items: stretch; flex-direction: column; }
-    .linear-regression-body .approach-select { width: 100%; }
-}
-@media (max-width: 550px) {
-    .linear-regression-body .topbar { padding: 24px 20px; }
-    .linear-regression-body .topbar h1 { font-size: 27px; }
-    .linear-regression-body .content { padding: 25px 15px 40px; }
-    .linear-regression-body .regression-page .section-card { padding: 18px; }
-    .linear-regression-body .data-table th, .linear-regression-body .data-table td { padding: 11px; }
-}
-
-/* =========================================================
-   STREAMSTAY SHARED APPLICATION SHELL
-   PolicyPulse-derived, applied after all legacy page rules.
-   ========================================================= */
-body.application-shell { min-height: 100vh; background: #f5f7fb; color: #253b57; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; }
-.application-shell .topbar { position: static; display: block; width: 100%; height: auto; padding: 32px 34px 27px; background: #244b75; color: #fff; border: 0; border-bottom: 1px solid #d7e0ea; box-shadow: none; }
-.application-shell .topbar h1 { margin: 0 0 10px; color: #fff; font-size: 32px; font-weight: 700; letter-spacing: normal; }
-.application-shell .topbar h1::after { content: none; }
-.application-shell .topbar p { margin: 0; color: #e5edf6; font-size: 16px; }
-.application-shell .layout { display: flex; align-items: stretch; min-height: calc(100vh - 126px); background: #f5f7fb; }
-.application-shell .sidebar { position: static; width: 250px; min-width: 250px; height: auto; min-height: calc(100vh - 126px); padding: 0; background: #2b5683; border: 0; overflow: visible; }
-.application-shell .sidebar ul { width: 100%; margin: 0; padding: 32px 14px; list-style: none; }
-.application-shell .sidebar li { margin: 0; }
-.application-shell .menu-item { display: flex; align-items: center; width: 100%; min-height: 56px; margin-bottom: 4px; padding: 0 18px; color: #fff; border: 0; border-radius: 9px; font-size: 17px; font-weight: 600; text-decoration: none; transition: background-color .2s ease, color .2s ease; }
-.application-shell .menu-item:hover { color: #fff; background: rgba(255,255,255,.10); border: 0; transform: none; }
-.application-shell .menu-item.active { color: #244b75; background: #fff; border: 0; box-shadow: 0 2px 7px rgba(0,0,0,.08); }
-.application-shell .menu-item.active::before { display: none; }
-.application-shell .content { flex: 1; min-width: 0; padding: 42px 44px 60px; background: #f5f7fb; animation: none; }
-.application-shell .content > h1, .application-shell .content > h2 { margin: 0 0 10px; color: #244b75; font-size: 29px; font-weight: 700; line-height: 1.25; }
-.application-shell .content > p { margin: 0 0 26px; color: #5c6d82; font-size: 16px; line-height: 1.6; }
-.application-shell .page-intro { max-width: none; margin: 0 0 26px; color: #5c6d82; font-size: 16px; }
-.application-shell .card-container, .application-shell .regression-summary, .application-shell .preprocessing-summary, .application-shell .logistic-summary, .application-shell .tree-summary { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; width: 100%; margin: 0 0 30px; }
-.application-shell .card { padding: 21px; background: #fff; border: 1px solid #dfe6ef; border-radius: 10px; box-shadow: 0 2px 8px rgba(30,55,80,.04); }
-.application-shell .card h3 { margin: 0 0 13px; color: #52667e; font-size: 16px; }
-.application-shell .card p { margin: 0; color: #244b75; font-size: 26px; font-weight: 700; }
-.application-shell .section-card { width: 100%; min-width: 0; margin: 24px 0 0; padding: 26px; background: #fff; border: 1px solid #dfe6ef; border-radius: 12px; box-shadow: 0 2px 8px rgba(30,55,80,.05); box-sizing: border-box; }
-.application-shell .section-card h2 { margin: 0 0 9px; color: #244b75; font-size: 24px; }
-.application-shell .section-card h3 { color: #244b75; font-size: 20px; }
-.application-shell .section-card h4 { margin: 0 0 15px; color: #294866; font-size: 16px; }
-.application-shell .section-card p { margin: 0 0 18px; color: #5c6d82; font-size: 15px; line-height: 1.6; }
-.application-shell .table-wrapper { width: 100%; max-width: 100%; margin-top: 16px; overflow-x: auto; background: #fff; border: 1px solid #dfe6ef; border-radius: 9px; box-shadow: none; }
-.application-shell .data-table { width: 100%; min-width: 650px; border-collapse: collapse; background: #fff; }
-.application-shell .data-table thead { position: static; background: #f1f5f9; }
-.application-shell .data-table th { padding: 15px; color: #294866; font-size: 14px; font-weight: 700; text-align: left; border-bottom: 1px solid #dfe6ef; white-space: nowrap; }
-.application-shell .data-table td { padding: 14px 15px; color: #5d6e82; font-size: 14px; line-height: 1.5; border-bottom: 1px solid #e8edf3; white-space: normal; }
-.application-shell .data-table tbody tr, .application-shell .data-table tbody tr:nth-child(even) { background: #fff; }
-.application-shell .data-table tbody tr:hover { background: #f8fafc; }
-.application-shell .plot-card, .application-shell .selected-chart, .application-shell .regression-plot { width: 100%; margin-top: 20px; padding: 20px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; text-align: center; overflow: hidden; box-sizing: border-box; }
-.application-shell .plot-card img, .application-shell .selected-chart img, .application-shell .regression-plot img { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border-radius: 6px; }
-.application-shell .prediction-card { padding: 18px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; }
-.application-shell .algorithm-form { margin-top: 20px; gap: 16px; }
-.application-shell .algorithm-form label { color: #294866; font-size: 16px; font-weight: 600; }
-.application-shell .algorithm-select, .application-shell .approach-select { width: 360px; height: 48px; padding: 0 15px; color: #253b57; background: #fff; border: 1px solid #aebfd2; border-radius: 7px; font-size: 16px; }
-.application-shell .run-button { height: 48px; padding: 0 25px; color: #fff; background: #244b75; border: 0; border-radius: 7px; font-size: 16px; font-weight: 600; }
-.application-shell .run-button:hover { background: #1d3e63; }
-
-@media (max-width: 1100px) {
-    .application-shell .card-container, .application-shell .regression-summary, .application-shell .preprocessing-summary, .application-shell .logistic-summary, .application-shell .tree-summary { grid-template-columns: repeat(2,minmax(0,1fr)); }
-}
-@media (max-width: 800px) {
-    .application-shell .layout { flex-direction: column; }
-    .application-shell .sidebar { width: 100%; min-width: 100%; min-height: auto; }
-    .application-shell .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; padding: 12px; }
-    .application-shell .menu-item { width: auto; min-height: 46px; margin-bottom: 0; }
-    .application-shell .content { padding: 30px 20px; }
-    .application-shell .algorithm-form { align-items: stretch; flex-direction: column; }
-    .application-shell .algorithm-select, .application-shell .approach-select, .application-shell .run-button { width: 100%; }
-}
-@media (max-width: 550px) {
-    .application-shell .topbar { padding: 24px 20px; }
-    .application-shell .topbar h1 { font-size: 27px; }
-    .application-shell .content { padding: 25px 15px 40px; }
-    .application-shell .section-card { padding: 18px; }
-    .application-shell .card-container, .application-shell .regression-summary, .application-shell .preprocessing-summary, .application-shell .logistic-summary, .application-shell .tree-summary { grid-template-columns: 1fr; }
-    .application-shell .data-table th, .application-shell .data-table td { padding: 11px; }
-}
-
-/* Legacy Stage 1 and Stage 3 content, visually normalized only. */
-.application-shell .content h3 { margin: 26px 0 12px; color: #244b75; font-size: 20px; }
-.application-shell .summary-table { width: 100%; margin: 0 0 24px; border-collapse: separate; border-spacing: 0; background: #fff; border: 1px solid #dfe6ef; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
-.application-shell .summary-table td { padding: 14px 15px; color: #5d6e82; border-bottom: 1px solid #e8edf3; }
+.application-shell .table-wrapper::-webkit-scrollbar { width: 8px; height: 8px; }
+.application-shell .table-wrapper::-webkit-scrollbar-track { background: var(--scroll-track); }
+.application-shell .table-wrapper::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 99px; }
+.application-shell .table-wrapper::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+.application-shell .data-table,
+.application-shell .summary-table { width: 100%; border-collapse: collapse; background: transparent; }
+.application-shell .data-table { min-width: 650px; }
+.application-shell .logistic-page .data-table { min-width: 900px; }
+.application-shell .summary-table { max-width: 620px; margin: 0 0 24px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.application-shell .data-table th,
+.application-shell .data-table td,
+.application-shell .data-table th *,
+.application-shell .data-table td *,
+.application-shell .summary-table th,
+.application-shell .summary-table td,
+.application-shell .summary-table th *,
+.application-shell .summary-table td * { color: var(--table-text); text-shadow: none; }
+.application-shell .data-table th,
+.application-shell .summary-table th { padding: 14px 15px; background: var(--table-header-bg); border-bottom: 1px solid var(--border); font-size: 13px; font-weight: 700; text-align: left; white-space: nowrap; }
+.application-shell .data-table td,
+.application-shell .summary-table td { padding: 13px 15px; background: var(--table-cell-bg); border-bottom: 1px solid var(--border); font-size: 13px; font-weight: 500; line-height: 1.5; vertical-align: top; }
+.application-shell .summary-table td:first-child { width: 42%; background: var(--table-key-bg); font-weight: 650; }
+.application-shell .data-table tbody tr:last-child td,
 .application-shell .summary-table tr:last-child td { border-bottom: 0; }
-.application-shell .summary-table td:first-child { width: 42%; color: #294866; font-weight: 700; background: #f8fafc; }
-.application-shell .chart-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; margin-top: 20px; }
-.application-shell .chart-card { padding: 20px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; text-align: center; overflow: hidden; }
-.application-shell .chart-card img { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border-radius: 6px; }
-@media (max-width: 800px) { .application-shell .chart-grid { grid-template-columns: 1fr; } }
+.application-shell .data-table tbody tr:hover > td,
+.application-shell .summary-table tr:hover > td,
+.application-shell .data-table tbody tr:focus-within > td,
+.application-shell .summary-table tr:focus-within > td { color: var(--heading); background: var(--table-hover-bg); }
+.application-shell .data-table tbody tr:hover > td *,
+.application-shell .summary-table tr:hover > td *,
+.application-shell .data-table tbody tr:focus-within > td *,
+.application-shell .summary-table tr:focus-within > td *,
+.application-shell .data-table td:hover,
+.application-shell .data-table td:focus,
+.application-shell .summary-table td:hover,
+.application-shell .summary-table td:focus { color: var(--heading); background-color: transparent; outline: none; }
+.application-shell .data-table a,
+.application-shell .summary-table a { color: var(--accent); font-weight: 650; }
+.application-shell .data-table a:focus-visible,
+.application-shell .summary-table a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 
-/* Stage 6 Logistic Regression reference-specific content hierarchy. */
-.application-shell .approach-card { width: 100%; padding: 24px; margin: 24px 0 0; background: #fff; border: 1px solid #dfe6ef; border-radius: 12px; box-shadow: 0 2px 8px rgba(30,55,80,.05); }
-.application-shell .approach-card h2 { margin: 0 0 8px; color: #244b75; font-size: 22px; }
-.application-shell .approach-card p { margin: 0 0 18px; color: #5c6d82; }
-.application-shell .approach-control { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-.application-shell .approach-control label { color: #294866; font-size: 16px; font-weight: 600; }
+/* Controls */
+.application-shell .algorithm-form,
+.application-shell .approach-control,
+.application-shell .form-field { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
+.application-shell .algorithm-form label,
+.application-shell .approach-control label,
+.application-shell .form-field label { color: var(--subheading); font-size: 15px; font-weight: 650; }
+.application-shell .algorithm-select,
+.application-shell .approach-select,
+.application-shell .form-field select {
+    min-width: 260px; min-height: 44px; padding: 9px 36px 9px 12px; color: var(--control-text);
+    background: var(--input-bg); border: 1px solid var(--border-bright); border-radius: 8px;
+    font: inherit; font-size: 15px;
+}
+.application-shell .algorithm-select option,
+.application-shell .approach-select option,
+.application-shell .form-field select option { color: var(--text); background: var(--input-option-bg); }
+.application-shell .algorithm-select:focus,
+.application-shell .approach-select:focus,
+.application-shell .form-field select:focus { border-color: var(--cyan); outline: 3px solid rgba(34,211,238,.18); outline-offset: 1px; }
+.application-shell .run-button {
+    min-height: 44px; padding: 9px 20px; color: #03111e; background: linear-gradient(110deg, #7db7ff, #42d6ed);
+    border: 1px solid rgba(197,239,255,.75); border-radius: 8px; box-shadow: 0 8px 18px rgba(34,211,238,.14);
+    font: inherit; font-size: 15px; font-weight: 720; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.application-shell .run-button:hover { box-shadow: 0 12px 25px rgba(34,211,238,.25); filter: brightness(1.05); transform: translateY(-1px); }
+.application-shell .run-button:active { transform: translateY(0); }
+.application-shell .run-button:focus-visible { outline: 3px solid rgba(34,211,238,.35); outline-offset: 2px; }
+.application-shell .clustering-parameters { margin-top: 30px; }
+.application-shell .clustering-form { margin-top: 20px; }
+.application-shell .clustering-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; }
+.application-shell .clustering-control { min-width: 0; }
+.application-shell .clustering-control label { display: block; margin-bottom: 8px; color: var(--subheading); font-size: 15px; font-weight: 650; }
+.application-shell .clustering-control select,
+.application-shell .clustering-control input { width: 100%; min-height: 48px; padding: 10px 13px; color: var(--control-text); background: var(--input-bg); border: 1px solid var(--border-bright); border-radius: 8px; font: inherit; font-size: 15px; }
+.application-shell .clustering-control select:disabled { opacity: 1; cursor: default; }
+.application-shell .clustering-control input[readonly] { cursor: default; }
+.application-shell .control-hint { margin: 12px 0 18px; font-size: 13px; }
 .application-shell .selection-section { display: none; }
 .application-shell .selection-section.show { display: block; }
-.application-shell .logistic-context { margin-top: 24px; }
-.application-shell .logistic-single-plot { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 20px; padding: 20px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; overflow: hidden; box-sizing: border-box; }
-.application-shell .logistic-single-plot img { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border-radius: 6px; }
-.application-shell .logistic-plot-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; width: 100%; margin-top: 20px; }
-.application-shell .logistic-plot-card { min-width: 0; padding: 18px; background: #f8fafc; border: 1px solid #dfe6ef; border-radius: 10px; text-align: center; overflow: hidden; }
-.application-shell .logistic-plot-card h4 { margin: 0 0 15px; color: #294866; font-size: 16px; line-height: 1.4; }
-.application-shell .logistic-plot-card img { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border-radius: 6px; }
-@media (max-width: 1100px) { .application-shell .logistic-plot-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
-@media (max-width: 800px) {
-    .application-shell .logistic-plot-grid { grid-template-columns: 1fr; }
-    .application-shell .approach-control { align-items: stretch; flex-direction: column; }
-}
 
-/* Stage 6 final layout containment: keep wide comparison tables inside their card. */
-html, body.application-shell { width: 100%; max-width: 100%; overflow-x: hidden; }
-.application-shell .layout { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
-.application-shell .content { width: auto; max-width: calc(100vw - 250px); min-width: 0; overflow-x: hidden; box-sizing: border-box; }
-.application-shell .logistic-page, .application-shell .logistic-page > *, .application-shell .logistic-context, .application-shell .logistic-page .section-card { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
-.application-shell .logistic-context p { max-width: 100%; overflow-wrap: anywhere; word-wrap: break-word; }
-.application-shell .logistic-page .table-wrapper { width: 100%; max-width: 100%; min-width: 0; overflow-x: auto; overflow-y: hidden; box-sizing: border-box; }
-.application-shell .logistic-page .data-table { min-width: 900px; }
+/* Charts and callouts */
+.application-shell .chart-grid,
+.application-shell .prediction-grid,
+.application-shell .logistic-plot-grid,
+.application-shell .three-plot-grid,
+.application-shell .two-plot-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; width: 100%; margin-top: 18px; }
+.application-shell .logistic-plot-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.application-shell .chart-card,
+.application-shell .plot-card,
+.application-shell .selected-chart,
+.application-shell .regression-plot,
+.application-shell .prediction-card,
+.application-shell .logistic-plot-card,
+.application-shell .model-chart {
+    min-width: 0; padding: 17px; background: var(--chart-surface); border: 1px solid var(--border);
+    border-radius: 11px; box-shadow: inset 0 1px rgba(255,255,255,.045), 0 10px 26px rgba(0,7,20,.16); overflow: hidden; text-align: center;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.application-shell .chart-card:hover,
+.application-shell .prediction-card:hover,
+.application-shell .logistic-plot-card:hover { border-color: var(--border-bright); box-shadow: inset 0 1px rgba(255,255,255,.07), 0 16px 32px rgba(0,7,20,.24); transform: translateY(-2px); }
+.application-shell .chart-card img,
+.application-shell .plot-card img,
+.application-shell .selected-chart img,
+.application-shell .regression-plot img,
+.application-shell .prediction-card img,
+.application-shell .logistic-plot-card img,
+.application-shell .model-chart img { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; }
+.application-shell .regularization-labels,
+.application-shell .matrix-values { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+.application-shell .regularization-labels span,
+.application-shell .matrix-values span,
+.application-shell .regularization-badge { padding: 6px 10px; color: var(--badge-text); background: rgba(34,211,238,.10); border: 1px solid rgba(34,211,238,.19); border-radius: 999px; font-size: 13px; font-weight: 600; }
+.application-shell .next-stage-card { display: block; margin-top: 24px; padding: 19px 22px; color: var(--heading); background: var(--next-stage-bg); border: 1px solid var(--border-bright); border-radius: 11px; box-shadow: var(--shadow); text-decoration: none; transition: transform .18s ease, border-color .18s ease, background-color .18s ease; }
+.application-shell .next-stage-card:hover { background: var(--next-stage-hover); border-color: var(--accent); transform: translateY(-1px); }
+.application-shell .next-stage-card:focus-visible { outline: 3px solid rgba(34,211,238,.25); outline-offset: 2px; }
+.application-shell .next-stage-card span { display: block; margin-bottom: 3px; color: var(--muted); font-size: 13px; }
+.application-shell .next-stage-card strong { font-size: 16px; }
+.application-shell .report-details { margin-top: 18px; padding: 14px 16px; background: var(--detail-surface); border: 1px solid var(--border); border-radius: 9px; }
+.application-shell .report-details summary { color: var(--subheading); font-weight: 650; cursor: pointer; }
+.application-shell .report-details pre { overflow-x: auto; color: var(--text); white-space: pre-wrap; }
+
+/* Compact, keyboard-accessible theme control. */
+.application-shell .theme-toggle {
+    position: absolute; top: 50%; right: 32px; display: inline-grid; width: 38px; height: 38px; place-items: center;
+    padding: 0; color: var(--toggle-icon); background: var(--toggle-bg); border: 1px solid var(--border-bright); border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 12, 32, .12); cursor: pointer; transform: translateY(-50%);
+    transition: background-color .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
+}
+.application-shell .theme-toggle:hover { background: var(--toggle-hover); border-color: var(--accent); }
+.application-shell .theme-toggle:focus-visible { outline: 3px solid rgba(34, 211, 238, .30); outline-offset: 3px; }
+.application-shell .theme-icon { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+.application-shell .theme-icon-moon { display: none; }
+:root[data-theme="light"] .application-shell .theme-icon-sun { display: none; }
+:root[data-theme="light"] .application-shell .theme-icon-moon { display: block; }
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .application-shell .section-card,
+    .application-shell .approach-card,
+    .application-shell .card { background: var(--glass-strong); }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+@media (max-width: 1100px) {
+    .application-shell .card-container, .application-shell .regression-summary, .application-shell .preprocessing-summary, .application-shell .logistic-summary, .application-shell .tree-summary { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .application-shell .logistic-plot-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
 @media (max-width: 800px) {
-    .application-shell .content { max-width: 100%; }
+    .application-shell .layout { display: block; }
+    .application-shell .sidebar { width: 100%; min-width: 0; padding: 10px 12px; border-right: 0; border-bottom: 1px solid var(--border); }
+    .application-shell .sidebar ul { display: flex; flex-wrap: wrap; gap: 5px; }
+    .application-shell .sidebar-section-title { margin: 12px 0 5px; }
+    .application-shell .sidebar li { margin: 0; }
+    .application-shell .menu-item { min-height: 42px; padding: 0 11px; font-size: 13px; }
+    .application-shell .content { max-width: none; padding: 30px 20px 48px; }
+    .application-shell .section-card, .application-shell .approach-card { padding: 20px; }
+    .application-shell .algorithm-form, .application-shell .approach-control, .application-shell .form-field { align-items: stretch; flex-direction: column; }
+    .application-shell .clustering-form-grid { grid-template-columns: 1fr; gap: 15px; }
+    .application-shell .algorithm-select, .application-shell .approach-select, .application-shell .form-field select, .application-shell .run-button { width: 100%; }
+    .application-shell .logistic-plot-grid, .application-shell .chart-grid, .application-shell .prediction-grid, .application-shell .three-plot-grid, .application-shell .two-plot-grid { grid-template-columns: 1fr; }
     .application-shell .logistic-page .data-table { min-width: 800px; }
+}
+@media (max-width: 550px) {
+    .application-shell .topbar { padding: 21px 70px 21px 20px; }
+    .application-shell .theme-toggle { right: 18px; }
+    .application-shell .content { padding: 25px 15px 40px; }
+    .application-shell .card-container, .application-shell .regression-summary, .application-shell .preprocessing-summary, .application-shell .logistic-summary, .application-shell .tree-summary, .application-shell .two-column-details, .application-shell .three-column-details, .application-shell .method-grid, .application-shell .regularization-grid { grid-template-columns: 1fr; }
+    .application-shell .data-table th, .application-shell .data-table td, .application-shell .summary-table th, .application-shell .summary-table td { padding: 11px; }
 }

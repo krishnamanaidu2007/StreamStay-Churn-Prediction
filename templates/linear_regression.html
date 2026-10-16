@@ -4,26 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StreamStay - Linear Regression</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='theme.js', v=css_version) }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=css_version) }}">
 </head>
 <body class="application-shell linear-regression-body">
 <div class="topbar">
     <h1>StreamStay</h1>
     <p>Churn Prediction</p>
+    {% include "_theme_toggle.html" %}
 </div>
 
 <div class="layout">
-    <aside class="sidebar">
-        <ul>
-            <li><a href="{{ url_for('index') }}" class="menu-item">🏠&nbsp; Home</a></li>
-            <li><a href="{{ url_for('data_loading') }}" class="menu-item">📁&nbsp; Data Loading</a></li>
-            <li><a href="{{ url_for('eda') }}" class="menu-item">📊&nbsp; EDA</a></li>
-            <li><a href="{{ url_for('preprocessing') }}" class="menu-item">⚙️&nbsp; Preprocessing</a></li>
-            <li><a href="{{ url_for('linear_regression') }}" class="menu-item active">📈&nbsp; Linear Regression</a></li>
-            <li><a href="{{ url_for('logistic_regression') }}" class="menu-item">🔢&nbsp; Logistic Regression</a></li>
-            <li><a href="{{ url_for('tree_based') }}" class="menu-item">🌳&nbsp; Tree Based Models</a></li>
-        </ul>
-    </aside>
+    {% include "_sidebar.html" %}
 
     <main class="content regression-page">
         <h1>Linear Regression</h1>
@@ -70,7 +62,7 @@
                     <h2>Actual vs Predicted</h2>
                     <div class="regression-plot">
                         <h4>Linear Regression</h4>
-                        <img src="{{ url_for('static', filename='charts/linear_regression_actual_vs_predicted.png') }}" alt="Linear Regression predictions">
+                        <img src="{{ url_for('static', filename='charts/' + results.chart_files['linear_regression_actual_vs_predicted.png']) }}" alt="Linear Regression predictions">
                     </div>
                 </div>
             </div>
@@ -98,8 +90,8 @@
                 <div class="section-card">
                     <h2>Regularized Predictions</h2>
                     <div class="prediction-grid">
-                        <div class="prediction-card"><h4>Ridge Regression — L2</h4><img src="{{ url_for('static', filename='charts/ridge_regression_actual_vs_predicted.png') }}" alt="Ridge Regression predictions"></div>
-                        <div class="prediction-card"><h4>Lasso Regression — L1</h4><img src="{{ url_for('static', filename='charts/lasso_regression_actual_vs_predicted.png') }}" alt="Lasso Regression predictions"></div>
+                        <div class="prediction-card"><h4>Ridge Regression — L2</h4><img src="{{ url_for('static', filename='charts/' + results.chart_files['ridge_regression_actual_vs_predicted.png']) }}" alt="Ridge Regression predictions"></div>
+                        <div class="prediction-card"><h4>Lasso Regression — L1</h4><img src="{{ url_for('static', filename='charts/' + results.chart_files['lasso_regression_actual_vs_predicted.png']) }}" alt="Lasso Regression predictions"></div>
                     </div>
                 </div>
             </div>
@@ -121,14 +113,14 @@
                 </div>
                 <div class="section-card">
                     <h2>Model Comparison</h2>
-                    <div class="regression-plot"><img src="{{ url_for('static', filename='charts/linear_regression_model_comparison.png') }}" alt="Linear Regression comparison"></div>
+                    <div class="regression-plot"><img src="{{ url_for('static', filename='charts/' + results.chart_files['linear_regression_model_comparison.png']) }}" alt="Linear Regression comparison"></div>
                 </div>
                 <div class="section-card">
                     <h2>Actual vs Predicted</h2>
                     <div class="prediction-grid">
-                        <div class="prediction-card"><h4>Linear Regression</h4><img src="{{ url_for('static', filename='charts/linear_regression_actual_vs_predicted.png') }}" alt="Linear Regression predictions"></div>
-                        <div class="prediction-card"><h4>Ridge Regression — L2</h4><img src="{{ url_for('static', filename='charts/ridge_regression_actual_vs_predicted.png') }}" alt="Ridge Regression predictions"></div>
-                        <div class="prediction-card"><h4>Lasso Regression — L1</h4><img src="{{ url_for('static', filename='charts/lasso_regression_actual_vs_predicted.png') }}" alt="Lasso Regression predictions"></div>
+                        <div class="prediction-card"><h4>Linear Regression</h4><img src="{{ url_for('static', filename='charts/' + results.chart_files['linear_regression_actual_vs_predicted.png']) }}" alt="Linear Regression predictions"></div>
+                        <div class="prediction-card"><h4>Ridge Regression — L2</h4><img src="{{ url_for('static', filename='charts/' + results.chart_files['ridge_regression_actual_vs_predicted.png']) }}" alt="Ridge Regression predictions"></div>
+                        <div class="prediction-card"><h4>Lasso Regression — L1</h4><img src="{{ url_for('static', filename='charts/' + results.chart_files['lasso_regression_actual_vs_predicted.png']) }}" alt="Lasso Regression predictions"></div>
                     </div>
                 </div>
             </div>

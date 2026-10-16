@@ -4,20 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StreamStay - Tree Based Models</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='theme.js', v=css_version) }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=css_version) }}">
 </head>
 <body class="application-shell tree-based-body">
-<header class="topbar"><h1>StreamStay</h1><p>Churn Prediction</p></header>
+<header class="topbar"><h1>StreamStay</h1><p>Churn Prediction</p>{% include "_theme_toggle.html" %}</header>
 <div class="layout">
-    <aside class="sidebar"><ul>
-        <li><a href="{{ url_for('index') }}" class="menu-item">🏠&nbsp; Home</a></li>
-        <li><a href="{{ url_for('data_loading') }}" class="menu-item">📁&nbsp; Data Loading</a></li>
-        <li><a href="{{ url_for('eda') }}" class="menu-item">📊&nbsp; EDA</a></li>
-        <li><a href="{{ url_for('preprocessing') }}" class="menu-item">⚙️&nbsp; Preprocessing</a></li>
-        <li><a href="{{ url_for('linear_regression') }}" class="menu-item">📈&nbsp; Linear Regression</a></li>
-        <li><a href="{{ url_for('logistic_regression') }}" class="menu-item">🔢&nbsp; Logistic Regression</a></li>
-        <li><a href="{{ url_for('tree_based') }}" class="menu-item active">🌳&nbsp; Tree Based Models</a></li>
-    </ul></aside>
+    {% include "_sidebar.html" %}
     <main class="content tree-based-page">
         <h1>Tree Based Models</h1>
         <p class="page-intro">Evaluate seven tree-based classification algorithms for StreamStay churn prediction.</p>

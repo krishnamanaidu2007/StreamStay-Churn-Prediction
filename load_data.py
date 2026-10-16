@@ -1,4 +1,6 @@
 import os
+import hashlib
+import threading
 import pandas as pd
 
 
@@ -33,6 +35,75 @@ FINAL_50K_PATH = os.path.join(
     DATA_DIR,
     "streamstay_50k.csv"
 )
+
+
+# =========================================================
+# PROCESS-LOCAL DATA CACHE
+# =========================================================
+
+# The canonical frame is never returned directly.  Each caller receives a
+# deep copy so page-specific work cannot mutate the reusable source data.
+_DATA_CACHE = {
+    "fingerprint": None,
+    "data": None,
+}
+_DATA_CACHE_LOCK = threading.RLock()
+_FINGERPRINT_CHUNK_SIZE = 1024 * 1024
+
+
+def _file_fingerprint(path: str) -> str:
+    """Return a content fingerprint for one CSV file."""
+    digest = hashlib.sha256()
+    with open(path, "rb") as dataset_file:
+        for chunk in iter(lambda: dataset_file.read(_FINGERPRINT_CHUNK_SIZE), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _copy_dataframe(data: pd.DataFrame) -> pd.DataFrame:
+    """Return an independent frame; never expose the cached canonical frame."""
+    return data.copy(deep=True)
+
+
+def load_data_with_fingerprint() -> tuple[pd.DataFrame, str]:
+    """Load a defensive data copy together with the exact CSV fingerprint.
+
+    The file is fingerprinted before and after a cache miss read.  If it is
+    modified during that read, the operation retries instead of pairing data
+    from one file version with the fingerprint of another.
+    """
+    with _DATA_CACHE_LOCK:
+        if not os.path.exists(FINAL_50K_PATH):
+            safe_print("\n50K dataset not found.")
+            safe_print("Creating it from the original datasets...")
+            create_50k_dataset()
+
+        while True:
+            fingerprint_before_read = _file_fingerprint(FINAL_50K_PATH)
+
+            if _DATA_CACHE["fingerprint"] == fingerprint_before_read:
+                return (
+                    _copy_dataframe(_DATA_CACHE["data"]),
+                    fingerprint_before_read,
+                )
+
+            data = pd.read_csv(FINAL_50K_PATH)
+            fingerprint_after_read = _file_fingerprint(FINAL_50K_PATH)
+
+            if fingerprint_before_read == fingerprint_after_read:
+                _DATA_CACHE["fingerprint"] = fingerprint_after_read
+                _DATA_CACHE["data"] = data
+                return _copy_dataframe(data), fingerprint_after_read
+
+
+def get_data_fingerprint() -> str:
+    """Return the current final-CSV content fingerprint without exposing data."""
+    with _DATA_CACHE_LOCK:
+        if not os.path.exists(FINAL_50K_PATH):
+            safe_print("\n50K dataset not found.")
+            safe_print("Creating it from the original datasets...")
+            create_50k_dataset()
+        return _file_fingerprint(FINAL_50K_PATH)
 
 
 # =========================================================
@@ -387,40 +458,23 @@ def create_50k_dataset():
 
 def load_data():
 
-    # If 50K dataset already exists,
-    # use it directly.
-    if os.path.exists(FINAL_50K_PATH):
-
-        safe_print(
-            "\n========== LOADING 50K DATASET =========="
-        )
-
-        df = pd.read_csv(
-            FINAL_50K_PATH
-        )
-
-        safe_print(
-            "Rows:",
-            len(df)
-        )
-
-        safe_print(
-            "Columns:",
-            len(df.columns)
-        )
-
-        return df
-
-    # Otherwise create it
     safe_print(
-        "\n50K dataset not found."
+        "\n========== LOADING 50K DATASET =========="
+    )
+
+    df, _ = load_data_with_fingerprint()
+
+    safe_print(
+        "Rows:",
+        len(df)
     )
 
     safe_print(
-        "Creating it from the original datasets..."
+        "Columns:",
+        len(df.columns)
     )
 
-    return create_50k_dataset()
+    return df
 
 
 # =========================================================

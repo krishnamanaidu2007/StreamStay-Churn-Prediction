@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamStay - Best Model</title>
+    <script src="{{ url_for('static', filename='theme.js', v=css_version) }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=css_version) }}">
+</head><body class="application-shell evaluation-page">
+<header class="topbar"><h1>StreamStay</h1><p>Churn Prediction</p>{% include "_theme_toggle.html" %}</header>
+<div class="layout">{% include "_sidebar.html" %}<main class="content">
+    <h2>Best Model</h2>
+    <p class="page-intro">Compare the existing churn classifiers on their shared held-out test set. This page reuses the approved model results and does not change model settings, preprocessing, or predictions.</p>
+    {% if error %}<div class="error">{{ error }}</div>{% endif %}
+    {% if not results %}<section class="section-card"><h2>Classifier Leaderboard</h2><p>Run the evaluation to assemble the existing Logistic Regression and Tree-Based metrics. The first run may complete any missing approved model results; later runs reuse their process-local caches.</p><form method="post"><button class="run-button" type="submit">Build Leaderboard</button></form></section>{% endif %}
+    {% if results %}
+    <section class="section-card"><h2>Highest Reported ROC-AUC</h2><div class="card-container"><div class="card"><h3>Model</h3><p>{{ results.best.Model }}</p></div><div class="card"><h3>ROC-AUC</h3><p>{{ '%.4f'|format(results.best['ROC-AUC']) }}</p></div><div class="card"><h3>F1 Score</h3><p>{{ '%.4f'|format(results.best.F1) }}</p></div><div class="card"><h3>Recall</h3><p>{{ '%.4f'|format(results.best.Recall) }}</p></div></div><p>{{ results.best.Model }} is the highest-ranked model by ROC-AUC among {{ results.eligible_model_count }} already-configured classifiers. This is a descriptive ranking of the shared held-out test metrics, not a new tuning or validation procedure; consider precision, recall, and F1 alongside ROC-AUC for the imbalanced churn outcome.</p></section>
+    <section class="section-card"><h2>Classifier Leaderboard</h2><p>All rows use the same {{ results.test_shape[0] }} held-out customers and {{ results.feature_count }} transformed features. Linear regression models are deliberately excluded because their page reports continuous regression outputs rather than probability classifiers.</p><div class="table-wrapper"><table class="data-table"><thead><tr><th>Rank</th><th>Family</th><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>ROC-AUC</th></tr></thead><tbody>{% for row in results.leaderboard %}<tr><td>{{ loop.index }}</td><td>{{ row.family }}</td><td>{{ row.Model }}</td><td>{{ '%.4f'|format(row.Accuracy) }}</td><td>{{ '%.4f'|format(row.Precision) }}</td><td>{{ '%.4f'|format(row.Recall) }}</td><td>{{ '%.4f'|format(row.F1) }}</td><td>{{ '%.4f'|format(row['ROC-AUC']) }}</td></tr>{% endfor %}</tbody></table></div></section>
+    {% endif %}
+</main></div></body></html>

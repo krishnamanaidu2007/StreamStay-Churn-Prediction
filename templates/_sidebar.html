@@ -1,0 +1,27 @@
+<aside class="sidebar" aria-label="Project navigation">
+    <nav>
+        <p class="sidebar-section-title">Data</p>
+        <ul>
+            <li><a href="{{ url_for('index') }}" class="menu-item {% if active == 'none' %}active{% endif %}">🏠&nbsp; Home</a></li>
+            <li><a href="{{ url_for('data_loading') }}" class="menu-item {% if active == 'data-loading' %}active{% endif %}">📁&nbsp; Data Loading</a></li>
+            <li><a href="{{ url_for('eda') }}" class="menu-item {% if active == 'eda' %}active{% endif %}">📊&nbsp; EDA</a></li>
+            <li><a href="{{ url_for('preprocessing') }}" class="menu-item {% if active == 'preprocessing' %}active{% endif %}">⚙️&nbsp; Preprocessing</a></li>
+        </ul>
+        <p class="sidebar-section-title">Supervised Learning</p>
+        <ul>
+            <li><a href="{{ url_for('linear_regression') }}" class="menu-item {% if active == 'linear-regression' %}active{% endif %}">📈&nbsp; Linear Regression</a></li>
+            <li><a href="{{ url_for('logistic_regression') }}" class="menu-item {% if active == 'logistic-regression' %}active{% endif %}">🔢&nbsp; Logistic Regression</a></li>
+            <li><a href="{{ url_for('tree_based') }}" class="menu-item {% if active == 'tree-based' %}active{% endif %}">🌳&nbsp; Tree Based Models</a></li>
+        </ul>
+        <p class="sidebar-section-title">Unsupervised Learning</p>
+        <ul>
+            <li><a href="{{ url_for('kmeans_clustering') }}" class="menu-item {% if active == 'kmeans' %}active{% endif %}">◌&nbsp; K-Means Clustering</a></li>
+            <li><a href="{{ url_for('hierarchical_clustering') }}" class="menu-item {% if active == 'hierarchical' %}active{% endif %}">◌&nbsp; Hierarchical Clustering</a></li>
+            <li><a href="{{ url_for('dbscan_clustering') }}" class="menu-item {% if active == 'dbscan' %}active{% endif %}">◌&nbsp; DBSCAN</a></li>
+        </ul>
+        <p class="sidebar-section-title">Evaluation</p>
+        <ul>
+            <li><a href="{{ url_for('best_model') }}" class="menu-item {% if active == 'best-model' %}active{% endif %}">★&nbsp; Best Model</a></li>
+        </ul>
+    </nav>
+</aside>
