@@ -1,4 +1,6 @@
 import os
+import copy
+import threading
 
 import matplotlib
 matplotlib.use("Agg")
@@ -8,7 +10,14 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 
-from load_data import load_data
+from load_data import get_data_fingerprint, load_data_with_fingerprint
+from result_cache import (
+    chart_files_exist,
+    result_version,
+    save_chart_atomically,
+    source_signature,
+    versioned_chart_filename,
+)
 
 
 # =========================================================
@@ -22,6 +31,8 @@ CHARTS_DIR = os.path.join(
     "static",
     "charts"
 )
+_EDA_CACHE = {"data_fingerprint": None, "signature": None, "result": None}
+_EDA_CACHE_LOCK = threading.RLock()
 
 
 # =========================================================
@@ -37,28 +48,28 @@ def _chart_path(filename: str) -> str:
 # SAVE CHART
 # =========================================================
 
-def _save(filename: str):
+def _save(filename: str, chart_version: str) -> str:
+    versioned_filename = versioned_chart_filename(filename, chart_version)
     plt.tight_layout()
 
-    plt.savefig(
-        _chart_path(filename),
-        bbox_inches="tight"
+    save_chart_atomically(
+        _chart_path(versioned_filename),
+        lambda path: plt.savefig(path, bbox_inches="tight"),
     )
 
     plt.close("all")
+    return versioned_filename
 
 
 # =========================================================
 # MAIN EDA FUNCTION
 # =========================================================
 
-def run_eda() -> dict:
+def _build_eda(data: pd.DataFrame, chart_version: str) -> dict:
 
     # =====================================================
     # 1. LOAD DATA
     # =====================================================
-
-    data = load_data()
 
     charts = []
 
@@ -131,11 +142,7 @@ def run_eda() -> dict:
             "Missing Values by Column"
         )
 
-        _save("missing_values.png")
-
-        charts.append(
-            "missing_values.png"
-        )
+        charts.append(_save("missing_values.png", chart_version))
 
 
     # =====================================================
@@ -181,13 +188,7 @@ def run_eda() -> dict:
             "Churn Distribution"
         )
 
-        _save(
-            "target_distribution.png"
-        )
-
-        charts.append(
-            "target_distribution.png"
-        )
+        charts.append(_save("target_distribution.png", chart_version))
 
 
     # =====================================================
@@ -234,9 +235,7 @@ def run_eda() -> dict:
             f"distribution_{column}.png"
         )
 
-        _save(filename)
-
-        charts.append(filename)
+        charts.append(_save(filename, chart_version))
 
 
     # =====================================================
@@ -264,9 +263,7 @@ def run_eda() -> dict:
             f"outliers_{column}.png"
         )
 
-        _save(filename)
-
-        charts.append(filename)
+        charts.append(_save(filename, chart_version))
 
 
     # =====================================================
@@ -308,13 +305,7 @@ def run_eda() -> dict:
         "Correlation Matrix - StreamStay"
     )
 
-    _save(
-        "correlation_matrix.png"
-    )
-
-    charts.append(
-        "correlation_matrix.png"
-    )
+    charts.append(_save("correlation_matrix.png", chart_version))
 
 
     # =====================================================
@@ -362,9 +353,7 @@ def run_eda() -> dict:
             f"{column}_vs_churn.png"
         )
 
-        _save(filename)
-
-        charts.append(filename)
+        charts.append(_save(filename, chart_version))
 
 
     # =====================================================
@@ -424,9 +413,7 @@ def run_eda() -> dict:
             f"categorical_{column}.png"
         )
 
-        _save(filename)
-
-        charts.append(filename)
+        charts.append(_save(filename, chart_version))
 
 
     # =====================================================
@@ -461,13 +448,7 @@ def run_eda() -> dict:
         plt.xlabel("Gender")
         plt.ylabel("Churn Rate")
 
-        _save(
-            "gender_vs_churn.png"
-        )
-
-        charts.append(
-            "gender_vs_churn.png"
-        )
+        charts.append(_save("gender_vs_churn.png", chart_version))
 
 
     # =====================================================
@@ -519,13 +500,7 @@ def run_eda() -> dict:
             ha="right"
         )
 
-        _save(
-            "registration_method_vs_churn.png"
-        )
-
-        charts.append(
-            "registration_method_vs_churn.png"
-        )
+        charts.append(_save("registration_method_vs_churn.png", chart_version))
 
 
     # =====================================================
@@ -568,13 +543,7 @@ def run_eda() -> dict:
             "Churn Rate (%)"
         )
 
-        _save(
-            "registration_year_vs_churn.png"
-        )
-
-        charts.append(
-            "registration_year_vs_churn.png"
-        )
+        charts.append(_save("registration_year_vs_churn.png", chart_version))
 
 
     # =====================================================
@@ -632,9 +601,7 @@ def run_eda() -> dict:
                 f"payment_{column}_vs_churn.png"
             )
 
-            _save(filename)
-
-            charts.append(filename)
+            charts.append(_save(filename, chart_version))
 
 
     # =====================================================
@@ -688,16 +655,15 @@ def run_eda() -> dict:
             y=1.02
         )
 
-        pair_plot.savefig(
-            _chart_path("pairplot.png"),
-            bbox_inches="tight"
+        pairplot_filename = versioned_chart_filename("pairplot.png", chart_version)
+        save_chart_atomically(
+            _chart_path(pairplot_filename),
+            lambda path: pair_plot.savefig(path, bbox_inches="tight"),
         )
 
         plt.close("all")
 
-        charts.append(
-            "pairplot.png"
-        )
+        charts.append(pairplot_filename)
 
 
     # =====================================================
@@ -756,6 +722,33 @@ def run_eda() -> dict:
 
         "charts": charts
     }
+
+
+def run_eda() -> dict:
+    """Return EDA results for the current data and EDA implementation only."""
+    with _EDA_CACHE_LOCK:
+        while True:
+            data, data_fingerprint = load_data_with_fingerprint()
+            computation_signature = source_signature(__file__)
+
+            cached = _EDA_CACHE["result"]
+            if (
+                _EDA_CACHE["data_fingerprint"] == data_fingerprint
+                and _EDA_CACHE["signature"] == computation_signature
+                and cached is not None
+                and chart_files_exist(CHARTS_DIR, cached["charts"])
+            ):
+                return copy.deepcopy(cached)
+
+            chart_version = result_version(data_fingerprint, computation_signature)
+            result = _build_eda(data, chart_version)
+
+            # A source-data change during plotting invalidates the whole run.
+            if get_data_fingerprint() == data_fingerprint:
+                _EDA_CACHE["data_fingerprint"] = data_fingerprint
+                _EDA_CACHE["signature"] = computation_signature
+                _EDA_CACHE["result"] = result
+                return copy.deepcopy(result)
 
 
 # =========================================================

@@ -1,6 +1,8 @@
 """Stage 7 tree-based churn classifiers using StreamStay's approved preprocessing."""
 
 import os
+import copy
+import threading
 
 import matplotlib
 matplotlib.use("Agg")
@@ -14,11 +16,20 @@ from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
 
 from preprocessing import preprocess_data
+from load_data import get_data_fingerprint
+from result_cache import (
+    result_version,
+    save_chart_atomically,
+    source_signature,
+    versioned_chart_filename,
+)
 
 
 CHARTS_DIR = os.path.join(os.path.dirname(__file__), "static", "charts")
 RANDOM_STATE = 42
 TOP_FEATURE_COUNT = 15
+_TREE_SUITE_CACHE = {"data_fingerprint": None, "signature": None, "suite": None}
+_TREE_SUITE_CACHE_LOCK = threading.RLock()
 
 
 def _chart_path(filename):
@@ -44,16 +55,19 @@ def _evaluate(model, X_test, y_test):
     return {"accuracy": float(accuracy_score(y_test, predictions)), "precision": float(precision_score(y_test, predictions, zero_division=0)), "recall": float(recall_score(y_test, predictions, zero_division=0)), "f1": float(f1_score(y_test, predictions, zero_division=0)), "roc_auc": float(roc_auc_score(y_test, probabilities)), "confusion_matrix": confusion_matrix(y_test, predictions, labels=[0, 1]).tolist(), "predictions": predictions, "probabilities": probabilities}
 
 
-def _plot_confusion(name, y_test, predictions):
+def _plot_confusion(name, y_test, predictions, filename):
     fig, axis = plt.subplots(figsize=(6, 4.8), dpi=120)
     ConfusionMatrixDisplay(confusion_matrix(y_test, predictions, labels=[0, 1]), display_labels=["No Churn", "Churn"]).plot(ax=axis, cmap="Blues", colorbar=False)
     axis.set_title(f"{name} — Confusion Matrix")
     fig.tight_layout()
-    fig.savefig(_chart_path("tree_based_confusion_matrix.png"), bbox_inches="tight")
+    save_chart_atomically(
+        _chart_path(filename),
+        lambda path: fig.savefig(path, bbox_inches="tight"),
+    )
     plt.close(fig)
 
 
-def _plot_roc(name, y_test, probabilities):
+def _plot_roc(name, y_test, probabilities, filename):
     false_positive_rate, true_positive_rate, _ = roc_curve(y_test, probabilities)
     score = roc_auc_score(y_test, probabilities)
     fig, axis = plt.subplots(figsize=(6, 4.8), dpi=120)
@@ -63,11 +77,14 @@ def _plot_roc(name, y_test, probabilities):
     axis.legend(loc="lower right")
     axis.grid(alpha=0.2)
     fig.tight_layout()
-    fig.savefig(_chart_path("tree_based_roc_curve.png"), bbox_inches="tight")
+    save_chart_atomically(
+        _chart_path(filename),
+        lambda path: fig.savefig(path, bbox_inches="tight"),
+    )
     plt.close(fig)
 
 
-def _plot_comparison(rows):
+def _plot_comparison(rows, filename):
     frame = pd.DataFrame(rows)
     metrics = ["Accuracy", "Precision", "Recall", "F1", "ROC-AUC"]
     figure, axis = plt.subplots(figsize=(12, 6), dpi=120)
@@ -81,11 +98,14 @@ def _plot_comparison(rows):
     axis.set_title("Tree-Based Model Comparison")
     axis.legend(ncol=5, loc="upper center")
     figure.tight_layout()
-    figure.savefig(_chart_path("tree_based_model_comparison.png"), bbox_inches="tight")
+    save_chart_atomically(
+        _chart_path(filename),
+        lambda path: figure.savefig(path, bbox_inches="tight"),
+    )
     plt.close(figure)
 
 
-def _feature_importance(model, feature_names, model_name):
+def _feature_importance(model, feature_names, model_name, filename):
     if not hasattr(model, "feature_importances_"):
         return [], None
     values = np.asarray(model.feature_importances_)
@@ -96,22 +116,23 @@ def _feature_importance(model, feature_names, model_name):
     axis.set_xlabel("Feature Importance")
     axis.set_title(f"Top Feature Importances — {model_name}")
     figure.tight_layout()
-    figure.savefig(_chart_path("tree_based_feature_importance.png"), bbox_inches="tight")
+    save_chart_atomically(
+        _chart_path(filename),
+        lambda path: figure.savefig(path, bbox_inches="tight"),
+    )
     plt.close(figure)
-    return [{"feature": feature, "importance": float(score)} for feature, score in pairs], "tree_based_feature_importance.png"
+    return [{"feature": feature, "importance": float(score)} for feature, score in pairs], filename
 
 
-def run_tree_models(selected_algorithm):
-    """Train all required models once per explicit POST and return selected-model details."""
+def _build_tree_suite():
+    """Fit the approved seven-model suite once for one preprocessing result."""
     definitions = _model_definitions()
-    if selected_algorithm not in definitions:
-        raise ValueError(f"Unknown tree-based algorithm: {selected_algorithm}")
     processed = preprocess_data()
     X_train, X_test = processed["X_train"], processed["X_test"]
     y_train, y_test = processed["y_train"], processed["y_test"]
     if X_train.shape != (40000, 61) or X_test.shape != (10000, 61):
         raise ValueError(f"Unexpected approved preprocessing shapes: {X_train.shape}, {X_test.shape}")
-    all_results, comparison_rows, selected_result = {}, [], None
+    all_results, comparison_rows = {}, []
     for key, definition in definitions.items():
         model = definition["factory"]()
         model.fit(X_train, y_train)
@@ -119,13 +140,111 @@ def run_tree_models(selected_algorithm):
         entry = {"algorithm": definition["name"], "configuration": definition["configuration"], "model": model, **metrics}
         all_results[key] = entry
         comparison_rows.append({"Model": definition["name"], "Accuracy": metrics["accuracy"], "Precision": metrics["precision"], "Recall": metrics["recall"], "F1": metrics["f1"], "ROC-AUC": metrics["roc_auc"]})
-        if key == selected_algorithm:
-            selected_result = entry
-    _plot_comparison(comparison_rows)
-    _plot_confusion(selected_result["algorithm"], y_test, selected_result["predictions"])
-    _plot_roc(selected_result["algorithm"], y_test, selected_result["probabilities"])
-    importance, importance_filename = _feature_importance(selected_result["model"], processed["feature_names"], selected_result["algorithm"])
-    selected_result.update({"feature_importance": importance, "feature_importance_plot": importance_filename, "confusion_matrix_plot": "tree_based_confusion_matrix.png", "roc_curve_plot": "tree_based_roc_curve.png"})
     no_churn = int((y_train == 0).sum() + (y_test == 0).sum())
     churn = int((y_train == 1).sum() + (y_test == 1).sum())
-    return {"selected": selected_result, "comparison_rows": comparison_rows, "training_shape": tuple(X_train.shape), "testing_shape": tuple(X_test.shape), "feature_count": len(processed["feature_names"]), "target_counts": {"no_churn": no_churn, "churn": churn}, "no_churn_percentage": float(no_churn / (no_churn + churn) * 100), "churn_percentage": float(churn / (no_churn + churn) * 100), "algorithm_count": len(definitions), "comparison_plot": "tree_based_model_comparison.png"}
+    return {
+        "all_results": all_results,
+        "comparison_rows": comparison_rows,
+        "training_shape": tuple(X_train.shape),
+        "testing_shape": tuple(X_test.shape),
+        "feature_names": list(processed["feature_names"]),
+        "feature_count": len(processed["feature_names"]),
+        "target_counts": {"no_churn": no_churn, "churn": churn},
+        "no_churn_percentage": float(no_churn / (no_churn + churn) * 100),
+        "churn_percentage": float(churn / (no_churn + churn) * 100),
+        "algorithm_count": len(definitions),
+        "y_test": y_test.copy(deep=True),
+    }
+
+
+def _selected_result(suite, selected_algorithm, suite_version):
+    """Build one response from cached evaluation outputs and versioned charts."""
+    selected = copy.deepcopy(suite["all_results"][selected_algorithm])
+    selection_version = f"{suite_version}-{selected_algorithm}"
+    comparison_filename = versioned_chart_filename(
+        "tree_based_model_comparison.png", suite_version
+    )
+    confusion_filename = versioned_chart_filename(
+        "tree_based_confusion_matrix.png", selection_version
+    )
+    roc_filename = versioned_chart_filename("tree_based_roc_curve.png", selection_version)
+    importance_filename = versioned_chart_filename(
+        "tree_based_feature_importance.png", selection_version
+    )
+
+    if not os.path.isfile(_chart_path(comparison_filename)):
+        _plot_comparison(suite["comparison_rows"], comparison_filename)
+    if not os.path.isfile(_chart_path(confusion_filename)):
+        _plot_confusion(selected["algorithm"], suite["y_test"], selected["predictions"], confusion_filename)
+    if not os.path.isfile(_chart_path(roc_filename)):
+        _plot_roc(selected["algorithm"], suite["y_test"], selected["probabilities"], roc_filename)
+
+    if os.path.isfile(_chart_path(importance_filename)):
+        importance, _ = _feature_importance_values(
+            selected["model"], suite["feature_names"]
+        )
+    else:
+        importance, generated_importance_filename = _feature_importance(
+            selected["model"], suite["feature_names"], selected["algorithm"], importance_filename
+        )
+        if generated_importance_filename is None:
+            importance_filename = None
+    selected.update({
+        "feature_importance": importance,
+        "feature_importance_plot": importance_filename,
+        "confusion_matrix_plot": confusion_filename,
+        "roc_curve_plot": roc_filename,
+    })
+    return {
+        "selected": selected,
+        "comparison_rows": copy.deepcopy(suite["comparison_rows"]),
+        "training_shape": suite["training_shape"],
+        "testing_shape": suite["testing_shape"],
+        "feature_count": suite["feature_count"],
+        "target_counts": dict(suite["target_counts"]),
+        "no_churn_percentage": suite["no_churn_percentage"],
+        "churn_percentage": suite["churn_percentage"],
+        "algorithm_count": suite["algorithm_count"],
+        "comparison_plot": comparison_filename,
+        "charts": [filename for filename in (comparison_filename, confusion_filename, roc_filename, importance_filename) if filename],
+    }
+
+
+def _feature_importance_values(model, feature_names):
+    if not hasattr(model, "feature_importances_"):
+        return [], None
+    values = np.asarray(model.feature_importances_)
+    pairs = sorted(zip(feature_names, values), key=lambda pair: pair[1], reverse=True)[:TOP_FEATURE_COUNT]
+    return [{"feature": feature, "importance": float(score)} for feature, score in pairs], "existing"
+
+
+def run_tree_models(selected_algorithm):
+    """Return one selected view from a cached seven-model evaluation suite."""
+    definitions = _model_definitions()
+    if selected_algorithm not in definitions:
+        raise ValueError(f"Unknown tree-based algorithm: {selected_algorithm}")
+
+    with _TREE_SUITE_CACHE_LOCK:
+        while True:
+            data_fingerprint = get_data_fingerprint()
+            computation_signature = source_signature(
+                __file__, os.path.join(os.path.dirname(__file__), "preprocessing.py")
+            )
+            suite = _TREE_SUITE_CACHE["suite"]
+            if not (
+                _TREE_SUITE_CACHE["data_fingerprint"] == data_fingerprint
+                and _TREE_SUITE_CACHE["signature"] == computation_signature
+                and suite is not None
+            ):
+                suite = _build_tree_suite()
+                if get_data_fingerprint() != data_fingerprint:
+                    continue
+                _TREE_SUITE_CACHE["data_fingerprint"] = data_fingerprint
+                _TREE_SUITE_CACHE["signature"] = computation_signature
+                _TREE_SUITE_CACHE["suite"] = suite
+
+            result = _selected_result(
+                suite, selected_algorithm, result_version(data_fingerprint, computation_signature)
+            )
+            if get_data_fingerprint() == data_fingerprint:
+                return result

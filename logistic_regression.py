@@ -1,6 +1,8 @@
 """Logistic churn-model baselines using StreamStay's existing preprocessing."""
 
 import os
+import copy
+import threading
 
 import matplotlib
 matplotlib.use("Agg")
@@ -11,11 +13,21 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score, confusion_matrix, f1_score, precision_score, recall_score, roc_auc_score, roc_curve
 
 from preprocessing import preprocess_data
+from load_data import get_data_fingerprint
+from result_cache import (
+    chart_files_exist,
+    result_version,
+    save_chart_atomically,
+    source_signature,
+    versioned_chart_filename,
+)
 
 
 CHARTS_DIR = os.path.join(os.path.dirname(__file__), "static", "charts")
 RANDOM_STATE = 42
 MAX_ITERATIONS = 2000
+_LOGISTIC_CACHE = {"data_fingerprint": None, "signature": None, "result": None}
+_LOGISTIC_CACHE_LOCK = threading.RLock()
 
 
 def _chart_path(filename):
@@ -44,7 +56,10 @@ def _confusion_plot(name, y_test, predictions, filename):
                            display_labels=["No Churn", "Churn"]).plot(ax=axis, cmap="Blues", colorbar=False)
     axis.set_title(f"{name} — Confusion Matrix")
     fig.tight_layout()
-    fig.savefig(_chart_path(filename), bbox_inches="tight")
+    save_chart_atomically(
+        _chart_path(filename),
+        lambda path: fig.savefig(path, bbox_inches="tight"),
+    )
     plt.close(fig)
 
 
@@ -59,11 +74,14 @@ def _roc_plot(name, y_test, probabilities, filename):
     axis.legend(loc="lower right")
     axis.grid(alpha=0.2)
     fig.tight_layout()
-    fig.savefig(_chart_path(filename), bbox_inches="tight")
+    save_chart_atomically(
+        _chart_path(filename),
+        lambda path: fig.savefig(path, bbox_inches="tight"),
+    )
     plt.close(fig)
 
 
-def _comparison_plot(rows):
+def _comparison_plot(rows, filename):
     frame = pd.DataFrame(rows)
     metrics = ["Accuracy", "Precision", "Recall", "F1", "ROC-AUC"]
     fig, axis = plt.subplots(figsize=(9, 5), dpi=120)
@@ -77,11 +95,14 @@ def _comparison_plot(rows):
     axis.set_title("Logistic Model Comparison")
     axis.legend(ncol=3)
     fig.tight_layout()
-    fig.savefig(_chart_path("logistic_regression_model_comparison.png"), bbox_inches="tight")
+    save_chart_atomically(
+        _chart_path(filename),
+        lambda path: fig.savefig(path, bbox_inches="tight"),
+    )
     plt.close(fig)
 
 
-def run_logistic_regression():
+def _build_logistic_regression(chart_version):
     """Fit comparable classifiers using the one StreamStay preprocessing split."""
     processed = preprocess_data()
     X_train, X_test = processed["X_train"], processed["X_test"]
@@ -105,16 +126,27 @@ def run_logistic_regression():
     }
     results, rows = {}, []
     filename_bases = ["logistic_regression", "ridge_logistic", "lasso_logistic"]
+    chart_files = {}
     for (name, (model, configuration)), base in zip(models.items(), filename_bases):
         model.fit(X_train, y_train)
         metrics = _evaluate(model, X_test, y_test)
-        _confusion_plot(name, y_test, metrics["predictions"], f"{base}_confusion_matrix.png")
-        _roc_plot(name, y_test, metrics["probabilities"], f"{base}_roc_curve.png")
+        confusion_filename = versioned_chart_filename(
+            f"{base}_confusion_matrix.png", chart_version
+        )
+        roc_filename = versioned_chart_filename(f"{base}_roc_curve.png", chart_version)
+        _confusion_plot(name, y_test, metrics["predictions"], confusion_filename)
+        _roc_plot(name, y_test, metrics["probabilities"], roc_filename)
+        chart_files[f"{base}_confusion_matrix.png"] = confusion_filename
+        chart_files[f"{base}_roc_curve.png"] = roc_filename
         metrics["configuration"] = configuration
         results[name] = metrics
         rows.append({"Model": name, "Accuracy": metrics["accuracy"], "Precision": metrics["precision"],
                      "Recall": metrics["recall"], "F1": metrics["f1"], "ROC-AUC": metrics["roc_auc"]})
-    _comparison_plot(rows)
+    comparison_filename = versioned_chart_filename(
+        "logistic_regression_model_comparison.png", chart_version
+    )
+    _comparison_plot(rows, comparison_filename)
+    chart_files["logistic_regression_model_comparison.png"] = comparison_filename
     target_counts = {
         "no_churn": int((y_train == 0).sum() + (y_test == 0).sum()),
         "churn": int((y_train == 1).sum() + (y_test == 1).sum()),
@@ -133,4 +165,33 @@ def run_logistic_regression():
         "churn_percentage": float(target_counts["churn"] / total_count * 100),
         "threshold": 0.5,
         "class_weight": "balanced",
+        "chart_files": chart_files,
+        "charts": list(chart_files.values()),
     }
+
+
+def run_logistic_regression():
+    """Return valid cached logistic-model results for the current CSV."""
+    with _LOGISTIC_CACHE_LOCK:
+        while True:
+            data_fingerprint = get_data_fingerprint()
+            computation_signature = source_signature(
+                __file__, os.path.join(os.path.dirname(__file__), "preprocessing.py")
+            )
+            cached = _LOGISTIC_CACHE["result"]
+            if (
+                _LOGISTIC_CACHE["data_fingerprint"] == data_fingerprint
+                and _LOGISTIC_CACHE["signature"] == computation_signature
+                and cached is not None
+                and chart_files_exist(CHARTS_DIR, cached["charts"])
+            ):
+                return copy.deepcopy(cached)
+
+            result = _build_logistic_regression(
+                result_version(data_fingerprint, computation_signature)
+            )
+            if get_data_fingerprint() == data_fingerprint:
+                _LOGISTIC_CACHE["data_fingerprint"] = data_fingerprint
+                _LOGISTIC_CACHE["signature"] = computation_signature
+                _LOGISTIC_CACHE["result"] = result
+                return copy.deepcopy(result)

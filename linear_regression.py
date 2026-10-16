@@ -1,6 +1,8 @@
 """Linear, Ridge, and Lasso regression using StreamStay's processed split."""
 
 import os
+import copy
+import threading
 import warnings
 
 import matplotlib
@@ -15,6 +17,14 @@ from sklearn.metrics import f1_score, mean_absolute_error, mean_squared_error
 from sklearn.metrics import precision_score, r2_score, recall_score, roc_auc_score
 
 from preprocessing import preprocess_data
+from load_data import get_data_fingerprint
+from result_cache import (
+    chart_files_exist,
+    result_version,
+    save_chart_atomically,
+    source_signature,
+    versioned_chart_filename,
+)
 
 
 RIDGE_ALPHA = 1.0
@@ -22,6 +32,8 @@ LASSO_ALPHA = 0.001
 CLASSIFICATION_THRESHOLD = 0.5
 TOP_COEFFICIENT_COUNT = 15
 CHARTS_DIR = os.path.join(os.path.dirname(__file__), "static", "charts")
+_LINEAR_CACHE = {"data_fingerprint": None, "signature": None, "result": None}
+_LINEAR_CACHE_LOCK = threading.RLock()
 
 
 def _chart_path(filename):
@@ -97,11 +109,14 @@ def _plot_actual_vs_predicted(model_name, y_test, predictions, filename):
     plt.title(f"Actual vs Predicted — {model_name}")
     plt.legend()
     plt.tight_layout()
-    plt.savefig(_chart_path(filename), bbox_inches="tight")
+    save_chart_atomically(
+        _chart_path(filename),
+        lambda path: plt.savefig(path, bbox_inches="tight"),
+    )
     plt.close()
 
 
-def _plot_model_comparison(comparison):
+def _plot_model_comparison(comparison, filename):
     names, positions = comparison["Model"].tolist(), np.arange(len(comparison))
     fig, axes = plt.subplots(1, 2, figsize=(13, 5), dpi=120)
     axes[0].bar(positions, comparison["RMSE"], color=["#167eaa", "#28c7ff", "#68b984"])
@@ -114,11 +129,14 @@ def _plot_model_comparison(comparison):
     axes[1].tick_params(axis="x", rotation=12)
     axes[1].legend()
     fig.tight_layout()
-    fig.savefig(_chart_path("linear_regression_model_comparison.png"), bbox_inches="tight")
+    save_chart_atomically(
+        _chart_path(filename),
+        lambda path: fig.savefig(path, bbox_inches="tight"),
+    )
     plt.close(fig)
 
 
-def _plot_coefficients(summaries):
+def _plot_coefficients(summaries, filename):
     fig, axes = plt.subplots(1, 3, figsize=(18, 7), dpi=120)
     for axis, (name, summary), color in zip(
         axes, summaries.items(), ["#167eaa", "#28c7ff", "#68b984"]
@@ -129,26 +147,43 @@ def _plot_coefficients(summaries):
         axis.set_title(f"Top coefficients — {name}")
         axis.tick_params(axis="y", labelsize=8)
     fig.tight_layout()
-    fig.savefig(_chart_path("linear_regression_top_coefficients.png"), bbox_inches="tight")
+    save_chart_atomically(
+        _chart_path(filename),
+        lambda path: fig.savefig(path, bbox_inches="tight"),
+    )
     plt.close(fig)
 
 
-def generate_linear_regression_charts(results, y_test):
+def generate_linear_regression_charts(results, y_test, chart_version):
     charts = [
         ("Linear Regression", "linear_regression_actual_vs_predicted.png"),
         ("Ridge Regression", "ridge_regression_actual_vs_predicted.png"),
         ("Lasso Regression", "lasso_regression_actual_vs_predicted.png"),
     ]
+    chart_files = {
+        filename: versioned_chart_filename(filename, chart_version)
+        for _, filename in charts
+    }
+    chart_files["linear_regression_model_comparison.png"] = versioned_chart_filename(
+        "linear_regression_model_comparison.png", chart_version
+    )
+    chart_files["linear_regression_top_coefficients.png"] = versioned_chart_filename(
+        "linear_regression_top_coefficients.png", chart_version
+    )
     for name, filename in charts:
-        _plot_actual_vs_predicted(name, y_test, results[name]["predictions"], filename)
-    _plot_model_comparison(results["comparison"])
-    _plot_coefficients(results["coefficient_summaries"])
-    return [filename for _, filename in charts] + [
-        "linear_regression_model_comparison.png", "linear_regression_top_coefficients.png"
-    ]
+        _plot_actual_vs_predicted(
+            name, y_test, results[name]["predictions"], chart_files[filename]
+        )
+    _plot_model_comparison(
+        results["comparison"], chart_files["linear_regression_model_comparison.png"]
+    )
+    _plot_coefficients(
+        results["coefficient_summaries"], chart_files["linear_regression_top_coefficients.png"]
+    )
+    return chart_files
 
 
-def run_linear_regression():
+def _build_linear_regression(chart_version):
     """Train three regressors from exactly one existing preprocessing result."""
     processed = preprocess_data()
     X_train, X_test = processed["X_train"], processed["X_test"]
@@ -188,8 +223,38 @@ def run_linear_regression():
     results["training_target_shape"] = tuple(y_train.shape)
     results["testing_target_shape"] = tuple(y_test.shape)
     results["target"] = "is_churn"
-    results["charts"] = generate_linear_regression_charts(results, y_test)
+    results["chart_files"] = generate_linear_regression_charts(
+        results, y_test, chart_version
+    )
+    results["charts"] = list(results["chart_files"].values())
     return results
+
+
+def run_linear_regression():
+    """Return valid cached Linear/Ridge/Lasso results for the current CSV."""
+    with _LINEAR_CACHE_LOCK:
+        while True:
+            data_fingerprint = get_data_fingerprint()
+            computation_signature = source_signature(
+                __file__, os.path.join(os.path.dirname(__file__), "preprocessing.py")
+            )
+            cached = _LINEAR_CACHE["result"]
+            if (
+                _LINEAR_CACHE["data_fingerprint"] == data_fingerprint
+                and _LINEAR_CACHE["signature"] == computation_signature
+                and cached is not None
+                and chart_files_exist(CHARTS_DIR, cached["charts"])
+            ):
+                return copy.deepcopy(cached)
+
+            result = _build_linear_regression(
+                result_version(data_fingerprint, computation_signature)
+            )
+            if get_data_fingerprint() == data_fingerprint:
+                _LINEAR_CACHE["data_fingerprint"] = data_fingerprint
+                _LINEAR_CACHE["signature"] = computation_signature
+                _LINEAR_CACHE["result"] = result
+                return copy.deepcopy(result)
 
 
 if __name__ == "__main__":
